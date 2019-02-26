@@ -67,10 +67,10 @@ void pstree() {
 	}
 	closedir(dir);
 
-
+	/*
 	for(int i=0;i<counter;i++) {
 		printf("%s\n",pidtree[i].pid_name);
 	}
-
+	*/
 }
 
