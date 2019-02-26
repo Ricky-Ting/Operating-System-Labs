@@ -89,7 +89,7 @@ void pstree() {
 
 	for(int i=0;i<counter;i++) {	
 		if(pidtree[i].pid_p==0) {
-			root = 1;
+			root = 0;
 		}
 		else {
 			for(int j=0;j<counter;j++){
@@ -101,7 +101,6 @@ void pstree() {
 
 		}
 	}
-
 	print_tree(root,0,0);
 
 }
