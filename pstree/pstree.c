@@ -43,8 +43,18 @@ void pstree() {
 			//printf("%s\n",ptr->d_name);
 			//DIR *pid_dir = opendir(  strcat("/proc",ptr->d_name) );
 			char tmp[10] = "/proc";
-			char pid_dir[300];
+			char pid_dir[300], pid_name_f[300], pid_pa_f[300];
 			sprintf(pid_dir,"%s/%s",tmp,ptr->d_name);
+			sprintf(pid_name_f, "%s/comm",pid_dir);
+			sprintf(pid_pa_f, "%s/stat",pid_dir);
+			
+			File * F_name = fopen("pid_name_f",'r');
+			Assert(F_name);
+
+
+
+			fclose(F_name);
+			
 			//printf("%s\n",strcat(tmp,ptr->d_name));
 			//printf("%s,%s\n",tmp,pid_dir);
 					
