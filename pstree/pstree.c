@@ -57,7 +57,9 @@ void pstree() {
 	
 			FILE * F_pa = fopen(pid_pa_f, "r");
 			assert(F_pa);
-			fscanf(F_pa,"%d %s %c %d",pidtree[counter].pid_num, , ,pidtree[counter].pid_p);	
+			char omit1[100];
+			char omit;2
+			fscanf(F_pa,"%d %s %c %d",&pidtree[counter].pid_num, omit1, omit2 ,&pidtree[counter].pid_p);	
 			fclose(F_pa);
 			
 			//printf("%s\n",strcat(tmp,ptr->d_name));
