@@ -46,7 +46,7 @@ void pstree() {
 			//printf("%s\n",strcat(tmp,ptr->d_name));
 			DIR *pid_dir = opendir(tmp2);
 			
-			closedir()
+			closedir(pid_dir);
 
 		}
 	}
