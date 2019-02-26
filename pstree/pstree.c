@@ -50,7 +50,7 @@ void pstree() {
 			
 			printf("%s\n",pid_name_f);
 			FILE * F_name = fopen("pid_name_f","r");
-			assert(F_name);
+			//assert(F_name);
 
 
 
