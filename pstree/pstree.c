@@ -15,6 +15,8 @@ struct node {
 
 int counter = 0;
 int root;
+int p_mode=0;
+int n_mode=0;
 void pstree(void);
 void print_tree(int no, int depth, int isindent);
 int main(int argc, char *argv[]) {
@@ -24,6 +26,7 @@ int main(int argc, char *argv[]) {
     printf("argv[%d] = %s\n", i, argv[i]);
   }
   assert(!argv[argc]); // always true
+
 	pstree();
 
   return 0;
@@ -110,7 +113,10 @@ void print_tree(int no, int depth, int isindent){
 		for(int i=0;i<depth;i++) {
 			printf("\t\t\t\t");
 		}
-	printf("%s\t\t",pidtree[no].pid_name);
+	printf("%s",pidtree[no].pid_name);
+	if(p_mode) {
+		printf("(%d)",pidtree[no].pid_num);
+	}
 	for(int i=0;i<pidtree[no].child_num;i++) {
 		if(i==0) {
 			print_tree(pidtree[no].child_index[i], depth+1, 0);	
