@@ -53,14 +53,16 @@ void pstree() {
 			FILE * F_name = fopen(pid_name_f,"r");
 			assert(F_name);
 			fscanf(F_name,"%s",pidtree[counter].pid_name);	
-			counter++;
-
-
 			fclose(F_name);
+	
+			FILE * F_pa = fopen(pid_pa_f, "r");
+			assert(F_pa);
+			fscanf(F_pa,"%d %s %c %d",pidtree[counter].pid_num, , ,pidtree[counter].pid_p);	
+			fclose(F_pa);
 			
 			//printf("%s\n",strcat(tmp,ptr->d_name));
 			//printf("%s,%s\n",tmp,pid_dir);
-					
+			counter++;		
 	
 
 		}
