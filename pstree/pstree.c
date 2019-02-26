@@ -16,7 +16,7 @@ struct node {
 int counter = 0;
 int root;
 int p_mode=1;
-int n_mode=0;
+int n_mode=1;
 void pstree(void);
 void print_tree(int no, int depth, int isindent);
 int main(int argc, char *argv[]) {
@@ -109,7 +109,7 @@ void pstree() {
 		for(int i=0;i<counter;i++) {
 			for(int j=0;j<pidtree[i].pid_num;j++) {
 				for(int k=pidtree[i].pid_num-1; k>j; k-- ) {
-					if(pidtree[pidtree[i].child_index[k]].pid_num < pidtree[pidtree[i].child_index[k-1]].pid_num ) {
+					if(pidtree[pidtree[i].child_index[k]].pid_num > pidtree[pidtree[i].child_index[k-1]].pid_num ) {
 						int swaptmp = pidtree[i].child_index[k];
 						pidtree[i].child_index[k]=pidtree[i].child_index[k-1];
 						pidtree[i].child_index[k-1]=swaptmp;
