@@ -102,6 +102,22 @@ void pstree() {
 		}
 	}
 
+	print_tree(root,0);
 
+}
 
+void print_tree(int no, int depth, int isindent){
+	if(isindent)
+		for(int i=0;i<depth;i++) {
+			printf("\t\t");
+		}
+	printf("%s\t\t",pidtree[no].pid_name);
+	for(int i=0;i<pidtree[no].child_num;i++) {
+		if(i==0) {
+			print_tree(pidtree[no].child_index[i], depth+1, 0);	
+		}
+		else
+			print_tree(pidtree[no].child_index[i], depth+1, 1);	
+	}		
+	printf("\n");
 }
