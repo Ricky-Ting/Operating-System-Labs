@@ -16,7 +16,7 @@ struct node {
 int counter = 0;
 int root;
 void pstree(void);
-
+void print_tree(int no, int depth, int isindent);
 int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < argc; i++) {
@@ -102,7 +102,7 @@ void pstree() {
 		}
 	}
 
-	print_tree(root,0);
+	print_tree(root,0,0);
 
 }
 
