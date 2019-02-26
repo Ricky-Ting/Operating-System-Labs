@@ -52,7 +52,7 @@ void pstree() {
 			//printf("%s\n",pid_name_f);
 			FILE * F_name = fopen(pid_name_f,"r");
 			assert(F_name);
-			fscanf(F_name,%s,pidtree[counter]->pid_name);	
+			fscanf(F_name,"%s",pidtree[counter]->pid_name);	
 
 
 			fclose(F_name);
