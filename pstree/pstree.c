@@ -8,7 +8,7 @@
 struct node {
 	pid_t pid_num;
 	pid_t pid_p;
-	char * pid_name;
+	char pid_name[100] ;
 } pidtree[MAXPID];
 
 int counter = 0;
@@ -67,10 +67,10 @@ void pstree() {
 	}
 	closedir(dir);
 
-	/*
+	
 	for(int i=0;i<counter;i++) {
 		printf("%s\n",pidtree[i].pid_name);
 	}
-	*/
+	
 }
 
