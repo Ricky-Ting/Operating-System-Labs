@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 void pstree() {
 	DIR *dir = opendir("/proc");
 	struct dirent * ptr;
-	while( ptr=readdir(dir) ) {
+	while( (ptr=readdir(dir)) ) {
 		if(ptr->d_type==DT_DIR)
 			printf("%s\n",ptr->d_name);
 
