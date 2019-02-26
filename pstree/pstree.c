@@ -74,13 +74,13 @@ void pstree() {
 	}
 	closedir(dir);
 
-	/*	
+		
 	for(int i=0;i<counter;i++) {
 		printf("pid:%d,name:%s,parent:%d\n",pidtree[i].pid_num,pidtree[i].pid_name, pidtree[i].pid_p);
 	}
 	
 }
-	*/
+	
 	for(int i=0;i<counter;i++) {
 		pidtree[i].child_num=0;
 	}	
