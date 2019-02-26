@@ -3,12 +3,13 @@
 #include <dirent.h>
 #include <assert.h>
 #include <string.h>
+#define MAXPID 10000
 
-struct pidtree {
+struct node {
 	pid_t pid_num;
 	pid_t pid_p;
 	char * pid_name;
-};
+} pidtree[MAXPID];
 
 int counter = 0;
 void pstree(void);
@@ -48,10 +49,10 @@ void pstree() {
 			sprintf(pid_name_f, "%s/comm",pid_dir);
 			sprintf(pid_pa_f, "%s/stat",pid_dir);
 			
-			printf("%s\n",pid_name_f);
+			//printf("%s\n",pid_name_f);
 			FILE * F_name = fopen(pid_name_f,"r");
 			assert(F_name);
-
+			fscanf(F_name,%s,pidtree[counter]->pid_name);	
 
 
 			fclose(F_name);
