@@ -49,7 +49,7 @@ void pstree() {
 			sprintf(pid_pa_f, "%s/stat",pid_dir);
 			
 			printf("%s\n",pid_name_f);
-			FILE * F_name = fopen("pid_name_f","r");
+			FILE * F_name = fopen(pid_name_f,"r");
 			//assert(F_name);
 
 
