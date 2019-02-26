@@ -42,11 +42,11 @@ void pstree() {
 		if( (ptr->d_type==DT_DIR) && (is_number(ptr->d_name)) ) {
 			//printf("%s\n",ptr->d_name);
 			//DIR *pid_dir = opendir(  strcat("/proc",ptr->d_name) );
-			char tmp[100] = "/proc";
-			char pid_dir[500];
+			char tmp[10] = "/proc";
+			char pid_dir[300];
 			sprintf(pid_dir,"%s/%s",tmp,ptr->d_name);
 			//printf("%s\n",strcat(tmp,ptr->d_name));
-			printf("%s,%s\n",tmp,pid_dir);
+			//printf("%s,%s\n",tmp,pid_dir);
 					
 	
 
