@@ -17,11 +17,20 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
+int is_number(char* s) {
+	while(*s) {
+		if( (*s < '0' ) || (*s > '9') )
+			return 0;
+	}
+	return 1;
+
+}
+
 void pstree() {
 	DIR *dir = opendir("/proc");
 	struct dirent * ptr;
 	while( (ptr=readdir(dir)) ) {
-		if(ptr->d_type==DT_DIR)
+		if( (ptr->d_type==DT_DIR) && (is_number(ptr->d_name)) )
 			printf("%s\n",ptr->d_name);
 
 	}
