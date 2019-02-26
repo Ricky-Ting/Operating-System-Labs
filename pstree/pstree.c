@@ -108,7 +108,7 @@ void pstree() {
 void print_tree(int no, int depth, int isindent){
 	if(isindent)
 		for(int i=0;i<depth;i++) {
-			printf("\t\t\t");
+			printf("\t\t\t\t");
 		}
 	printf("%s\t\t",pidtree[no].pid_name);
 	for(int i=0;i<pidtree[no].child_num;i++) {
