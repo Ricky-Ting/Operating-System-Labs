@@ -45,7 +45,7 @@ void pstree() {
 			char tmp[100] = "/proc/";
 			char* pid_dir = strcat(tmp,ptr->d_name);
 			//printf("%s\n",strcat(tmp,ptr->d_name));
-			printf("%s",tmp);
+			printf("%s,%s\n",tmp,pid_dir);
 					
 	
 
