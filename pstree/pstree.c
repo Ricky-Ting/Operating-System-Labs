@@ -2,6 +2,13 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <assert.h>
+#include <string.h>
+
+struct pidtree {
+	pid_t pid_num;
+	pid_t pid_p;
+	char * pid_name;
+};
 
 void pstree(void);
 
@@ -31,9 +38,12 @@ void pstree() {
 	DIR *dir = opendir("/proc");
 	struct dirent * ptr;
 	while( (ptr=readdir(dir)) ) {
-		if( (ptr->d_type==DT_DIR) && (is_number(ptr->d_name)) )
-			printf("%s\n",ptr->d_name);
+		if( (ptr->d_type==DT_DIR) && (is_number(ptr->d_name)) ) {
+			//printf("%s\n",ptr->d_name);
+			DIR *pid_dir = opendir(  strcat("/proc",ptr->d_name) );
+			printf("%s\n",strcat("/proc",ptr->d_name));
 
+		}
 	}
 
 }
