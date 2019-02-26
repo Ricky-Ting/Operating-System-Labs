@@ -3,7 +3,7 @@
 #include <dirent.h>
 #include <assert.h>
 #include <string.h>
-#define MAXPID 1<<19
+#define MAXPID 1<<20
 
 struct node {
 	pid_t pid_num;
