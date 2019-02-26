@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <assert.h>
 #include <string.h>
+#include <unistd.h>
 #define MAXPID 1<<21
 
 struct node {
@@ -15,17 +16,22 @@ struct node {
 
 int counter = 0;
 int root;
-int p_mode=1;
-int n_mode=1;
+int p_mode=0;
+int n_mode=0;
 void pstree(void);
 void print_tree(int no, int depth, int isindent);
 int main(int argc, char *argv[]) {
-  int i;
-  for (i = 0; i < argc; i++) {
-    assert(argv[i]); // always true
-    printf("argv[%d] = %s\n", i, argv[i]);
-  }
-  assert(!argv[argc]); // always true
+  int o;
+	while( (o = getopt(argc,argv)) !=-1 ) {
+	switch(o) {
+		case 'p' : p_mode=1; break;
+		case 'n' : n_mode=1; break;
+		default : printf("wrong parameter\n"); return 0; break;
+	}
+
+
+	}
+
 
 	pstree();
 
