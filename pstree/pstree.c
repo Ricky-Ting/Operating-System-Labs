@@ -42,7 +42,7 @@ void pstree() {
 			//printf("%s\n",ptr->d_name);
 			//DIR *pid_dir = opendir(  strcat("/proc",ptr->d_name) );
 			char tmp[100] = "/proc";
-			printf("%s\n",strcat(tmp,"hello"));
+			printf("%s\n",strcat(tmp,ptr->d_name));
 
 		}
 	}
