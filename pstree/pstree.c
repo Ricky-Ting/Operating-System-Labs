@@ -76,7 +76,7 @@ void pstree() {
 	}
 	closedir(dir);
 
-	/*	
+	/*		
 	for(int i=0;i<counter;i++) {
 		printf("pid:%d,name:%s,parent:%d\n",pidtree[i].pid_num,pidtree[i].pid_name, pidtree[i].pid_p);
 	}
@@ -89,7 +89,7 @@ void pstree() {
 
 	for(int i=0;i<counter;i++) {	
 		if(pidtree[i].pid_p==0) {
-			root = i;
+			root = 1;
 		}
 		else {
 			for(int j=0;j<counter;j++){
