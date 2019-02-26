@@ -15,7 +15,7 @@ struct node {
 
 int counter = 0;
 int root;
-int p_mode=0;
+int p_mode=1;
 int n_mode=0;
 void pstree(void);
 void print_tree(int no, int depth, int isindent);
@@ -117,6 +117,7 @@ void print_tree(int no, int depth, int isindent){
 	if(p_mode) {
 		printf("(%d)",pidtree[no].pid_num);
 	}
+	printf("\t\t");
 	for(int i=0;i<pidtree[no].child_num;i++) {
 		if(i==0) {
 			print_tree(pidtree[no].child_index[i], depth+1, 0);	
