@@ -10,6 +10,7 @@ struct pidtree {
 	char * pid_name;
 };
 
+int counter = 0;
 void pstree(void);
 
 int main(int argc, char *argv[]) {
@@ -42,14 +43,15 @@ void pstree() {
 			//printf("%s\n",ptr->d_name);
 			//DIR *pid_dir = opendir(  strcat("/proc",ptr->d_name) );
 			char tmp[100] = "/proc/";
-			char* tmp2 = strcat(tmp,ptr->d_name);
+			char* pid_dir = strcat(tmp,ptr->d_name);
 			//printf("%s\n",strcat(tmp,ptr->d_name));
-			DIR *pid_dir = opendir(tmp2);
-			
-			closedir(pid_dir);
+			printf("%s",tmp);
+					
+	
 
 		}
 	}
+	closedir(dir);
 
 }
 
