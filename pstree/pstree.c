@@ -177,6 +177,7 @@ void printbefore(int index, int mode) {
 			
 	if( pidtree[pidtree[index].p_index].child_index[0] ==index && mode) {
 		printf("-+-");
+		return;
 	}
 	else {
 		printbefore(pidtree[index].p_index,0);
