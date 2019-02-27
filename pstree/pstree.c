@@ -76,10 +76,34 @@ void pstree() {
 			char omit2;
 			fscanf(F_pa,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
 			fclose(F_pa);
+			counter++;		
+	
+			char pid_task_dir[300];
+			sprintf(pid_task_dir,"%s/task",pid_dir);
+			DIR * pid_task = opendir(pid_task_dir);
+			struct dirent * subptr;
+			while( (subptr=readdir(pid_task))  )	{
+				if( strcmp(subptr->d_name,ptr->d_name)!=0  ) {
+						char task_name_F[300];
+						char task_ppid_F[300];
+						sprintf(task_name_F,"/proc/%s/task/%s/comm",ptr->d_name,subtr->d_name);
+						sprintf(task_ppid_F,"/proc/%s/task/%s/stat",ptr->d_name,subptr->d_name);	
+						
+					FILE * TASK_NAME = fopen(task_name_F,"r");
+					fscanf(TASK_NAME,"%s",pidtree[i].pid_name);
+					fclose(TASK_NAME);
+					FILE * TASK_PPID = fopen(task_ppid_F,"r");
+					fscanf(TASK_PPID,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
+					fclose(TASK_PPID);
+					counter++;
+				}	
+
+
+			}
+			closedir(pid_task);
 			
 			//printf("%s\n",strcat(tmp,ptr->d_name));
 			//printf("%s,%s\n",tmp,pid_dir);
-			counter++;		
 	
 
 		}
