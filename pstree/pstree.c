@@ -87,7 +87,7 @@ void pstree() {
 						char task_name_F[600];
 						char task_ppid_F[600];
 						sprintf(task_name_F,"/proc/%s/task/%s/comm",ptr->d_name,subptr->d_name);
-						printf("%s\n",task_name_F);
+						//printf("%s\n",task_name_F);
 						sprintf(task_ppid_F,"/proc/%s/task/%s/stat",ptr->d_name,subptr->d_name);	
 						
 					FILE * TASK_NAME = fopen(task_name_F,"r");
