@@ -20,7 +20,7 @@ int root;
 int p_mode=0;
 int n_mode=0;
 void pstree(void);
-void print_tree(int no, int depth, int isindent);
+void print_tree(int no);
 void printbefore(int index, int mode); 
 void printspace(int len);
 int main(int argc, char *argv[]) {
