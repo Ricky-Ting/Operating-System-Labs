@@ -187,10 +187,10 @@ void printbefore(int index, int mode) {
 			printspace(strlen(pidtree[pidtree[index].p_index].pid_name)+1);
 		else
 			printspace(strlen(pidtree[pidtree[index].p_index].pid_name)+2);
-		char str[20];
 		if(p_mode){
-			itoa(pidtree[pidtree[index].p_index].pid_num,str,10);
-			printspace(strlen(str)+2);
+			char str[20];
+			sprintf(str,"(%d)",pidtree[pidtree[index].p_index].pid_num);
+			printspace(strlen(str));
 		}
 	}
 	printf("|");
