@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
 	switch(o) {
 		case 'p' : p_mode=1; break;
 		case 'n' : n_mode=1; break;
+		case 'V' : printf("pstree:V3.1415\n"); return 0; break;
 		default : printf("wrong parameter\n"); return 0; break;
 	}
 
@@ -115,7 +116,7 @@ void pstree() {
 		for(int i=0;i<counter;i++) {
 			for(int j=0;j<pidtree[i].child_num;j++) {
 				for(int k=pidtree[i].child_num-1; k>j; k-- ) {
-					if(pidtree[pidtree[i].child_index[k]].pid_num >   pidtree[pidtree[i].child_index[k-1]].pid_num ) {
+					if(pidtree[pidtree[i].child_index[k]].pid_num <   pidtree[pidtree[i].child_index[k-1]].pid_num ) {
 						int swaptmp = pidtree[i].child_index[k];
 						pidtree[i].child_index[k]=pidtree[i].child_index[k-1];
 						pidtree[i].child_index[k-1]=swaptmp;
