@@ -90,9 +90,11 @@ void pstree() {
 						sprintf(task_ppid_F,"/proc/%s/task/%s/stat",ptr->d_name,subptr->d_name);	
 						
 					FILE * TASK_NAME = fopen(task_name_F,"r");
+					assert(TASK_NAME);
 					fscanf(TASK_NAME,"%s",pidtree[counter].pid_name);
 					fclose(TASK_NAME);
 					FILE * TASK_PPID = fopen(task_ppid_F,"r");
+					assert(TASK_PPID);
 					fscanf(TASK_PPID,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
 					fclose(TASK_PPID);
 					counter++;
