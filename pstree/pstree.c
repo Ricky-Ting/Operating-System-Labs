@@ -166,11 +166,7 @@ void print_tree(int no){
 		printf("(%d)",pidtree[no].pid_num);
 	}
 	for(int i=0;i<pidtree[no].child_num;i++) {
-		if(i==0) {
-			print_tree(pidtree[no].child_index[i], depth+1, 0);	
-		}
-		else
-			print_tree(pidtree[no].child_index[i], depth+1, 1);	
+			print_tree(pidtree[no].child_index[i]);	
 	}		
 	printf("\n");
 }
