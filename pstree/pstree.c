@@ -9,6 +9,7 @@
 struct node {
 	pid_t pid_num;
 	pid_t pid_p;
+	int p_index;
 	char pid_name[100] ;
 	int child_num;
 	int child_index[200];
@@ -122,14 +123,15 @@ void pstree() {
 	}	
 
 	for(int i=0;i<counter;i++) {	
-		if(pidtree[i].pid_p==0) {
-			root = 0;
+		if(pidtree[i].pid_num==1) {
+			root = i;
 		}
 		else {
 			for(int j=0;j<counter;j++){
 				if(pidtree[j].pid_num==pidtree[i].pid_p) {
 					pidtree[j].child_index[pidtree[j].child_num]=i;
 					pidtree[j].child_num++;
+					pidtree[i].p_index=j;
 				}
 			}
 
@@ -151,20 +153,16 @@ void pstree() {
 		}	
 
 	}
-	print_tree(root,0,0);
+	print_tree(root);
 
 }
 
-void print_tree(int no, int depth, int isindent){
-	if(isindent)
-		for(int i=0;i<depth;i++) {
-			printf("\t\t\t\t");
-		}
+void print_tree(int no){
+	printbefore(no,1);
 	printf("%s",pidtree[no].pid_name);
 	if(p_mode) {
 		printf("(%d)",pidtree[no].pid_num);
 	}
-	printf("\t\t");
 	for(int i=0;i<pidtree[no].child_num;i++) {
 		if(i==0) {
 			print_tree(pidtree[no].child_index[i], depth+1, 0);	
@@ -173,4 +171,32 @@ void print_tree(int no, int depth, int isindent){
 			print_tree(pidtree[no].child_index[i], depth+1, 1);	
 	}		
 	printf("\n");
+}
+
+void printbefore(int index, int mode) {
+	if(index==root)	
+		return;
+			
+	printbefore(pidtree[index].p_index,0);
+	if( pidtree[pidtree[index].p_index].child_index[0] ==index) {
+		printf("-+-");
+	}
+	else {
+		if(pidtree[index].p_index==root)
+			printspace(strlen(pidtree[pidtree[index].p_index].p_name)+1);
+		else
+			printspace(strlen(pidtree[pidtree[index].p_index].p_name)+2);
+	}
+	printf("|");
+	if(mode){
+		printf("-");
+	}
+}
+
+
+void printspace(int len) {
+	for(int i=0;i<len;i++) {
+		printf(" ");
+	}
+
 }
