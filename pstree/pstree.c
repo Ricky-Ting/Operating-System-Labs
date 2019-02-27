@@ -185,9 +185,9 @@ void printbefore(int index, int mode) {
 	else {
 		printbefore(pidtree[index].p_index,0);
 		if(pidtree[index].p_index==root)
-			printspace(strlen(pidtree[pidtree[index].p_index].p_name)+1);
+			printspace(strlen(pidtree[pidtree[index].p_index].pid_name)+1);
 		else
-			printspace(strlen(pidtree[pidtree[index].p_index].p_name)+2);
+			printspace(strlen(pidtree[pidtree[index].p_index].pid_name)+2);
 	}
 	printf("|");
 	if(mode){
