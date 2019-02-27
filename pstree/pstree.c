@@ -99,7 +99,7 @@ void pstree() {
 					FILE * TASK_PPID = fopen(task_ppid_F,"r");
 					assert(TASK_PPID);
 					fscanf(TASK_PPID,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
-					pidtree[counter].pid_num=p;
+					pidtree[counter].pid_p=p;
 					fclose(TASK_PPID);
 					counter++;
 				}	
