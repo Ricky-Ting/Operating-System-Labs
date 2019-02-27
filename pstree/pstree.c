@@ -154,7 +154,7 @@ void pstree() {
 		}	
 
 	}
-	//print_tree(root,0,0);
+	print_tree(root,0,0);
 
 }
 
