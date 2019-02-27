@@ -22,7 +22,7 @@ void pstree(void);
 void print_tree(int no, int depth, int isindent);
 int main(int argc, char *argv[]) {
   int o;
-	while( (o = getopt(argc,argv,"-p-n")) !=-1 ) {
+	while( (o = getopt(argc,argv,"-pnV")) !=-1 ) {
 	switch(o) {
 		case 'p' : p_mode=1; break;
 		case 'n' : n_mode=1; break;
