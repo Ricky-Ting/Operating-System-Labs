@@ -168,7 +168,8 @@ void print_tree(int no){
 	for(int i=0;i<pidtree[no].child_num;i++) {
 			print_tree(pidtree[no].child_index[i]);	
 	}		
-	printf("\n");
+	if(pidtree[no].child_num==0)
+		printf("\n");
 }
 
 void printbefore(int index, int mode) {
