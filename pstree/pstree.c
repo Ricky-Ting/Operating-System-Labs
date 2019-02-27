@@ -21,6 +21,8 @@ int p_mode=0;
 int n_mode=0;
 void pstree(void);
 void print_tree(int no, int depth, int isindent);
+void printbefore(int index, int mode); 
+void printspace(int len);
 int main(int argc, char *argv[]) {
   int o;
 	while( (o = getopt(argc,argv,"-pnV")) !=-1 ) {
@@ -177,11 +179,11 @@ void printbefore(int index, int mode) {
 	if(index==root)	
 		return;
 			
-	printbefore(pidtree[index].p_index,0);
-	if( pidtree[pidtree[index].p_index].child_index[0] ==index) {
+	if( pidtree[pidtree[index].p_index].child_index[0] ==index && mode) {
 		printf("-+-");
 	}
 	else {
+		printbefore(pidtree[index].p_index,0);
 		if(pidtree[index].p_index==root)
 			printspace(strlen(pidtree[pidtree[index].p_index].p_name)+1);
 		else
