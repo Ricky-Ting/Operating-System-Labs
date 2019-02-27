@@ -84,8 +84,8 @@ void pstree() {
 			struct dirent * subptr;
 			while( (subptr=readdir(pid_task))  )	{
 				if( strcmp(subptr->d_name,ptr->d_name)!=0  ) {
-						char task_name_F[300];
-						char task_ppid_F[300];
+						char task_name_F[600];
+						char task_ppid_F[600];
 						sprintf(task_name_F,"/proc/%s/task/%s/comm",ptr->d_name,subptr->d_name);
 						sprintf(task_ppid_F,"/proc/%s/task/%s/stat",ptr->d_name,subptr->d_name);	
 						
