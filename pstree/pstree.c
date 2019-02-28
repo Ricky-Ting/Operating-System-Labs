@@ -73,7 +73,7 @@ void pstree() {
 			assert(F_name);
 			//fscanf(F_name,"%s",pidtree[counter].pid_name);	
 			fgets(pidtree[counter].pid_name,99,F_name);
-			pidtree[counter].pid_name[strlen(pidtree[counter].pid_name)-1]='\0'
+			pidtree[counter].pid_name[strlen(pidtree[counter].pid_name)-1]='\0';
 			fclose(F_name);
 	
 			FILE * F_pa = fopen(pid_pa_f, "r");
