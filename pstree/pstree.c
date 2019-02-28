@@ -11,7 +11,7 @@ struct node {
 	pid_t pid_num;
 	pid_t pid_p;
 	int p_index;
-	char pid_name[100] ;
+	char pid_name[300] ;
 	int child_num;
 	int child_index[200];
 } pidtree[MAXPID];
@@ -71,7 +71,8 @@ void pstree() {
 			//printf("%s\n",pid_name_f);
 			FILE * F_name = fopen(pid_name_f,"r");
 			assert(F_name);
-			fscanf(F_name,"%s",pidtree[counter].pid_name);	
+			//fscanf(F_name,"%s",pidtree[counter].pid_name);	
+			fgets(pidtree[counter].pid_name,300,F_name);
 			fclose(F_name);
 	
 			FILE * F_pa = fopen(pid_pa_f, "r");
