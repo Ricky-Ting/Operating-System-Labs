@@ -80,7 +80,7 @@ void pstree() {
 			assert(F_pa);
 			char omit1[100];
 			char omit2;
-			fscanf(F_pa,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
+			fscanf(F_pa,"%d %[^)]%c %c %d",&pidtree[counter].pid_num, omit1,&omit2, &omit2 ,&pidtree[counter].pid_p);	
 			fclose(F_pa);
 			int p = counter;
 			counter++;		
@@ -97,7 +97,7 @@ void pstree() {
 						
 					FILE * TASK_PPID = fopen(task_ppid_F,"r");
 					assert(TASK_PPID);
-					fscanf(TASK_PPID,"%d %s %c %d",&pidtree[counter].pid_num, omit1, &omit2 ,&pidtree[counter].pid_p);	
+					fscanf(TASK_PPID,"%d %[^)]%c %c %d",&pidtree[counter].pid_num, omit1, &omit2,  &omit2 ,&pidtree[counter].pid_p);	
 					pidtree[counter].pid_p= pidtree[p].pid_num;
 					sprintf(pidtree[counter].pid_name,"{%s}",pidtree[p].pid_name);
 					fclose(TASK_PPID);
