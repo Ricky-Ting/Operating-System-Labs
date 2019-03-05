@@ -2,7 +2,7 @@
 #include <klib.h>
 void init_screen();
 void splash();
-int read_key();
+int my_read_key();
 void move(int key_dire);
 int in_bound(int bx, int by);
 enum {	_UP=0, _DOWN=1, _LEFT=2, _RIGHT=3 };
@@ -19,7 +19,7 @@ int main() {
 	unsigned long last = 0;
 	unsigned long current;
   while (1) {
-    int key = read_key();
+    int key = my_read_key();
 		if(key != _KEY_NONE) {
 				switch(key) {
 					case _KEY_UP:   	move(_UP);	break;	
@@ -51,7 +51,7 @@ int in_bound(int bx, int by) {
 	return 0;
 }
 
-int read_key() {
+int my_read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
