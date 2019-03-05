@@ -98,7 +98,7 @@ void splash() {
     }
   }
 */
-	mydraw_rect(0, 0, w, h, 0x000000);
+	//mydraw_rect(0, 0, w, h, 0x000000);
 	mydraw_rect(px, py, SIDE, SIDE, 0xffffff); 
 }
 
