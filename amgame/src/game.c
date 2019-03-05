@@ -1,5 +1,5 @@
 #include <game.h>
-
+#include <klib.h>
 void init_screen();
 void splash();
 int read_key();
@@ -14,6 +14,7 @@ int main() {
   _ioe_init();
   init_screen();
 	px = w/2; py = h/2;
+	printf("px=%d, py=%d\n",px,py);
   splash();
   while (1) {
     int key = read_key();
@@ -68,7 +69,7 @@ void init_screen() {
   h = info.height;
 }
 
-void draw_rect(int x, int y, int w, int h, uint32_t color) {
+void mydraw_rect(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // WARNING: allocated on stack
   _DEV_VIDEO_FBCTL_t event = {
     .x = x, .y = y, .w = w, .h = h, .sync = 1,
@@ -91,7 +92,7 @@ void splash() {
     }
   }
 */
-	draw_rect(px*SIDE, py*SIDE, SIDE, SIDE, 0xffffff); 
+	mydraw_rect(px*SIDE, py*SIDE, SIDE, SIDE, 0xffffff); 
 }
 
 
