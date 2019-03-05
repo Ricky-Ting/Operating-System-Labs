@@ -28,7 +28,7 @@ int main() {
 					default: break;
 				}
 		}
-		if(0){ 
+		if(changed){ 
 			splash();
 			changed=0;
 		}
