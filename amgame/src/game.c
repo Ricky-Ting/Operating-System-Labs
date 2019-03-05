@@ -4,6 +4,7 @@ void init_screen();
 void splash();
 int my_read_key();
 void move(int key_dire);
+void mydraw_rect(int x, int y, int w, int h, uint32_t color); 
 int in_bound(int bx, int by);
 enum {	_UP=0, _DOWN=1, _LEFT=2, _RIGHT=3 };
 int dire[4][2]= { {0,-SIDE}, {0,SIDE}, {-SIDE,0}, {SIDE,0} };
@@ -38,6 +39,7 @@ int main() {
 
 void move(int key_dire) {
 	if( in_bound(px+dire[key_dire][0],py+dire[key_dire][1]) ) {
+		mydraw_rect(px, py, SIDE, SIDE, 0); 
 		px+=dire[key_dire][0];
 		py+=dire[key_dire][1];
 		changed=1;
