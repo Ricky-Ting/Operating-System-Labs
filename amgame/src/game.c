@@ -16,16 +16,23 @@ int main() {
 	px = w/2; py = h/2;
 	//printf("px=%d, py=%d\n",px,py);
   splash();
+	unsigned long last = 0;
+	unsigned long current;
   while (1) {
     int key = read_key();
 		if(key != _KEY_NONE) {
 				switch(key) {
-					case _KEY_UP:   	move(_UP); printf("UP\n");		break;	
+					case _KEY_UP:   	move(_UP);	break;	
 					case _KEY_DOWN:	move(_DOWN);	break;
 					case _KEY_LEFT:	move(_LEFT);	break;
 					case _KEY_RIGHT:	move(_RIGHT);	break;
 					default: break;
 				}
+		}
+		current = uptime();
+		if(current - last > 500) {
+			splash();
+			last = current;
 		}
   }
   return 0;
