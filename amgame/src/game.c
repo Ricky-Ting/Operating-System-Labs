@@ -9,6 +9,7 @@ enum {	_UP=0, _DOWN=1, _LEFT=2, _RIGHT=3 };
 int dire[4][2]= { {0,-SIDE}, {0,SIDE}, {-SIDE,0}, {SIDE,0} };
 int w,h;
 int px,py;
+int changed=0;
 int main() {
   // Operating system is a C program
   _ioe_init();
@@ -16,8 +17,6 @@ int main() {
 	px = w/2; py = h/2;
 	//printf("px=%d, py=%d\n",px,py);
   splash();
-	unsigned long last = 0;
-	unsigned long current;
   while (1) {
     int key = my_read_key();
 		if(key != _KEY_NONE) {
@@ -29,10 +28,9 @@ int main() {
 					default: break;
 				}
 		}
-		current = uptime();
-		if(current - last > 500) {
+		if(changed){ 
 			splash();
-			last = current;
+			changed=0;
 		}
   }
   return 0;
@@ -42,6 +40,7 @@ void move(int key_dire) {
 	if( in_bound(px+dire[key_dire][0],py+dire[key_dire][1]) ) {
 		px+=dire[key_dire][0];
 		py+=dire[key_dire][1];
+		changed=1;
 	}	
 }
 
@@ -99,6 +98,7 @@ void splash() {
     }
   }
 */
+	mydraw_rect(0, 0, w, h, 0x000000);
 	mydraw_rect(px, py, SIDE, SIDE, 0xffffff); 
 }
 
