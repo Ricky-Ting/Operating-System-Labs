@@ -6,7 +6,7 @@ int read_key();
 void move(int key_dire);
 int in_bound(int bx, int by);
 enum {	_UP=0, _DOWN=1, _LEFT=2, _RIGHT=3 };
-int dire[4][2]= { {0,-1}, {0,1}, {-1,0}, {1,0} };
+int dire[4][2]= { {0,-SIDE}, {0,SIDE}, {-SIDE,0}, {SIDE,0} };
 int w,h;
 int px,py;
 int main() {
@@ -14,7 +14,7 @@ int main() {
   _ioe_init();
   init_screen();
 	px = w/2; py = h/2;
-	printf("px=%d, py=%d\n",px,py);
+	//printf("px=%d, py=%d\n",px,py);
   splash();
   while (1) {
     int key = read_key();
@@ -39,7 +39,7 @@ void move(int key_dire) {
 }
 
 int in_bound(int bx, int by) {
-	if( bx>=0 && bx*SIDE<=w  && by>=0 && by*SIDE<=h )
+	if( bx>=0 && bx+SIDE<=w  && by>=0 && by+SIDE<=h )
 		return 1;
 	return 0;
 }
@@ -92,7 +92,7 @@ void splash() {
     }
   }
 */
-	mydraw_rect(px*SIDE, py*SIDE, SIDE, SIDE, 0xffffff); 
+	mydraw_rect(px, py, SIDE, SIDE, 0xffffff); 
 }
 
 
