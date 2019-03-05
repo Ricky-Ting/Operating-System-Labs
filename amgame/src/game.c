@@ -20,7 +20,7 @@ int main() {
     int key = read_key();
 		if(key != _KEY_NONE) {
 				switch(key) {
-					case _KEY_UP:   	move(_UP); 		break;	
+					case _KEY_UP:   	move(_UP); printf("UP\n");		break;	
 					case _KEY_DOWN:	move(_DOWN);	break;
 					case _KEY_LEFT:	move(_LEFT);	break;
 					case _KEY_RIGHT:	move(_RIGHT);	break;
