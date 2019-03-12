@@ -60,7 +60,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
 	int ccurrent = current;	
-	printf("In co_wait: wait for %s\n",thd->thread_name);
+	//printf("In co_wait: wait for %s\n",thd->thread_name);
 	ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
 	ucontext_t * beforeuc = malloc(sizeof(ucontext_t));  
 	(thd->uc).uc_link = thisuc;
