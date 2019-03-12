@@ -8,7 +8,7 @@
 #define MB KB * 1024LL
 #define GB MB * 1024LL
 
-#define CO_MAX 100;
+#define CO_MAX 100
 
 struct co {
 	ucontext_t uc;
@@ -17,7 +17,7 @@ struct co {
 	
 };
 
-co * co_array[CO_MAX];
+struct co * co_array[CO_MAX];
 int co_counter;
 void co_init() {
 	srand(time(NULL));
