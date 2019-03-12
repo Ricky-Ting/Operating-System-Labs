@@ -57,6 +57,8 @@ void co_yield() {
 	swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
 	return ;	
 }
+ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
+	ucontext_t * beforeuc = malloc(sizeof(ucontext_t));  
 
 void co_wait(struct co *thd) {
 	int ccurrent = current;	
