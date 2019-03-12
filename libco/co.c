@@ -13,6 +13,7 @@
 struct co {
 	ucontext_t uc;
 	int co_index;
+	char thread_name[20];
 	char __stack[30 MB];	
 };
 
@@ -37,6 +38,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
 	makecontext(&(new_co->uc), (void(*) (void ) )func, 1, (void *)arg);
 	new_co->co_index = co_counter;
+	sprintf(new_co->thread_name,"%s",name);
 	assert(co_counter<100);
 	co_array[co_counter++] = new_co;
 	printf("co_start: create %s, counter=%d\n",name,co_counter);
@@ -58,6 +60,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
 	int ccurrent = current;
+	printf("In co_wait: wait for %s\n",thd->thread_name);
 	ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
 	(thd->uc).uc_link = thisuc;
 	for(int i=0; i<co_counter; i++) {
