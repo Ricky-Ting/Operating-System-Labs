@@ -83,6 +83,7 @@ void co_wait(struct co *thd) {
 	}
 	current = ccurrent;	
 	free(thisuc);
+	free(beforeuc);
 	co_array[thd->co_index]=NULL;
 	free(thd);
 	return;	
