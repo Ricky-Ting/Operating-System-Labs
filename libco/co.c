@@ -61,9 +61,9 @@ void co_yield() {
 void co_wait(struct co *thd) {
 	int ccurrent = current;	
 	printf("In co_wait: wait for %s\n",thd->thread_name);
-	ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
+	ucontext_t  thisuc ;//= malloc(sizeof(ucontext_t));  
 	ucontext_t * beforeuc = malloc(sizeof(ucontext_t));  
-	(thd->uc).uc_link = thisuc;
+	(thd->uc).uc_link = &thisuc;
 	for(int i=0; i<co_counter; i++) {
 		if(co_array[i]==thd)
 			current = i;
@@ -76,7 +76,7 @@ void co_wait(struct co *thd) {
 	getcontext(beforeuc);
 	printf("In co_wait: wait for %s\n",thd->thread_name);
 
-	swapcontext(thisuc, &(thd->uc));
+	swapcontext(&thisuc, &(thd->uc));
 	printf("In co_wait: %s returned\n", thd->thread_name);	
 	for(int i=0; i<co_counter; i++) {
 		if(co_array[i]!=NULL && i!=current) {
@@ -84,7 +84,7 @@ void co_wait(struct co *thd) {
 		}	
 	}
 	current = ccurrent;	
-	free(thisuc);
+	//free(thisuc);
 	free(beforeuc);
 	co_array[thd->co_index]=NULL;
 	free(thd);
