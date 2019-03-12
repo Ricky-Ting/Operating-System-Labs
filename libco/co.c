@@ -68,6 +68,7 @@ void co_wait(struct co *thd) {
 			current = i;
 	}
 	swapcontext(thisuc, &(thd->uc));
+	printf("In co_wait: %s returned\n", thd->thread_name);	
 	current = ccurrent;	
 	free(thisuc);
 	co_array[thd->co_index]=NULL;
