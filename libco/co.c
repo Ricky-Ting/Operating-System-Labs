@@ -13,7 +13,7 @@
 struct co {
 	ucontext_t uc;
 	int co_index;
-	char __stack[10 MB];
+	char __stack[30 MB];
 	
 };
 
