@@ -31,6 +31,8 @@ struct co* co_start(const char *name, func_t func, void *arg) {
   //func(arg); // Test #2 hangs
 	struct co* new_co = malloc(sizeof(struct co));
 	getcontext(&(new_co->uc));	
+	new_co->uc.uc_stack.ss_sp = new_co->__stack;
+	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
 	makecontext(&(new_co->uc), (void(*) (void ) )func, 1, (void *)arg);
 	new_co->co_index = co_counter;
 	assert(co_counter<100);
