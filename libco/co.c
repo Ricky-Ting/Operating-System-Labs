@@ -18,9 +18,11 @@ struct co {
 
 struct co * co_array[CO_MAX];
 int co_counter;
+int current;
 void co_init() {
 	srand(time(NULL));
 	co_counter=0;
+	current =-1;
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
 
@@ -41,19 +43,26 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 }
 
 void co_yield() {
+	int ccurrent = current;
 	int next_co;
 	do {
 		next_co = rand()%co_counter;
 	} while(co_array[next_co]==NULL);
-	setcontext( &(co_array[next_co]->uc));
+	current = next_co;	
+	swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
 	return ;	
 }
 
 void co_wait(struct co *thd) {
+	int ccurrent = current;
 	ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
 	(thd->uc).uc_link = thisuc;
+	for(int i=0; i<co_counter; i++) {
+		if(co_array[i]==thd)
+			current = i;
+	}
 	swapcontext(thisuc, &(thd->uc));
-	
+	current = ccurrent;	
 	free(thisuc);
 	co_array[thd->co_index]=NULL;
 	free(thd);
