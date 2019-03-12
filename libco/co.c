@@ -16,7 +16,7 @@ struct co {
 	char __stack[30 MB];	
 };
 
-struct co * co_array[CO_MAX];
+struct co * co_array[CO_MAX+1];
 int co_counter;
 int current;
 void co_init() {
@@ -48,8 +48,10 @@ void co_yield() {
 	do {
 		next_co = rand()%co_counter;
 	} while(co_array[next_co]==NULL);
-	current = next_co;	
-	swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
+	current = next_co;
+	getcontext(&(co_array[ccurrent]->uc));
+	setcontext(&(co_array[next_co]->uc));	
+	//swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
 	return ;	
 }
 
