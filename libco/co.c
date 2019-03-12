@@ -33,7 +33,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	makecontext(&(new_co->uc), void * ( func), 1, (void *)arg);
 	new_co->co_index = co_counter;
 	assert(co_counter<100);
-	co_array[co_counter++] = co;
+	co_array[co_counter++] = new_co;
   return co;
 }
 
