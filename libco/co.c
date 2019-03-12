@@ -49,9 +49,9 @@ void co_yield() {
 		next_co = rand()%co_counter;
 	} while(co_array[next_co]==NULL);
 	current = next_co;
-	getcontext(&(co_array[ccurrent]->uc));
-	setcontext(&(co_array[next_co]->uc));	
-	//swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
+	//getcontext(&(co_array[ccurrent]->uc));
+	//setcontext(&(co_array[next_co]->uc));	
+	swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
 	return ;	
 }
 
