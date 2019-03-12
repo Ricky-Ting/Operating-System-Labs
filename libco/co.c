@@ -48,7 +48,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
 	ucontext_t * thisuc = malloc(sizeof(ucontext_t));  
-	thd->uc->uc_link = thisuc;
+	(thd->uc).uc_link = thisuc;
 	swapcontext(thisuc, &(thd->uc));
 	
 	free(thisuc);
