@@ -74,7 +74,7 @@ void co_wait(struct co *thd) {
 		}	
 	}
 	getcontext(beforeuc);
-	getcontext(thisuc)
+	getcontext(thisuc);
 	printf("In co_wait: wait for %s\n",thd->thread_name);
 
 
