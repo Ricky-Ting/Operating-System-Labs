@@ -39,7 +39,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->co_index = co_counter;
 	assert(co_counter<100);
 	co_array[co_counter++] = new_co;
-	printf("co_start: create %s, counter=%d",name,counter);
+	printf("co_start: create %s, counter=%d\n",name,co_counter);
   return new_co;
 }
 
