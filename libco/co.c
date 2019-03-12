@@ -34,7 +34,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->co_index = co_counter;
 	assert(co_counter<100);
 	co_array[co_counter++] = new_co;
-  return co;
+  return new_co;
 }
 
 void co_yield() {
