@@ -13,8 +13,7 @@
 struct co {
 	ucontext_t uc;
 	int co_index;
-	char __stack[30 MB];
-	
+	char __stack[30 MB];	
 };
 
 struct co * co_array[CO_MAX];
@@ -24,6 +23,8 @@ void co_init() {
 	co_counter=0;
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
+
+	printf("Has inited\n");
 }
 
 struct co* co_start(const char *name, func_t func, void *arg) {
