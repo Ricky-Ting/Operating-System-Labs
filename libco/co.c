@@ -29,9 +29,9 @@ void co_init() {
 struct co* co_start(const char *name, func_t func, void *arg) {
   //func(arg); // Test #2 hangs
 	struct co* new_co = malloc(sizeof(struct co));
-	getcontext(&(co->uc));	
-	makecontext(&(co->uc), void (* func), 1, (void *)arg);
-	co->co_index = co_counter;
+	getcontext(&(newco->uc));	
+	makecontext(&(newco->uc), void (* func), 1, (void *)arg);
+	newco->co_index = co_counter;
 	assert(co_counter<100);
 	co_array[co_counter++] = co;
   return co;
