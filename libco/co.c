@@ -9,6 +9,8 @@
 #define GB MB * 1024LL
 
 #define CO_MAX 100
+ucontext_t  thisuc; //= malloc(sizeof(ucontext_t));  
+	ucontext_t  beforeuc; //= malloc(sizeof(ucontext_t));  
 
 struct co {
 	ucontext_t uc;
@@ -36,6 +38,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	getcontext(&(new_co->uc));	
 	new_co->uc.uc_stack.ss_sp = new_co->__stack;
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
+	new_co->uc.uc_link = &thisuc;
 	makecontext(&(new_co->uc), (void(*) (void ) )func, 1, (void *)arg);
 	new_co->co_index = co_counter;
 	sprintf(new_co->thread_name,"%s",name);
@@ -57,8 +60,6 @@ void co_yield() {
 	swapcontext(&(co_array[ccurrent]->uc)  , &(co_array[next_co]->uc));
 	return ;	
 }
-ucontext_t  thisuc; //= malloc(sizeof(ucontext_t));  
-	ucontext_t  beforeuc; //= malloc(sizeof(ucontext_t));  
 
 void co_wait(struct co *thd) {
 	int ccurrent = current;	
@@ -80,7 +81,7 @@ void co_wait(struct co *thd) {
 	printf("In co_wait: wait for %s\n",thd->thread_name);
 
 
-	int ret=swapcontext(&thisuc, &(thd->uc));
+	int ret=setcontext(&thisuc, &(thd->uc));
 	assert(ret!=-1);
 	printf("In co_wait: %s returned\n", thd->thread_name);	
 	for(int i=0; i<co_counter; i++) {
