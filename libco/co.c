@@ -41,7 +41,7 @@ void co_yield() {
 	int next_co;
 	do {
 		next_co = rand()%co_counter;
-	} while(co_array[next_co]==NULL)
+	} while(co_array[next_co]==NULL);
 	setcontext(co_array[next_co]->uc);
 	return ;	
 }
