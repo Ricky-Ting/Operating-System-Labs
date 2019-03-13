@@ -93,10 +93,13 @@ void co_yield() {
 	if(co_main.wait==NULL) {
 		if( (rand()%(co_counter)) == 0 ) {
 			co_current= &co_main;
-			printf("In\n");
+			//printf("In\n");
+			assert(co_current->uc == (&co_main));
 		}
 		//printf("In main_yield\n");
 	}	
+
+	
 	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
 	return ;	
 }
