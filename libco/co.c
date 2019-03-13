@@ -80,7 +80,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 }
 
 void co_yield() {
-	co *  co_ccurrent = co_current;
+	struct co *  co_ccurrent = co_current;
 	int next_co;
 	do {
 		next_co = rand()%co_counter;
@@ -102,7 +102,7 @@ void co_yield() {
 
 void co_wait(struct co *thd) {
 	co_current -> wait = &(thd->uc);
-	co * co_ccurrent = current;	
+	struct co * co_ccurrent = co_current;	
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
 	co_current = thd;
 	//getcontext(&thisuc);
