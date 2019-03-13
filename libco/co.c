@@ -95,7 +95,7 @@ void co_yield() {
 		}
 		//printf("In main_yield\n");
 	}	
-	swapcontext(ccurrent  , current);
+	swapcontext(ccurrent  , &main_uc);
 	return ;	
 }
 
