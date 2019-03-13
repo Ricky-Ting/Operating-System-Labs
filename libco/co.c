@@ -16,7 +16,7 @@ struct co {
 	int co_index;
 	ucontext_t * wait;
 	char thread_name[20];
-	char __stack[100 MB];	
+	char __stack[100 MB] __attribute__((aligned (16)));	
 };
 
 struct co * co_array[CO_MAX];
