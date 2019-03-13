@@ -27,6 +27,7 @@ void  myfunc(func_t func, void *arg){
 	func(arg);
 	co_current -> completed =1;
 	printf("Here Here\n");
+	has_thread--;
 	co_yield();	
 }
 
