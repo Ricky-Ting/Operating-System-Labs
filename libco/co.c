@@ -74,7 +74,7 @@ void co_yield() {
 	do {
 		next_co = rand()%co_counter;
 		
-	} while(co_array[next_co]==NULL || co_array[next_co]->completed==0  || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0));
+	} while(co_array[next_co]==NULL || co_array[next_co]->completed==1  || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0));
 		
 	co_current = (co_array[next_co]);
 	
