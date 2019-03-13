@@ -14,7 +14,7 @@ struct co {
 	int co_index;
 	int completed;
 	struct co  * wait;
-	char thread_name[20];
+	char name[20];
 	char __stack[10 MB] __attribute__((aligned (16)));	
 };
 
@@ -61,7 +61,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	makecontext(&(new_co->uc),  (void (*) (void))myfunc, 2, func ,(void *)arg);
 	has_thread ++;
 	new_co->co_index = co_counter;
-	sprintf(new_co->thread_name,"%s",name);
+	sprintf(new_co->name,"%s",name);
 	assert(co_counter<CO_MAX);
 	co_array[co_counter++] = new_co;
 	printf("co_start: create %s, counter=%d\n",name,co_counter);
@@ -105,13 +105,13 @@ void co_wait(struct co *thd) {
 	}
 	co_current -> wait = thd;
 	struct co * co_ccurrent = co_current;	
-	printf("In co_wait: wait for %s\n",thd->thread_name);
+	printf("In co_wait: wait for %s\n",thd->name);
 	co_current = thd;
 	//getcontext(&thisuc);
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
 	int ret=swapcontext( &(co_ccurrent->uc), &(co_current->uc));
 	assert(ret!=-1);
-	printf("In co_wait: %s returned\n", thd->thread_name);	
+	printf("In co_wait: %s returned\n", thd->name);	
 	co_current -> wait = NULL;
 	co_array[thd->co_index] =NULL;
 	free(thd);
