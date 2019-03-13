@@ -22,7 +22,7 @@ struct co {
 struct co * co_array[CO_MAX];
 int co_counter;
 ucontext_t * current;
-void myfunc(func_t func, void *arg){
+void * myfunc(func_t func, void *arg){
 	func(arg);
 	if(main_wait == current) {
 		main_wait = NULL;
@@ -34,11 +34,13 @@ void myfunc(func_t func, void *arg){
 		}
 	}
 	
+	int current_index=-1;
 	for(int i=0;i<co_counter;i++) {
 		if( (co_array[i]!=NULL) && (&(co_array[i]->uc)==current)  )
 			current_index = i;
 	}	
 
+	assert(current_index !=-1);
 	free(co_array[current_index]);
 	co_array[current_index]=NULL;
 
@@ -65,6 +67,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->uc.uc_stack.ss_sp = new_co->__stack;
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
 	new_co->uc.uc_link = &main_uc;
+	//void * run_func = &(myfunc(func, arg));
 	makecontext(&(new_co->uc), myfunc, 2, func ,(void *)arg);
 	new_co->co_index = co_counter;
 	sprintf(new_co->thread_name,"%s",name);
