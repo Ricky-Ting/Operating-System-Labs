@@ -81,7 +81,7 @@ void co_yield() {
 	} while( (co_array[next_co]==NULL || co_array[next_co]->completed==1  || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0) ) && has_thread>0   );
 		
 	co_current = (co_array[next_co]);
-	
+		
 	if( (co_main.wait==NULL || co_main.wait->completed==1) ) {
 		if( (rand()%(co_counter)) == 0 ) {
 			co_current= &co_main;
@@ -90,6 +90,8 @@ void co_yield() {
 		}
 		//printf("In main_yield\n");
 	}	
+	if(has_thread ==0)
+		co_current = &co_main;
 	printf("In co_yield: swap %s and %s\n",co_ccurrent->name, co_current->name);
 	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
 
