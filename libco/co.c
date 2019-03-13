@@ -40,7 +40,7 @@ void co_init() {
 	co_main.wait = NULL;
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
-
+	has_thread = 0;
 	
 	printf("Has inited\n");
 }
@@ -56,6 +56,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	//new_co->uc.uc_link = &(co_main.uc);
 	//void * run_func = &(myfunc(func, arg));
 	makecontext(&(new_co->uc),  (void (*) (void))myfunc, 2, func ,(void *)arg);
+	has_thread ++;
 	new_co->co_index = co_counter;
 	sprintf(new_co->thread_name,"%s",name);
 	assert(co_counter<CO_MAX);
@@ -73,8 +74,7 @@ void co_yield() {
 	int next_co;
 	do {
 		next_co = rand()%co_counter;
-		
-	} while(co_array[next_co]==NULL || co_array[next_co]->completed==1  || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0));
+	} while( (co_array[next_co]==NULL || co_array[next_co]->completed==1  || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0) ) && has_thread>0   );
 		
 	co_current = (co_array[next_co]);
 	
