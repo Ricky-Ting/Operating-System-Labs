@@ -63,7 +63,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	sprintf(new_co->thread_name,"%s",name);
 	assert(co_counter<CO_MAX);
 	co_array[co_counter++] = new_co;
-	printf("co_start: create %s, counter=%d\n",name,co_counter);
+	//printf("co_start: create %s, counter=%d\n",name,co_counter);
 	co_current = new_co;
 	swapcontext(&(co_main.uc), &(new_co->uc));
 	//printf("Here\n");
