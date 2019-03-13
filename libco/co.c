@@ -9,8 +9,6 @@
 #define GB MB * 1024LL
 
 #define CO_MAX 100
-ucontext_t  main_uc; 
-ucontext_t * main_wait;
 struct co {
 	ucontext_t uc;
 	int co_index;
@@ -20,23 +18,25 @@ struct co {
 };
 
 struct co * co_array[CO_MAX];
+struct co co_main;
 int co_counter;
-ucontext_t * current;
+struct co * co_current;
 void  myfunc(func_t func, void *arg){
 	func(arg);
-	if(main_wait == current) {
-		main_wait = NULL;
+	if(co_main.wait == &(co_current->uc)) {
+		co_main.wait = NULL;
 	}	
 	else {
 		for(int i=0;i<co_counter;i++) {
-			if( (co_array[i]!=NULL) && (co_array[i]->wait == current)   )
+			if( (co_array[i]!=NULL) && (co_array[i]->wait == &(co_current->uc) )   )
 				co_array[i]->wait=NULL;
 		}
 	}
 	
+	
 	int current_index=-1;
 	for(int i=0;i<co_counter;i++) {
-		if( (co_array[i]!=NULL) && (&(co_array[i]->uc)==current)  )
+		if( (co_array[i]!=NULL) && (&(co_array[i]->uc)== &(co_current->uc))  )
 			current_index = i;
 	}	
 
@@ -50,8 +50,8 @@ void  myfunc(func_t func, void *arg){
 void co_init() {
 	srand(time(NULL));
 	co_counter=0;
-	current = &main_uc;
-	main_wait = NULL;
+	co_current = &(co_main);
+	co_main.wait = NULL;
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
 
@@ -66,7 +66,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->wait=NULL;
 	new_co->uc.uc_stack.ss_sp = new_co->__stack;
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
-	new_co->uc.uc_link = &main_uc;
+	new_co->uc.uc_link = &(co_main.uc);
 	//void * run_func = &(myfunc(func, arg));
 	makecontext(&(new_co->uc),  (void (*) (void))myfunc, 2, func ,(void *)arg);
 	new_co->co_index = co_counter;
@@ -74,48 +74,40 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	assert(co_counter<CO_MAX);
 	co_array[co_counter++] = new_co;
 	printf("co_start: create %s, counter=%d\n",name,co_counter);
-	swapcontext(&main_uc, &(new_co->uc));
+	swapcontext(&(co_main.uc), &(new_co->uc));
 	printf("Here\n");
   return new_co;
 }
 
 void co_yield() {
-	ucontext_t * ccurrent = current;
+	co *  co_ccurrent = co_current;
 	int next_co;
 	do {
 		next_co = rand()%co_counter;
 		
 	} while(co_array[next_co]==NULL || co_array[next_co]->wait!=NULL);
 		
-	current = &(co_array[next_co]->uc);
+	co_current = (co_array[next_co]);
 	
-	if(main_wait==NULL) {
+	if(co_main.wait==NULL) {
 		if( (rand()%(co_counter)) == 0 ) {
-			current= &main_uc;
+			co_current= &co_main;
 			printf("In\n");
 		}
 		//printf("In main_yield\n");
 	}	
-	swapcontext(ccurrent  , current);
+	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
 	return ;	
 }
 
 void co_wait(struct co *thd) {
-	if(current == &main_uc) {
-		main_wait= &(thd->uc);
-	}
-	else {
-		for(int i=0;i<co_counter;i++) {
-			if( co_array[i]!=NULL     &&   (&(co_array[i]->uc) == current) )
-				co_array[i]->wait = &(thd->uc );
-		} 
-	}
-	ucontext_t * ccurrent = current;	
+	co_current -> wait = &(thd->uc);
+	co * co_ccurrent = current;	
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
-	current = &(thd->uc);
+	co_current = thd;
 	//getcontext(&thisuc);
 	printf("In co_wait: wait for %s\n",thd->thread_name);
-	int ret=swapcontext(ccurrent, current);
+	int ret=swapcontext( &(co_ccurrent->uc), &(co_current->uc));
 	assert(ret!=-1);
 	printf("In co_wait: %s returned\n", thd->thread_name);	
 	return;	
