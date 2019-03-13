@@ -18,6 +18,7 @@ struct co {
 	char __stack[10 MB] __attribute__((aligned (16)));	
 };
 
+int has_thread;
 struct co  *  co_array[CO_MAX];
 struct co co_main;
 int co_counter;
