@@ -26,7 +26,7 @@ struct co * co_current;
 void  myfunc(func_t func, void *arg){
 	func(arg);
 	co_current -> completed =1;
-	//printf("Here Here\n");
+	printf("%s has completed\n",co_current->name);
 	has_thread--;
 	co_yield();	
 }
@@ -40,6 +40,7 @@ void co_init() {
 	co_current = &(co_main);
 	getcontext(&(co_main.uc));
 	co_main.wait = NULL;
+	co_main.name = "main";
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
 	has_thread = 0;
@@ -63,7 +64,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	sprintf(new_co->thread_name,"%s",name);
 	assert(co_counter<CO_MAX);
 	co_array[co_counter++] = new_co;
-	//printf("co_start: create %s, counter=%d\n",name,co_counter);
+	printf("co_start: create %s, counter=%d\n",name,co_counter);
 	co_current = new_co;
 	swapcontext(&(co_main.uc), &(new_co->uc));
 	//printf("Here\n");
@@ -88,7 +89,7 @@ void co_yield() {
 		}
 		//printf("In main_yield\n");
 	}	
-
+	printf("In co_yield: swap %s and %s\n",co_ccurrent->name, co_current->name);
 	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
 
 	return ;	
@@ -104,13 +105,13 @@ void co_wait(struct co *thd) {
 	}
 	co_current -> wait = thd;
 	struct co * co_ccurrent = co_current;	
-	//printf("In co_wait: wait for %s\n",thd->thread_name);
+	printf("In co_wait: wait for %s\n",thd->thread_name);
 	co_current = thd;
 	//getcontext(&thisuc);
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
 	int ret=swapcontext( &(co_ccurrent->uc), &(co_current->uc));
 	assert(ret!=-1);
-	//printf("In co_wait: %s returned\n", thd->thread_name);	
+	printf("In co_wait: %s returned\n", thd->thread_name);	
 	co_current -> wait = NULL;
 	co_array[thd->co_index] =NULL;
 	free(thd);
