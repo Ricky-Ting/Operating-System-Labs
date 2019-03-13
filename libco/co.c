@@ -40,7 +40,8 @@ void co_init() {
 	co_current = &(co_main);
 	getcontext(&(co_main.uc));
 	co_main.wait = NULL;
-	co_main.name = "main";
+	//co_main.name = "main";
+	sprintf(co_main.name,"main");
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
 	has_thread = 0;
