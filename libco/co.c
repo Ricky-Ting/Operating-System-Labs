@@ -12,39 +12,26 @@
 struct co {
 	ucontext_t uc;
 	int co_index;
-	ucontext_t * wait;
+	int completed;
+	struct co  * wait;
 	char thread_name[20];
 	char __stack[10 MB] __attribute__((aligned (16)));	
 };
 
-struct co * co_array[CO_MAX];
+struct co  *  co_array[CO_MAX];
 struct co co_main;
 int co_counter;
 struct co * co_current;
 void  myfunc(func_t func, void *arg){
 	func(arg);
-	if(co_main.wait == &(co_current->uc)) {
-		co_main.wait = NULL;
-	}	
-	else {
-		for(int i=0;i<co_counter;i++) {
-			if( (co_array[i]!=NULL) && (co_array[i]->wait == &(co_current->uc) )   )
-				co_array[i]->wait=NULL;
-		}
-	}
-	
-	
-	int current_index=co_current->co_index;
-	co_current = NULL;
-	assert(current_index !=-1);
-	printf("Here 3\n");
-
-	free(co_array[current_index]);
-	co_array[current_index]=NULL;
+	co_current -> completed =1;
 	printf("Here Here\n");
 	co_yield();	
-
 }
+
+
+
+
 void co_init() {
 	srand(time(NULL));
 	co_counter=0;
@@ -63,6 +50,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	struct co* new_co = malloc(sizeof(struct co));
 	getcontext(&(new_co->uc));	
 	new_co->wait=NULL;
+	new_co->completed=0;
 	new_co->uc.uc_stack.ss_sp = new_co->__stack;
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
 	//new_co->uc.uc_link = &(co_main.uc);
@@ -86,11 +74,11 @@ void co_yield() {
 	do {
 		next_co = rand()%co_counter;
 		
-	} while(co_array[next_co]==NULL || co_array[next_co]->wait!=NULL);
+	} while(co_array[next_co]==NULL || (co_array[next_co]->wait!=NULL  && co_array[next_co]->wait->completed==0));
 		
 	co_current = (co_array[next_co]);
 	
-	if(co_main.wait==NULL) {
+	if( (co_main.wait==NULL || co_main.wait->completed==1) ) {
 		if( (rand()%(co_counter)) == 0 ) {
 			co_current= &co_main;
 			//printf("In\n");
@@ -99,18 +87,20 @@ void co_yield() {
 		//printf("In main_yield\n");
 	}	
 
-	if(co_ccurrent !=NULL)	
-		swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
-	else setcontext(&(co_current->uc));
-	
+	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
 
 	return ;	
 }
 
 void co_wait(struct co *thd) {
 	if(co_array[thd->co_index]==NULL)
-			return;
-	co_current -> wait = &(thd->uc);
+			assert(0);
+	if(co_array[thd->co_index]->completed ==1) {
+		co_array[thd->co_index]=NULL;
+		free(thd);
+		return ; 
+	}
+	co_current -> wait = thd;
 	struct co * co_ccurrent = co_current;	
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
 	co_current = thd;
@@ -119,6 +109,8 @@ void co_wait(struct co *thd) {
 	int ret=swapcontext( &(co_ccurrent->uc), &(co_current->uc));
 	assert(ret!=-1);
 	printf("In co_wait: %s returned\n", thd->thread_name);	
+	co_array[thd->co_index] =NULL;
+	free(thd);
 	return;	
 }
 
