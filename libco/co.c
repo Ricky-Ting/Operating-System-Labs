@@ -75,6 +75,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	co_array[co_counter++] = new_co;
 	printf("co_start: create %s, counter=%d\n",name,co_counter);
 	swapcontext(&main_uc, &(new_co->uc));
+	printf("Here\n");
   return new_co;
 }
 
