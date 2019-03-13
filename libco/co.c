@@ -100,7 +100,7 @@ void co_yield() {
 	}	
 
 	
-	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
+	swapcontext( &(co_ccurrent->uc)  , &(co_main.uc) );
 	return ;	
 }
 
