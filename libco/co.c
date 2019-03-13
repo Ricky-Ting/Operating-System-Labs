@@ -67,7 +67,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->wait=NULL;
 	new_co->uc.uc_stack.ss_sp = new_co->__stack;
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
-	new_co->uc.uc_link = &(co_main.uc);
+	//new_co->uc.uc_link = &(co_main.uc);
 	//void * run_func = &(myfunc(func, arg));
 	makecontext(&(new_co->uc),  (void (*) (void))myfunc, 2, func ,(void *)arg);
 	new_co->co_index = co_counter;
