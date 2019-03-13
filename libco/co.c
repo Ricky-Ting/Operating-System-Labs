@@ -89,7 +89,7 @@ void co_yield() {
 	current = &(co_array[next_co]->uc);
 	
 	if(main_wait==NULL) {
-		if(rand()%(co_counter+1) == co_counter )
+		if( (rand()%(co_counter)) == 0 )
 			current=&main_uc;
 	}	
 	swapcontext(ccurrent  , current);
