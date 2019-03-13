@@ -109,6 +109,7 @@ void co_wait(struct co *thd) {
 	int ret=swapcontext( &(co_ccurrent->uc), &(co_current->uc));
 	assert(ret!=-1);
 	printf("In co_wait: %s returned\n", thd->thread_name);	
+	co_current -> wait = NULL;
 	co_array[thd->co_index] =NULL;
 	free(thd);
 	return;	
