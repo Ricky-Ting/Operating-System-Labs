@@ -68,7 +68,7 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	new_co->uc.uc_stack.ss_size = sizeof(new_co->__stack);
 	new_co->uc.uc_link = &main_uc;
 	//void * run_func = &(myfunc(func, arg));
-	makecontext(&(new_co->uc), myfunc, 2, func ,(void *)arg);
+	makecontext(&(new_co->uc),  (void (*) (void))myfunc, 2, func ,(void *)arg);
 	new_co->co_index = co_counter;
 	sprintf(new_co->thread_name,"%s",name);
 	assert(co_counter<CO_MAX);
