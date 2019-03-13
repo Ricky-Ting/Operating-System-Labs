@@ -34,6 +34,7 @@ void  myfunc(func_t func, void *arg){
 	}
 	
 	
+	printf("Here 3\n");
 	int current_index=co_current->co_index;
 
 	assert(current_index !=-1);
