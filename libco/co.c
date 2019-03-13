@@ -43,7 +43,7 @@ void  myfunc(func_t func, void *arg){
 	assert(current_index !=-1);
 	free(co_array[current_index]);
 	co_array[current_index]=NULL;
-
+	printf("Here Here\n");
 	co_yield();	
 
 }
