@@ -36,7 +36,7 @@ void  myfunc(func_t func, void *arg){
 	
 	printf("Here 3\n");
 	int current_index=co_current->co_index;
-
+	co_current = NULL;
 	assert(current_index !=-1);
 	free(co_array[current_index]);
 	co_array[current_index]=NULL;
@@ -98,14 +98,17 @@ void co_yield() {
 		//printf("In main_yield\n");
 	}	
 
-	
-	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
+	if(co_ccurrent !=NULL)	
+		swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
+	else setcontext(&(co_current->uc));
 	
 
 	return ;	
 }
 
 void co_wait(struct co *thd) {
+	if(co_array[thd->co_index]==NULL)
+			return;
 	co_current -> wait = &(thd->uc);
 	struct co * co_ccurrent = co_current;	
 	//printf("In co_wait: wait for %s\n",thd->thread_name);
