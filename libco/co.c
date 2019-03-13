@@ -22,7 +22,7 @@ struct co {
 struct co * co_array[CO_MAX];
 int co_counter;
 ucontext_t * current;
-void * myfunc(func_t func, void *arg){
+void  myfunc(func_t func, void *arg){
 	func(arg);
 	if(main_wait == current) {
 		main_wait = NULL;
