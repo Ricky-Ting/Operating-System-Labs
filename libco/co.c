@@ -51,6 +51,7 @@ void co_init() {
 	srand(time(NULL));
 	co_counter=0;
 	co_current = &(co_main);
+	getcontext(&(co_main.uc));
 	co_main.wait = NULL;
 	for(int i=0; i<CO_MAX; i++) 
 		co_array[i]=NULL;
