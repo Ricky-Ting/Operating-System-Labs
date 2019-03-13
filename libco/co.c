@@ -75,13 +75,14 @@ struct co* co_start(const char *name, func_t func, void *arg) {
 	assert(co_counter<CO_MAX);
 	co_array[co_counter++] = new_co;
 	printf("co_start: create %s, counter=%d\n",name,co_counter);
-	getcontext(&(co_main.uc));
+	co_current = new_co;
 	swapcontext(&(co_main.uc), &(new_co->uc));
 	printf("Here\n");
   return new_co;
 }
 
 void co_yield() {
+	
 	struct co *  co_ccurrent = co_current;
 	int next_co;
 	do {
@@ -101,7 +102,9 @@ void co_yield() {
 	}	
 
 	
-	swapcontext( &(co_ccurrent->uc)  , &(co_main.uc) );
+	swapcontext( &(co_ccurrent->uc)  , &(co_current->uc) );
+	
+
 	return ;	
 }
 
