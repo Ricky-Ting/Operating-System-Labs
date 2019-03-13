@@ -94,7 +94,7 @@ void co_yield() {
 		if( (rand()%(co_counter)) == 0 ) {
 			co_current= &co_main;
 			//printf("In\n");
-			assert(co_current->uc == (&(co_main.uc)));
+			assert( &(co_current->uc) == (&(co_main.uc)));
 		}
 		//printf("In main_yield\n");
 	}	
