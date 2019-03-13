@@ -8,13 +8,13 @@
 #define MB KB * 1024LL
 #define GB MB * 1024LL
 
-#define CO_MAX 100
+#define CO_MAX 10
 struct co {
 	ucontext_t uc;
 	int co_index;
 	ucontext_t * wait;
 	char thread_name[20];
-	char __stack[100 MB] __attribute__((aligned (16)));	
+	char __stack[10 MB] __attribute__((aligned (16)));	
 };
 
 struct co * co_array[CO_MAX];
@@ -34,10 +34,11 @@ void  myfunc(func_t func, void *arg){
 	}
 	
 	
-	printf("Here 3\n");
 	int current_index=co_current->co_index;
 	co_current = NULL;
 	assert(current_index !=-1);
+	printf("Here 3\n");
+
 	free(co_array[current_index]);
 	co_array[current_index]=NULL;
 	printf("Here Here\n");
