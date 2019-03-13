@@ -14,7 +14,7 @@ ucontext_t * main_wait;
 struct co {
 	ucontext_t uc;
 	int co_index;
-	int wait;
+	ucontext_t * wait;
 	char thread_name[20];
 	char __stack[100 MB];	
 };
