@@ -90,10 +90,10 @@ void co_yield() {
 	
 	if(main_wait==NULL) {
 		if( (rand()%(co_counter)) == 0 ) {
-			current=&main_uc;
+			current= &main_uc;
 			printf("In\n");
 		}
-		printf("In main_yield\n");
+		//printf("In main_yield\n");
 	}	
 	swapcontext(ccurrent  , current);
 	return ;	
