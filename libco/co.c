@@ -34,11 +34,7 @@ void  myfunc(func_t func, void *arg){
 	}
 	
 	
-	int current_index=-1;
-	for(int i=0;i<co_counter;i++) {
-		if( (co_array[i]!=NULL) && (&(co_array[i]->uc)== &(co_current->uc))  )
-			current_index = i;
-	}	
+	int current_index=co_current->co_index;
 
 	assert(current_index !=-1);
 	free(co_array[current_index]);
