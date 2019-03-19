@@ -4,7 +4,8 @@
 
 static uintptr_t pm_start, pm_end;
 
-#define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
+//#define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
+#define ALI_F(x) x
 #define SIZE(x)  (sizeof(x))
 
 struct {
@@ -23,7 +24,7 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
 	myhead = (struct node_t *)(ALI_F(pm_start));
-	//myhead->next= myhead->prev = NULL;
+	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
 	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(node_t));
 	pthread_mutex_init(&mylock, NULL);
