@@ -4,7 +4,7 @@
 
 static uintptr_t pm_start, pm_end;
 
-#define U(x)  ((uintptr_t)(x))
+//#define U(x)  ((uintptr_t)(x))
 #define ALI_F(x) ( ( U(x) & 0x7)?( ( ( U(x) >>3)<<3)+ 0x8 ) : U(x)  )
 //#define ALI_F(x) func(U(x)) 
 #define SIZE(x)  (sizeof(x))
@@ -28,7 +28,7 @@ uintptr_t func(uintptr_t x) {
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-	myhead = (struct node_t *)(ALI_F(pm_start));
+	myhead = (struct node_t *)(func(U(pm_start)));
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
 	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
