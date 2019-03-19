@@ -4,7 +4,7 @@
 
 static uintptr_t pm_start, pm_end;
 
-#define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
+#define ALI_F(x) (((uintptr_t)x & 0x7)?( (((uintptr_t)x>>3)<<3)+ 0x8 ) : (uintptr_t)x)
 //#define ALI_F(x) x
 #define SIZE(x)  (sizeof(x))
 
@@ -43,7 +43,7 @@ static void *kalloc(size_t size) {
 	if(tmp!=NULL) {
 		ret = (void *)(tmp) + ALI_F( SIZE(struct node_t) );
 		tmp->used = 1;
-		if(  ((tmp->next==NULL)?pm_end:(void*)(tmp->next)) - ret - size > 2* ALI_F(SIZE(struct node_t))   ) {
+		if(  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - (uintptr_t)ret - size > 2* ALI_F(SIZE(struct node_t))   ) {
 			struct node_t * tmp2 = ALI_F(ret+size);
 			tmp2->next = tmp->next;
 			if(tmp2->next != NULL)
