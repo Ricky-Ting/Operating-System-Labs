@@ -8,8 +8,8 @@ static uintptr_t pm_start, pm_end;
 #define SIZE(x)  (sizeof(x))
 
 struct __node_t{
-	node_t * next;
-	node_t * prev;
+	struct node_t * next;
+	struct node_t * prev;
 	int size;
 	int used;
 } node_t;
