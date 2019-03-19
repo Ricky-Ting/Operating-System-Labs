@@ -4,16 +4,16 @@
 
 static uintptr_t pm_start, pm_end;
 
-//#define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
-#define ALI_F(x) x
+#define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
+//#define ALI_F(x) x
 #define SIZE(x)  (sizeof(x))
 
-struct {
+struct node_t{
 	struct node_t * next;
 	struct node_t * prev;
 	int size;
 	int used;
-} node_t;
+};
 
 
 struct node_t * myhead; 
@@ -26,7 +26,7 @@ static void pmm_init() {
 	myhead = (struct node_t *)(ALI_F(pm_start));
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
-	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(node_t));
+	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
 	pthread_mutex_init(&mylock, NULL);
 }
 
