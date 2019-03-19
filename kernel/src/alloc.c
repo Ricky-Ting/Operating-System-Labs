@@ -4,7 +4,7 @@
 
 static uintptr_t pm_start, pm_end;
 
-#define U(x)  (uintptr_t(x))
+#define U(x)  ((uintptr_t)(x))
 //#define ALI_F(x) ( ( U(x) & 0x7)?( ( ( U(x) >>3)<<3)+ 0x8 ) : U(x)  )
 #define ALI_F(x) func(U(x)) 
 #define SIZE(x)  (sizeof(x))
