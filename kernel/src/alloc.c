@@ -22,7 +22,7 @@ pthread_mutex_t mylock;
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-	head = (struct node_t *)(ALI_F(pm_start));
+	myhead = (struct node_t *)(ALI_F(pm_start));
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
 	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
@@ -35,7 +35,7 @@ static void pmm_init() {
 static void *kalloc(size_t size) {
 	pthread_mutex_lock(&mylock);
 	uintptr_t ret=NULL;
-	struct node_t * tmp = head;
+	struct node_t * tmp = myhead;
 	while(tmp!=NULL && tmp->size < size) {
 		tmp=tmp->next;			
 	}
