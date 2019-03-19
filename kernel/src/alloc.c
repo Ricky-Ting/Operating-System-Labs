@@ -7,7 +7,7 @@ static uintptr_t pm_start, pm_end;
 #define ALI_F(x) ((x & 0x7)?( ((x>>3)<<3)+ 0x8 ) : x)
 #define SIZE(x)  (sizeof(x))
 
-struct __node_t{
+struct {
 	struct node_t * next;
 	struct node_t * prev;
 	int size;
