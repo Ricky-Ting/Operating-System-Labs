@@ -49,13 +49,13 @@ static void *kalloc(size_t size) {
 		ret = (void *)(tmp) + func( U(SIZE(struct node_t)) );
 		tmp->used = 1;
 		if(  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - (uintptr_t)ret - size > 2* func(U(SIZE(struct node_t)))   ) {
-			struct node_t * tmp2 = func(U(ret+size));
+			struct node_t * tmp2 = (struct node_t *)func(U(ret+size));
 			tmp2->next = tmp->next;
 			if(tmp2->next != NULL)
 				tmp2->next->prev = tmp2;
 			tmp2->used = 0;
 			tmp->next = tmp2;
-			tmp2->size = ((tmp2->next==NULL)?pm_end:(void*)(tmp2->next))  - func( U(tmp2) ) ;
+			tmp2->size = ((tmp2->next==NULL)?pm_end:(uintptr_t)(tmp2->next))  - func( U(tmp2) ) ;
 		}
 		
 	} 
@@ -73,7 +73,7 @@ static void kfree(void *ptr) {
 		tmp->next = tmp->next->next;
 		if(tmp->next->next!=NULL) 
 			tmp->next->next->prev = tmp;
-		tmp->size =  ((tmp->next->next==NULL)?pm_end:(void*)(tmp->next->next)) - func( U(tmp) );
+		tmp->size =  ((tmp->next->next==NULL)?pm_end:(uintptr_t)(tmp->next->next)) - func( U(tmp) );
 		
 	}
 	tmp = midd;
@@ -82,7 +82,7 @@ static void kfree(void *ptr) {
 		tmp2->next = tmp->next;
 		if(tmp->next!=NULL)
 			tmp->next->prev = tmp2;	
-		tmp2->size =  ((tmp->next==NULL)?pm_end:(void*)(tmp->next)) - ALI_F( ( U(tmp2) ) );
+		tmp2->size =  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - ALI_F( ( U(tmp2) ) );
 		tmp = tmp2;
 	}
 	pthread_mutex_unlock(&mylock);
