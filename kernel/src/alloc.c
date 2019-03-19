@@ -17,16 +17,12 @@ struct __node_t{
 
 struct node_t * head; 
 pthread_mutex_t mylock;
-void List_Init(void) {
-	struct node_t * myhelp = malloc(sizeof())
-	
-}
 
 
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
-	head = ALI_F(pm_start);
+	head = (struct node_t *)(ALI_F(pm_start));
 	head->next= head->prev = NULL;
 	head->used = 0;
 	head->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
