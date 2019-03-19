@@ -35,7 +35,7 @@ static void pmm_init() {
 
 static void *kalloc(size_t size) {
 	pthread_mutex_lock(&mylock);
-	uintptr_t ret=NULL;
+	void * ret=NULL;
 	struct node_t * tmp = myhead;
 	while(tmp!=NULL && tmp->size < size) {
 		tmp=tmp->next;			
