@@ -15,7 +15,7 @@ struct {
 } node_t;
 
 
-struct node_t * head; 
+struct node_t * myhead; 
 pthread_mutex_t mylock;
 
 
@@ -23,9 +23,9 @@ static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
 	head = (struct node_t *)(ALI_F(pm_start));
-	head->next= head->prev = NULL;
-	head->used = 0;
-	head->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
+	myhead->next= myhead->prev = NULL;
+	myhead->used = 0;
+	myhead->size = pm_end - ALI_F(pm_start) - ALI_F(SIZE(struct node_t));
 	pthread_mutex_init(&mylock, NULL);
 }
 
