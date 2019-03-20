@@ -59,7 +59,7 @@ static void *kalloc(size_t size) {
 	printf("In kalloc\n");
 	void * ret=NULL;
 	struct node_t * tmp = myhead;
-	while(tmp!=NULL && tmp->size < size && tmp->used==1) {
+	while( (tmp!=NULL) && ( tmp->size < size ||  tmp->used==1) ) {
 		tmp=tmp->next;			
 	}
 	if(tmp!=NULL) {
