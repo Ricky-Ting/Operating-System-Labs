@@ -2,9 +2,11 @@
 #include <klib.h>
 
 void mytest(void){
-	int * a = pmm->alloc(100);
+	char * s = pmm->alloc(100);
 	assert(a!=NULL);
+	s = "This is s\n";
 	printf("a=%d\n",a);
+	printf("%c",s);
 	//*a = 5;
 	//assert( (*a == 5));
 
