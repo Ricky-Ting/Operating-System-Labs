@@ -36,3 +36,5 @@ MODULE_DEF(os) {
   .trap   = os_trap,
   .on_irq = os_on_irq,
 };
+
+void mytest(void);
