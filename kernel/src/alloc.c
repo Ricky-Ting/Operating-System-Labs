@@ -42,13 +42,13 @@ int atomic_xchg(volatile int *addr, int newval) {
 }
 
 void lock(int * lk) {
-	cli();
+	//cli();
 	while(atomic_xchg(&lk,1));
 }
 
 void unlock(inr * lk) {
 	atomic_xchg(&lk->locked, 0);
-	sti();
+	//sti();
 }
 
 
