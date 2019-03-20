@@ -56,6 +56,7 @@ void unlock(int * lk) {
 
 static void *kalloc(size_t size) {
 	lock(&mylock);
+	printf("In kalloc\n");
 	void * ret=NULL;
 	struct node_t * tmp = myhead;
 	while(tmp!=NULL && tmp->size < size) {
@@ -75,7 +76,7 @@ static void *kalloc(size_t size) {
 		}
 		
 	} 
-
+	printf("Out kalloc\n");
 	unlock(&mylock);
 	return ret;
 }
