@@ -12,7 +12,7 @@ void mytest(void){
 	int * b = pmm->alloc(sizeof(int));
 	assert(b!=NULL);
 	printf("b=%d\n",b);	
-	
+	printf("hello\n");	
 	pmm->free(a);
 	pmm->free(b);
 
