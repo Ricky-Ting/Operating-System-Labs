@@ -80,6 +80,8 @@ static void *kalloc(size_t size) {
 }
 
 static void kfree(void *ptr) {
+	if(ptr==NULL)
+		return;
 	lock(&mylock);
 	struct node_t * midd = (struct node_t *)(ptr - func(U(SIZE(struct node_t))) );
 	midd->used = 0;
