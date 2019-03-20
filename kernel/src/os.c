@@ -1,6 +1,8 @@
 #include <common.h>
 #include <klib.h>
 
+void mytest(void);
+
 static void os_init() {
   pmm->init();
 }
@@ -37,4 +39,3 @@ MODULE_DEF(os) {
   .on_irq = os_on_irq,
 };
 
-void mytest(void);
