@@ -3,9 +3,9 @@
 
 void mytest(void){
 	char * s = pmm->alloc(100);
-	assert(a!=NULL);
+	assert(s!=NULL);
 	s = "This is s\n";
-	printf("a=%d\n",a);
+	printf("s=%d\n",&s);
 	printf("%c",s);
 	//*a = 5;
 	//assert( (*a == 5));
