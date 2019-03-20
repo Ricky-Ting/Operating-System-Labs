@@ -1,11 +1,10 @@
 #include <common.h>
 #include <klib.h>
-#include <pthread.h>
 
 static uintptr_t pm_start, pm_end;
 
 #define U(x)  ((uintptr_t)(x))
-#define ALI_F(x) ( ( U(x) & 0x7)?( ( ( U(x) >>3)<<3)+ 0x8 ) : U(x)  )
+//#define ALI_F(x) ( ( U(x) & 0x7)?( ( ( U(x) >>3)<<3)+ 0x8 ) : U(x)  )
 //#define ALI_F(x) func(U(x)) 
 #define SIZE(x)  (sizeof(x))
 
@@ -17,8 +16,8 @@ struct node_t{
 };
 
 
-struct node_t * myhead; 
-pthread_mutex_t mylock;
+struct node_t * myhead;
+int mylock;
 
 uintptr_t func(uintptr_t x) {
 	return (x & 0x7)? (((x>>3)<<3)+0x8) : x;
@@ -32,14 +31,30 @@ static void pmm_init() {
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
 	myhead->size = pm_end - func(U(pm_start)) - func(U(SIZE(struct node_t))) ;
-	pthread_mutex_init(&mylock, NULL);
+	mylock=0;
+}
+
+
+int atomic_xchg(volatile int *addr, int newval) {
+	int result;
+	asm volatile ("lock xchg %0, %1": "+m"(*addr), "=a"(result): "1"(newval) : "cc");
+	return result;
+}
+
+void lock(int * lk) {
+	cli();
+	while(atomic_xchg(&lk,1));
+}
+
+void unlock(inr * lk) {
+	atomic_xchg(&lk->locked, 0);
+	sti();
 }
 
 
 
-
 static void *kalloc(size_t size) {
-	pthread_mutex_lock(&mylock);
+	lock(&mylock);
 	void * ret=NULL;
 	struct node_t * tmp = myhead;
 	while(tmp!=NULL && tmp->size < size) {
@@ -60,12 +75,12 @@ static void *kalloc(size_t size) {
 		
 	} 
 
-	pthread_mutex_unlock(&mylock);
+	unlock(&mylock);
 	return ret;
 }
 
 static void kfree(void *ptr) {
-	pthread_mutex_lock(&mylock);
+	lock(&mylock);
 	struct node_t * midd = (struct node_t *)(ptr - func(U(SIZE(struct node_t))) );
 	midd->used = 0;
 	struct node_t * tmp = midd;
@@ -85,7 +100,7 @@ static void kfree(void *ptr) {
 		tmp2->size =  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - ALI_F( ( U(tmp2) ) );
 		tmp = tmp2;
 	}
-	pthread_mutex_unlock(&mylock);
+	unlock(&mylock);
 	return;
 }
 
