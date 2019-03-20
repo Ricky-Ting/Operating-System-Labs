@@ -13,7 +13,7 @@ void mytest(void){
 	assert(b!=NULL);
 	printf("b=%d\n",b);	
 	printf("hello\n");	
-	pmm->free(s);
+	pmm->free(a);
 	pmm->free(b);
 	return;
 }
