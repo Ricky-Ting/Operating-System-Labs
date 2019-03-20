@@ -27,6 +27,7 @@ uintptr_t func(uintptr_t x) {
 static void pmm_init() {
   pm_start = (uintptr_t)_heap.start;
   pm_end   = (uintptr_t)_heap.end;
+	printf("In pmm_init(): pmstart=%d, pmend=%d\n",pm_start,pm_end);
 	myhead = (struct node_t *)(func(U(pm_start)));
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
