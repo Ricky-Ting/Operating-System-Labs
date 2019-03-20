@@ -4,7 +4,7 @@
 void mytest(void){
 	char * * s = pmm->alloc(100);
 	assert(s!=NULL);
-	s = "This is s\n";
+	*s = "This is s\n";
 	printf("s=%d\n",s);
 	//*a = 5;
 	//assert( (*a == 5));
