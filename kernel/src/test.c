@@ -5,8 +5,8 @@ void mytest(void){
 	char * s = pmm->alloc(100);
 	assert(s!=NULL);
 	s = "This is s\n";
-	printf("s=%d\n",&s);
-	printf("%c",s);
+	printf("s=%d\n",s);
+	printf("%s",s);
 	//*a = 5;
 	//assert( (*a == 5));
 
