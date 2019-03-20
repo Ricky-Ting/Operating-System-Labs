@@ -7,7 +7,6 @@ void mytest(void){
 	printf("a=%d\n",a);
 	*a = 5;
 	assert( (*a == 5));
-	return;
 
 	int * b = pmm->alloc(sizeof(int));
 	assert(b!=NULL);
@@ -15,5 +14,5 @@ void mytest(void){
 	printf("hello\n");	
 	pmm->free(a);
 	pmm->free(b);
-
+	return;
 }
