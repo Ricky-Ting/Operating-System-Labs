@@ -52,11 +52,12 @@ void unlock(int * lk) {
 	//sti();
 }
 
-
+int kcounter = 0;
 
 static void *kalloc(size_t size) {
 	lock(&mylock);
 	printf("In kalloc\n");
+	kcounter++;
 	void * ret=NULL;
 	struct node_t * tmp = myhead;
 	while( (tmp!=NULL) && ( tmp->size < size ||  tmp->used==1) ) {
@@ -75,7 +76,9 @@ static void *kalloc(size_t size) {
 			tmp2->size = ((tmp2->next==NULL)?pm_end:(uintptr_t)(tmp2->next))  - func( U(tmp2) ) ;
 		}
 		
-	} 
+	}
+	assert(kcounter==1);
+	kcounter--; 
 	printf("Out kalloc\n");
 	unlock(&mylock);
 	return ret;
