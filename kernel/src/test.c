@@ -8,12 +8,12 @@ void mytest(void){
 	printf("s=%d\n",s);
 	//*a = 5;
 	//assert( (*a == 5));
-
+	pmm->free(s);
 	int * b = pmm->alloc(sizeof(int));
 	assert(b!=NULL);
 	printf("b=%d\n",b);	
 	printf("hello\n");	
-	pmm->free(s);
+	//pmm->free(s);
 	pmm->free(b);
 	return;
 }
