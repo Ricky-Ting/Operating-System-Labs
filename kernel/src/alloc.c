@@ -97,7 +97,7 @@ static void kfree(void *ptr) {
 		tmp2->next = tmp->next;
 		if(tmp->next!=NULL)
 			tmp->next->prev = tmp2;	
-		tmp2->size =  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - ALI_F( ( U(tmp2) ) );
+		tmp2->size =  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - func( ( U(tmp2) ) );
 		tmp = tmp2;
 	}
 	unlock(&mylock);
