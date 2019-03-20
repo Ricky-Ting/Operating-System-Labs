@@ -44,7 +44,7 @@ int atomic_xchg(volatile int *addr, int newval) {
 
 void lock(int * lk) {
 	//cli();
-	while(atomic_xchg(lk,1));
+	while(atomic_xchg(lk,1))  printf("waiting\n");
 }
 
 void unlock(int * lk) {
