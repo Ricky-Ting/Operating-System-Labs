@@ -14,12 +14,9 @@ void mytest(void){
 	printf("b=%d\n",b);	
 	printf("hello\n");	
 	//pmm->free(s);
-	pmm->free(b);
 
 
 	int * c = pmm->alloc(sizeof(int));
 	printf("c=%d\n",c);
-	pmm->free(c);
-	pmm->free(s);
 	return;
 }
