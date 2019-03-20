@@ -1,7 +1,7 @@
 #include <common.h>
 #include <klib.h>
 
-void test(void){
+void mytest(void){
 	int * a = pmm->alloc(sizeof(int));
 	assert(a!=NULL);
 	*a = 5;
