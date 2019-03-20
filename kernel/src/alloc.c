@@ -46,7 +46,7 @@ void lock(int * lk) {
 	while(atomic_xchg(lk,1));
 }
 
-void unlock(inr * lk) {
+void unlock(int * lk) {
 	atomic_xchg(lk, 0);
 	//sti();
 }
