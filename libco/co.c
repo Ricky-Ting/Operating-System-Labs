@@ -15,7 +15,7 @@ struct co {
 	int completed;
 	struct co  * wait;
 	char name[20];
-	char __stack[10 MB] __attribute__((aligned (16)));	
+	char __stack[8 KB] __attribute__((aligned (16)));	
 };
 
 int has_thread;
