@@ -7,9 +7,10 @@
 extern char ** environ;
 
 void print(char ** s) {
-	while(s!=NULL) {
-		printf("%s\n", *s);
-		s++;
+	char ** var = s;
+	while(var!=NULL) {
+		printf("%s\n", *var);
+		var++;
 	}
 
 }
@@ -17,7 +18,7 @@ void print(char ** s) {
 
 int main(int argc, char *argv[]) {
 	print(argv);
-	* argv = "/bin/strace";	
+	argv[0] = "/bin/strace";	
 	print(argv);
 	pid_t pid = fork();
 	if(pid == 0) {
