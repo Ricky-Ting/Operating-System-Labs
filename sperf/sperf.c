@@ -17,10 +17,17 @@ void print(char ** s) {
 
 
 int main(int argc, char *argv[]) {
-	argv[0] = "/usr/bin/strace";	
+	char * myargv[0] = "/usr/bin/strace";	
+	char * myargv[1] = "-T";
+	int tmp = 1;
+	while(argv[tmp]!=NULL) {
+		myargv[tmp+1] = argv[tmp];
+		tmp++;
+	}
+	
 	pid_t pid = fork();
 	if(pid == 0) {
-		int ret = execve(argv[0], argv, environ);
+		int ret = execve(myargv[0], myargv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		wait(NULL);
