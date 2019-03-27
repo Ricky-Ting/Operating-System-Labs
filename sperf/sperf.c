@@ -44,9 +44,9 @@ int main(int argc, char *argv[]) {
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[0], 0);
-		regmatch_t pmatch[1];
-		const size_t nmatch = 1;
-		char s[1000];
+		//regmatch_t pmatch[1];
+		//const size_t nmatch = 1;
+		//char s[1000];
 			
 		regex_t regex[2];
 		regcomp(&regex[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
