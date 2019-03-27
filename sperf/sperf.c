@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <sys/wait.h>
 
 extern char ** environ;
 
