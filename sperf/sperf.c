@@ -3,9 +3,10 @@
 
 extern char **environ;
 int main(int argc, char *argv[]) {
+	print("%s\n",argv[0]);
 	pid_t pid = fork(); 
 	if(pid == 0) {
-		execve("/bin/ls", ["ls"], environ);
+		execve("/bin/ls", argv, environ);
 	} else {
 
 				
