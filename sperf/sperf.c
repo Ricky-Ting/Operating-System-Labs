@@ -2,13 +2,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
-extern char **environ;
 int main(int argc, char *argv[]) {
-	printf("%s\n",environ[2]);
 	pid_t pid = fork(); 
-	char * arg[] = {"ls"};
+	char * arg[] = {"ls", NULL};
+	char * env[] = {"PATH=/bin", NULL};
 	if(pid == 0) {
-		int ret = execve("/bin/ls", arg, environ);
+		int ret = execve("/bin/ls", arg, env);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 
