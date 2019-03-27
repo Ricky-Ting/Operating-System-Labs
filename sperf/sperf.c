@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
 	char * arg[] = {"ls"};
 	if(pid == 0) {
 		execve("/bin/ls", arg, environ);
+		printf("Shouldn't be here!\n");
 	} else {
 
 				
