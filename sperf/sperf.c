@@ -8,6 +8,7 @@ extern char ** environ;
 
 int main(int argc, char *argv[]) {
 	argv[0] = "strace";	
+	pid_t pid = fork();
 	if(pid == 0) {
 		int ret = execve(argv[0], argv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
