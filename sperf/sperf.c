@@ -28,9 +28,12 @@ int main(int argc, char *argv[]) {
 	}
 	myargv[tmp+1] = NULL;
 	//print(myargv);	
-	pipe(pipefd);
+	if( pipe(pipefd) != 0) {
+		assert(0);
+	}
 	pid_t pid = fork();
 	if(pid == 0) {
+		dup2(2,pipefd[1]);
 		int ret = execve(myargv[0], myargv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
