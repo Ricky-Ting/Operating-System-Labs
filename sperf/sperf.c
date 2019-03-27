@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[1], 0);
-		char * s;
+		char  s[200];
 		scanf("%s",s);
 		printf("%s\n",s);
 		
