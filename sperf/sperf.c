@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
 		int ret = execve("/bin/ls", argv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
+		wait(NULL);
 		printf("End\n");
 	}
 	
