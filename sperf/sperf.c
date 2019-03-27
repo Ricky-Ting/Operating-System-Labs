@@ -6,6 +6,15 @@
 
 extern char ** environ;
 
+void print(char ** s) {
+	while(s!=NULL) {
+		print("%s\n", s);
+		s++;
+	}
+
+}
+
+
 int main(int argc, char *argv[]) {
 	argv[0] = "/bin/strace";	
 	pid_t pid = fork();
