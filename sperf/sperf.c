@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <assert.h>
 #include <regex.h>
+#include <string.h>
 
 extern char ** environ;
 
