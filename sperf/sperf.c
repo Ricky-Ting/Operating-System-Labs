@@ -4,10 +4,10 @@
 
 extern char **environ;
 int main(int argc, char *argv[]) {
-	printf("%s\n",argv[0]);
+	//printf("%s\n",argv[0]);
 	pid_t pid = fork(); 
 	if(pid == 0) {
-		execve("/bin/ls", argv, environ);
+		execve("/bin/ls", (char *)argv+1, environ);
 	} else {
 
 				
