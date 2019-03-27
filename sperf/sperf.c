@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
 	pid_t pid = fork();
 	if(pid == 0) {
 		FILE * trash_bin = fopen("/dev/null", "w+");
+	
 		dup2(pipefd[1], 2);
 		dup2(fileno(trash_bin), 1);
 		int ret = execve(myargv[0], myargv, environ);
@@ -50,13 +51,14 @@ int main(int argc, char *argv[]) {
 		regex_t regex[2];
 		regcomp(&regex[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9.]+>$", REG_NEWLINE);	
+		/*
 		while(fgets(s,800,stdin)) {			
 			char name[100];
 			regexec(&regex[0], s, nmatch, pmatch, 0);
 			memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
 			printf("%s\n", name);
 		}	
-		
+		*/
 		wait(NULL);
 		printf("End\n");
 	}
