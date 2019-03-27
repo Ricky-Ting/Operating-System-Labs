@@ -4,7 +4,7 @@
 
 extern char **environ;
 int main(int argc, char *argv[]) {
-	//printf("%s\n",argv[0]);
+	printf("%s\n",environ[0]);
 	pid_t pid = fork(); 
 	char * arg[] = {"ls"};
 	if(pid == 0) {
