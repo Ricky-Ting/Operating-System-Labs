@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		dup2(pipefd[0], 0);
 		char  s[200];
-		scanf("%s",&s);
+		scanf("%s",s);
 		printf("%s\n",s);
 		
 		wait(NULL);
