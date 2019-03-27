@@ -6,9 +6,9 @@ extern char ** environ;
 
 int main(int argc, char *argv[]) {
 	pid_t pid = fork(); 
-	print("%s\n",argv[0]);
+	printf("%s\n",argv[0]);
 	argv++;
-	print("%s\n",argv[0]);
+	printf("%s\n",argv[0]);
 
 	if(pid == 0) {
 		int ret = execve("/bin/ls", argv++, environ);
