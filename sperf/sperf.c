@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		regext_t reg[2];
 		regcomp(&reg[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
 		regcomp(&reg[1], "<[0-9.]+>$", REG_NEWLINE);	
-		while(gets(s)!=NULL) {			
+		while(gets(s)) {			
 			char name[100];
 			regexec(reg[0], s, nmatch, pmatch, 0);
 			memcpy(name , s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
