@@ -17,7 +17,7 @@ void print(char ** s) {
 
 
 int main(int argc, char *argv[]) {
-	char ** myargv;
+	char ** myargv = NULL;
 	myargv[0] = "/usr/bin/strace";	
 	myargv[1] = "-T";
 	int tmp = 1;
