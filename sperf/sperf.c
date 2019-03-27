@@ -16,6 +16,7 @@ void print(char ** s) {
 
 
 int main(int argc, char *argv[]) {
+	print(argv);
 	* argv = "/bin/strace";	
 	print(argv);
 	pid_t pid = fork();
