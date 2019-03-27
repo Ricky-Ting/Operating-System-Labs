@@ -8,8 +8,8 @@ int main(int argc, char *argv[]) {
 	pid_t pid = fork(); 
 	char * arg[] = {"ls"};
 	if(pid == 0) {
-		execve("/bin/ls", arg, environ);
-		printf("Shouldn't be here!\n");
+		int ret = execve("/bin/ls", arg, environ);
+		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 
 				
