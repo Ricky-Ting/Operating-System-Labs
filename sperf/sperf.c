@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 		myargv[tmp+1] = argv[tmp];
 		tmp++;
 	}
+	myargv[tmp+1] = NULL;
 	print(myargv);	
 	pid_t pid = fork();
 	if(pid == 0) {
