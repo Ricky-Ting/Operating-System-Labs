@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 		while(fgets(s,800,stdin)) {			
 			char name[100];
 			regexec(&regex[0], s, nmatch, pmatch, 0);
-			memcpy(name , s + pmatch[0].rm_so, int(pmatch[0].rm_eo - pmatch[0].rm_so));
+			memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
 			printf("%s\n", name);
 		}	
 		
