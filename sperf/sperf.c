@@ -10,7 +10,8 @@ int main(int argc, char *argv[]) {
 		int ret = execve("/bin/ls", arg, env);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
-
+		wait(NULL);
+		printf("End\n");
 				
 
 	}
