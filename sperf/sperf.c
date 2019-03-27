@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <sys/wait.h>
 #include <assert.h>
+#include <regex.h>
 
 extern char ** environ;
 
@@ -41,9 +42,19 @@ int main(int argc, char *argv[]) {
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[0], 0);
-		char  s[200];
-		scanf("%s",s);
-		printf("%s\n",s);
+		regmatch_t pmatch[1];
+		const size_t nmatch = 1;
+		char s[1000];
+			
+		regext_t reg[2];
+		regcomp(&reg[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
+		regcomp(&reg[1], "<[0-9.]+>$")	
+		while(gets(s)!=NULL) {			
+			char name[100];
+			regexec(reg[0], s, nmatch, pmatch, 0);
+			memcpy(name , s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
+			printf("%s\n", name);
+		}	
 		
 		wait(NULL);
 		printf("End\n");
