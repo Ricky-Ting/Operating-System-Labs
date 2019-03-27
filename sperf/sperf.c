@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 	}
 	pid_t pid = fork();
 	if(pid == 0) {
-		dup2(2,pipefd[1]);
+		dup2(1,pipefd[1]);
 		int ret = execve(myargv[0], myargv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
