@@ -15,6 +15,7 @@ void print(char ** s) {
 
 }
 
+int pipefd[2];
 
 int main(int argc, char *argv[]) {
 	char * myargv[100];
@@ -26,7 +27,8 @@ int main(int argc, char *argv[]) {
 		tmp++;
 	}
 	myargv[tmp+1] = NULL;
-	print(myargv);	
+	//print(myargv);	
+	int pipe(pipefd);
 	pid_t pid = fork();
 	if(pid == 0) {
 		int ret = execve(myargv[0], myargv, environ);
