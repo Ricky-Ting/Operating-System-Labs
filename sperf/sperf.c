@@ -8,7 +8,7 @@ extern char ** environ;
 
 void print(char ** s) {
 	while(s!=NULL) {
-		print("%s\n", *s);
+		printf("%s\n", *s);
 		s++;
 	}
 
