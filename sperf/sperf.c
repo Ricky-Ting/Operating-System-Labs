@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 		myargv[tmp+1] = argv[tmp];
 		tmp++;
 	}
-	
+	print(myargv);	
 	pid_t pid = fork();
 	if(pid == 0) {
 		int ret = execve(myargv[0], myargv, environ);
