@@ -46,12 +46,12 @@ int main(int argc, char *argv[]) {
 		const size_t nmatch = 1;
 		char s[1000];
 			
-		regext_t reg[2];
-		regcomp(&reg[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
-		regcomp(&reg[1], "<[0-9.]+>$", REG_NEWLINE);	
+		regext_t regex[2];
+		regcomp(&regex[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
+		regcomp(&regex[1], "<[0-9.]+>$", REG_NEWLINE);	
 		while(fgets(s,800,stdin)) {			
 			char name[100];
-			regexec(reg[0], s, nmatch, pmatch, 0);
+			regexec(&regex[0], s, nmatch, pmatch, 0);
 			memcpy(name , s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
 			printf("%s\n", name);
 		}	
