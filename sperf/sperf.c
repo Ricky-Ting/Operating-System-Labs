@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	argv[0] = "strace";	
 	pid_t pid = fork();
 	if(pid == 0) {
-		int ret = execve("/bin/strace", argv, environ);
+		int ret = execve("strace", argv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		wait(NULL);
