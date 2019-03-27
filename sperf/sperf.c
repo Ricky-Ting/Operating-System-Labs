@@ -7,13 +7,9 @@
 extern char ** environ;
 
 int main(int argc, char *argv[]) {
-	printf("%s\n",argv[0]);
-	argv++;
-	printf("%s\n",argv[0]);
-	pid_t pid = fork(); 
-	
+	argv[0] = "strace";	
 	if(pid == 0) {
-		int ret = execve("/bin/ls", argv, environ);
+		int ret = execve(argv[0], argv, environ);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		wait(NULL);
