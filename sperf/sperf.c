@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
 		char s[1000];
 			
 		regex_t regex[2];
-		regcomp(&regex[0], "^[A-Za-z0-9]+\(", REG_NEWLINE);
-		regcomp(&regex[1], "<[0-9\.]+>$", REG_NEWLINE);	
+		regcomp(&regex[0], "^[A-Za-z0-9]+\\(", REG_NEWLINE);
+		regcomp(&regex[1], "<[0-9\\.]+>$", REG_NEWLINE);	
 		while(fgets(s,800,stdin)) {			
 			//char name[100];
 			regexec(&regex[0], s, nmatch, pmatch, 0);
