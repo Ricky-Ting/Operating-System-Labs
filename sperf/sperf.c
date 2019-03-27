@@ -7,7 +7,7 @@
 extern char ** environ;
 
 int main(int argc, char *argv[]) {
-	argv[0] = "strace";	
+	argv[0] = "/bin/strace";	
 	pid_t pid = fork();
 	if(pid == 0) {
 		int ret = execve(argv[0], argv, environ);
