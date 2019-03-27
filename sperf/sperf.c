@@ -5,7 +5,7 @@ extern char **environ;
 int main(int argc, char *argv[]) {
 	pid_t pid = fork(); 
 	if(pid == 0) {
-		execve("/bin/ls", NULL, environ);
+		execve("/bin/ls", "ls", environ);
 	} else {
 
 				
