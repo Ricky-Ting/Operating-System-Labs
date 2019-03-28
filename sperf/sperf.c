@@ -65,7 +65,8 @@ int main(int argc, char *argv[]) {
 	
 				ret = regexec(&regex[1], s, nmatch, pmatch, 0);
 				if(ret == 0) {
-						strncpy(time, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
+						strncpy(time, s + pmatch[0].rm_so + 1, pmatch[0].rm_eo - pmatch[0].rm_so);
+						time[pmatch[0].rm_eo - pmatch[0].rm_so - 1] = '\0';
 						printf("%s\n",time);
 				}
 			}
