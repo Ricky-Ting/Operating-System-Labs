@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
 		
 		while(fgets(s,800,stdin)) {			
-			if(s[0]='+')
+			if(s[0]=='+')
 				break;
 			char name[100];
 			char time_str[100]; double time;
