@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
 						if(tmp_counter == counter) {
 								strncpy(call[counter].name, name, 200);
 								call[counter].time = time;
+								counter++;
 								sum += time;
 						} else {
 								call[tmp_counter].time += time;
