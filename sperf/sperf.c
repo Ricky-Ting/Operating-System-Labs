@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 						while(tmp_counter<counter && (strcmp(call[tmp_counter].name, name)!=0))
 								tmp_counter++;
 						if(tmp_counter == counter) {
-								strncpy(call[counter].name, name, 800);
+								strncpy(call[counter].name, name, 200);
 								call[counter].time = time;
 								sum += time;
 						} else {
