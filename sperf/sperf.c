@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <regex.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_CALL 1000
 
@@ -58,9 +59,13 @@ int main(int argc, char *argv[]) {
 		} call[MAX_CALL];
 		double sum = 0;
 		int counter = 0;
+		time_t current_time, previous_time;
+		diff_t diff_time;
+
 		regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
 		
+		time(&previous_time);
 		while(fgets(s,800,stdin)) {			
 			if(s[0]=='+')
 				break;
@@ -94,15 +99,24 @@ int main(int argc, char *argv[]) {
 						}
 				}
 			}
-			
 		
+			time(&current_time);	
+			diff_time = difftime(current_time, previous_time);	
+			if(diff_time > 0.05) {
+				for(int i=0; i<counter; i++) 
+					printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
+
+			}
 		}	
 		wait(NULL);
-		printf("End\n");
+		//printf("End\n");
+		/*
 		for(int i=0; i<counter; i++) {
 			printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
 
 		}
+
+		*/
 	}
 	
 
