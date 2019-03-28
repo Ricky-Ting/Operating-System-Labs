@@ -7,6 +7,7 @@
 #include <regex.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 #define MAX_CALL 1000
 
@@ -102,7 +103,8 @@ int main(int argc, char *argv[]) {
 		
 			time(&current_time);	
 			diff_time = difftime(current_time, previous_time);	
-			if(diff_time > 0.000005) {
+			if(diff_time > 0.005) {
+				system("clear");
 				for(int i=0; i<counter; i++) 
 					printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
 
@@ -111,13 +113,12 @@ int main(int argc, char *argv[]) {
 		}	
 		wait(NULL);
 		//printf("End\n");
-		/*
+		system("clear");
 		for(int i=0; i<counter; i++) {
 			printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
 
 		}
 
-		*/
 	}
 	
 
