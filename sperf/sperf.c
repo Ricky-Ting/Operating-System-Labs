@@ -70,32 +70,32 @@ int main(int argc, char *argv[]) {
 			if(s[0]=='+')
 				break;
 			char name[100];
-			char time_str[100]; double time;
+			char time_str[100]; double call_time;
 			//printf("%s\n",s);
 			ret = regexec(&regex[0], s, nmatch, pmatch, 0);
 			//memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
 			if(ret == 0) {
 				strncpy(name, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
 				name[pmatch[0].rm_eo-pmatch[0].rm_so - 1] = '\0';
-				printf("%s\n", name);
+				//printf("%s\n", name);
 	
 				ret = regexec(&regex[1], s, nmatch, pmatch, 0);
 				if(ret == 0) {
 						strncpy(time_str, s + pmatch[0].rm_so + 1, pmatch[0].rm_eo - pmatch[0].rm_so);
 						time_str[pmatch[0].rm_eo - pmatch[0].rm_so - 2] = '\0';
 						printf("%s\n",time_str);
-						sscanf(time_str,"%lf",&time);
+						sscanf(time_str,"%lf",&call_time);
 						int tmp_counter = 0;
 						while(tmp_counter<counter && (strcmp(call[tmp_counter].name, name)!=0))
 								tmp_counter++;
 						if(tmp_counter == counter) {
 								strncpy(call[counter].name, name, 200);
-								call[counter].time = time;
+								call[counter].time = call_time;
 								counter++;
-								sum += time;
+								sum += call_time;
 						} else {
-								call[tmp_counter].time += time;
-								sum += time;
+								call[tmp_counter].time += call_time;
+								sum += call_time;
 						}
 				}
 			}
