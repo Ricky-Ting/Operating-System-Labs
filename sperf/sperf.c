@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
 		
 			time(&current_time);	
 			diff_time = difftime(current_time, previous_time);	
-			if(diff_time > 0.0005) {
+			if(diff_time > 0.000005) {
 				for(int i=0; i<counter; i++) 
 					printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
 
