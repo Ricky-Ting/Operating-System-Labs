@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
 		
 		while(fgets(s,800,stdin)) {			
 			char name[100];
+			char time[100];
 			//printf("%s\n",s);
 			ret = regexec(&regex[0], s, nmatch, pmatch, 0);
 			//memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
@@ -61,7 +62,15 @@ int main(int argc, char *argv[]) {
 				strncpy(name, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
 				name[pmatch[0].rm_eo-pmatch[0].rm_so - 1] = '\0';
 				printf("%s\n", name);
+	
+				ret = regexec(&regex[1], s, nmatch, pmatch, 0);
+				if(ret == 0) {
+						strncpy(time, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
+						printf("time\n",time);
+				}
 			}
+			
+		
 		}	
 		wait(NULL);
 		printf("End\n");
