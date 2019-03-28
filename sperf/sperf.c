@@ -55,7 +55,8 @@ int main(int argc, char *argv[]) {
 			char name[100];
 			printf("%s\n",s);
 			regexec(&regex[0], s, nmatch, pmatch, 0);
-			memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
+			//memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
+			strncpy(name, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
 			printf("%s\n", name);
 		}	
 		wait(NULL);
