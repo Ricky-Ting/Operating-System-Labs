@@ -13,6 +13,22 @@
 
 extern char ** environ;
 
+regmatch_t pmatch[1];
+const size_t nmatch = 1;
+char s[1000];
+int ret;	
+regex_t regex[2];
+struct {
+	char name[200];
+	double time;
+} call[MAX_CALL];
+double sum = 0;
+int counter = 0;
+time_t current_time, previous_time;
+double diff_time;
+
+	
+
 void print(char ** s) {
 	char ** var = s;
 	while(*var!=NULL) {
@@ -21,6 +37,34 @@ void print(char ** s) {
 	}
 
 }
+
+void output() {
+		for(int i=0; i<counter; i++) {
+			printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
+
+		}
+}
+
+
+void sort() {
+	double tmp_time = 0;
+	char tmp_name[200];
+	for(int i=0; i<counter-1; i++) {
+		for(int j=i+1; j<counter; j++) {
+			if(call[i].time < call[j].time) {
+				tmp_time = call[j].time;
+				call[j].time = call[i].time;
+				call[i].time = tmp_time;
+
+				sprintf(tmp_name,"%s",call[j].name);
+				sprintf(call[j].name, "%s", call[i].name);
+				sprintf(call[i].name, "%s", tmp_name);	
+			}	
+		}
+	}
+
+}
+
 
 int pipefd[2];
 
@@ -49,21 +93,7 @@ int main(int argc, char *argv[]) {
 	} else {
 		dup2(pipefd[0], 0);
 
-		regmatch_t pmatch[1];
-		const size_t nmatch = 1;
-		char s[1000];
-		int ret;	
-		regex_t regex[2];
-		struct {
-			char name[200];
-			double time;
-		} call[MAX_CALL];
-		double sum = 0;
-		int counter = 0;
-		time_t current_time, previous_time;
-		double diff_time;
-
-		regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
+	regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
 		
 		time(&previous_time);
@@ -103,21 +133,18 @@ int main(int argc, char *argv[]) {
 		
 			time(&current_time);	
 			diff_time = difftime(current_time, previous_time);	
-			if(diff_time > 0.005) {
+			if(diff_time > 1) {
+				sort();
 				system("clear");
-				for(int i=0; i<counter; i++) 
-					printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
-
+				output();
 				time(&previous_time);
 			}
 		}	
 		wait(NULL);
 		//printf("End\n");
+		sort();
 		system("clear");
-		for(int i=0; i<counter; i++) {
-			printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
-
-		}
+		output();
 
 	}
 	
