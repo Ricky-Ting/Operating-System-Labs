@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 		double sum = 0;
 		int counter = 0;
 		time_t current_time, previous_time;
-		diff_t diff_time;
+		double diff_time;
 
 		regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
