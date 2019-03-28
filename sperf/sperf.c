@@ -44,17 +44,26 @@ int main(int argc, char *argv[]) {
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[0], 0);
+
 		regmatch_t pmatch[1];
 		const size_t nmatch = 1;
 		char s[1000];
 		int ret;	
 		regex_t regex[2];
+		struct {
+			char name[200];
+			double time;
+		} call[MAX_CALL];
+		double sum;
+		int counter = 0;
 		regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
 		
 		while(fgets(s,800,stdin)) {			
+			if(s[0]='+')
+				break;
 			char name[100];
-			char time[100];
+			char time_str[100]; double time;
 			//printf("%s\n",s);
 			ret = regexec(&regex[0], s, nmatch, pmatch, 0);
 			//memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
@@ -65,9 +74,21 @@ int main(int argc, char *argv[]) {
 	
 				ret = regexec(&regex[1], s, nmatch, pmatch, 0);
 				if(ret == 0) {
-						strncpy(time, s + pmatch[0].rm_so + 1, pmatch[0].rm_eo - pmatch[0].rm_so);
-						time[pmatch[0].rm_eo - pmatch[0].rm_so - 2] = '\0';
-						printf("%s\n",time);
+						strncpy(time_str, s + pmatch[0].rm_so + 1, pmatch[0].rm_eo - pmatch[0].rm_so);
+						time_str[pmatch[0].rm_eo - pmatch[0].rm_so - 2] = '\0';
+						printf("%s\n",time_str);
+						sscanf(time_str,"%lf",&time);
+						int tmp_counter = 0;
+						while(tmp_counter<counter && (strcmp(call[tmp_counter].name, name)!=0))
+								tmp_counter++;
+						if(tmp_counter == counter) {
+								strncpy(call[counter].name, name, 800);
+								call[counter].time = time;
+								sum += time;
+						} else {
+								call[tmp_counter].time += time;
+								sum += time;
+						}
 				}
 			}
 			
