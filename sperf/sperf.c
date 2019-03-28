@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 			char name[200];
 			double time;
 		} call[MAX_CALL];
-		double sum;
+		double sum = 0;
 		int counter = 0;
 		regcomp(&regex[0], "^[A-Za-z0-9_]*(", REG_NEWLINE);
 		regcomp(&regex[1], "<[0-9/.]*>$", REG_NEWLINE);	
