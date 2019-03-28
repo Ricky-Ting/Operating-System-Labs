@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
 				for(int i=0; i<counter; i++) 
 					printf("%s: \t \t %.5lf%%\n", call[i].name, call[i].time/sum*100);
 
+				time(&previous_time);
 			}
 		}	
 		wait(NULL);
