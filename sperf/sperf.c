@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 				if(ret == 0) {
 						strncpy(time_str, s + pmatch[0].rm_so + 1, pmatch[0].rm_eo - pmatch[0].rm_so);
 						time_str[pmatch[0].rm_eo - pmatch[0].rm_so - 2] = '\0';
-						printf("%s\n",time_str);
+						//printf("%s\n",time_str);
 						sscanf(time_str,"%lf",&call_time);
 						int tmp_counter = 0;
 						while(tmp_counter<counter && (strcmp(call[tmp_counter].name, name)!=0))
