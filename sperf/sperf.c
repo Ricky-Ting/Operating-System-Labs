@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 			//memcpy(name , s + pmatch[0].rm_so, (int)(pmatch[0].rm_eo - pmatch[0].rm_so));
 			if(ret == 0) {
 				strncpy(name, s + pmatch[0].rm_so, pmatch[0].rm_eo - pmatch[0].rm_so);
-				name[pmatch[0].rm_eo-pmatch[0].rm_so] = '\0';
+				name[pmatch[0].rm_eo-pmatch[0].rm_so - 1] = '\0';
 				printf("%s\n", name);
 			}
 		}	
