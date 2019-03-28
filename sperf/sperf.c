@@ -98,6 +98,10 @@ int main(int argc, char *argv[]) {
 		}	
 		wait(NULL);
 		printf("End\n");
+		for(int i=0; i<counter; i++) {
+			printf("%s:%lf\n", call[i].name, call[i].time/sum);
+
+		}
 	}
 	
 
