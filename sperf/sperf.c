@@ -11,7 +11,6 @@
 
 #define MAX_CALL 1000
 
-extern char ** environ;
 
 regmatch_t pmatch[1];
 const size_t nmatch = 1;
@@ -70,7 +69,7 @@ int pipefd[2];
 
 int main(int argc, char *argv[]) {
 	char * myargv[100];
-	myargv[0] = "/usr/bin/strace";	
+	myargv[0] = "strace";	
 	myargv[1] = "-T";
 	int tmp = 1;
 	while(argv[tmp]!=NULL) {
@@ -88,7 +87,7 @@ int main(int argc, char *argv[]) {
 	
 		dup2(pipefd[1], 2);
 		dup2(fileno(trash_bin), 1);
-		int ret = execve(myargv[0], myargv, environ);
+		int ret = execvep(myargv[0], myargv);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[0], 0);
