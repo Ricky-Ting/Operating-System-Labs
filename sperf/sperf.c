@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 	
 		dup2(pipefd[1], 2);
 		dup2(fileno(trash_bin), 1);
-		int ret = execvep(myargv[0], myargv);
+		int ret = execvp(myargv[0], myargv);
 		printf("Shouldn't be here! error=%d\n",ret);
 	} else {
 		dup2(pipefd[0], 0);
