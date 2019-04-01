@@ -81,6 +81,10 @@ static void *kalloc(size_t size) {
 	kcounter--; 
 	printf("Out kalloc\n");
 	unlock(&mylock);
+	if(ret == NULL) {
+		printf("Out of memory\n");
+		assert(0);
+	}
 	return ret;
 }
 
