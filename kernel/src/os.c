@@ -3,7 +3,6 @@
 
 void mytest(void);
 
-void * test_point(void);
 
 static void os_init() {
   pmm->init();
@@ -19,8 +18,7 @@ static void hello() {
 static void os_run() {
   hello();
   _intr_write(1);
-	//mytest();
-	test_point();
+	mytest();
   while (1) {
     _yield();
   }
