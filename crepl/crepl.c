@@ -69,8 +69,8 @@ int main(int argc, char *argv[]) {
 			char * error;
 			if( (error = dlerror())!=NULL)
 				fprintf(stderr,"%s", error);
-
-			printf("%d\n", (*func)());
+			int ret = (*func)();
+			printf("%d\n", ret);
 			unlink(file_tmplate);
 			dlclose(handle);	
 
