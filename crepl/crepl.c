@@ -5,7 +5,7 @@
 #define EXPR 2 
 #define MAX_BUF 4028
 
-#define ASSERT(x,y) if(!x) {printf(y); return 0}
+#define Assert(x,y) if(!x) {printf(y); return 0}
 
 int judge(char * buf) {
 	if( *(buf+0) == 'q' && *(buf+1) == 'u' &&  *(buf+2) == 'i' &&  *(buf+3) =='t' )
