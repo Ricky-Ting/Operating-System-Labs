@@ -60,6 +60,7 @@ int main(int argc, char *argv[]) {
 			
 			int (* func)(void);
 			void * handle = dlopen("sl.so", RTLD_LAZY);
+			fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
 			func = dlsym(handle, "tmp_func");
 			printf("%d\n", func());
