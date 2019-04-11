@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 			dprintf(tmpfd, "%s",line);	
 
 			char GCC[MAX_BUF];
-			sprintf(GCC, "gcc -shared -fPIC -m%ld %s -o sl.so", 8*(sizeof(void *)), file_tmplate);			
+			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", 8*(sizeof(void *)), file_tmplate);			
 			system(GCC);
 			
 			unlink(file_tmplate);
