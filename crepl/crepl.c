@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "all.h"
 #include <stdlib.h>
+#include <unistd.h>
 #define QUIT 0
 #define FUNC 1
 #define EXPR 2 
