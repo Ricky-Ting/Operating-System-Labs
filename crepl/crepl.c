@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 			printf("\n Hello World!\n");
 			return 0;
 		} else if(judge(line) == FUNC) {
-			char file_tmplate = "tmpXXXXXX";
+			char file_tmplate[MAX_F_LEN] = "tmpXXXXXX";
 			int tmpfd = mkstemp(file_tmplate);
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			unlink(file_tmplate);
