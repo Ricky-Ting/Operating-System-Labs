@@ -4,6 +4,7 @@
 #define FUNC 1
 #define EXPR 2 
 #define MAX_BUF 4028
+#define MAX_F_LEN 4028
 
 #define Assert(x,y) if(!x) {printf(y); return 0;}
 
