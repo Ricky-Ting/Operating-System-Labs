@@ -62,8 +62,8 @@ int main(int argc, char *argv[]) {
 		
 			printf("%s\n",line);	
 			int (* func)(void);
-			void * handle = dlopen("./b.so", RTLD_NOW | RTLD_GLOBAL);
-			fprintf(stderr,"%s", dlerror());
+			void * handle = dlopen("./b.so", RTLD_LAZY | RTLD_GLOBAL);
+			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
 			func = dlsym(handle, "tmp_func");	
 			char * error;
