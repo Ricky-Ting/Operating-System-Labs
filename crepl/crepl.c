@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			dlopen("a.so", RTLD_NOW | RTLD_GLOBAL );
+			dlopen("a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
 
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 		
 			printf("%s\n",line);	
 			int (* func)(void);
-			void * handle = dlopen("./b.so", RTLD_NOW | RTLD_LOCAL);
+			void * handle = dlopen("./b.so", RTLD_NOW | RTLD_GLOBAL);
 			fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
 			func = dlsym(handle, "tmp_func");	
