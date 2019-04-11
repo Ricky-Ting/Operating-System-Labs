@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define QUIT 0
 #define FUNC 1
 #define EXPR 2 
