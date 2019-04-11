@@ -17,6 +17,7 @@ int judge(char * buf) {
 int main(int argc, char *argv[]) {
 	
 	char line[MAX_BUF];
+	printf("Welcome to fantasy world.\n If you want to quit, type quit\n");
 	printf(">> ");
 	while( fgets(line, MAX_BUF, stdin) ) {
 		if(judge(line) == QUIT) {
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
 
 		}
 
-
+		printf("\n>> ");
 	}
 
   return 0;
