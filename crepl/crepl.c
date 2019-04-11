@@ -42,6 +42,13 @@ int main(int argc, char *argv[]) {
 			system(GCC);
 		
 			dlopen("a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
+			int (* func)(void);
+			func = dlsym(handle, "f");	
+			char * error;
+			if( (error = dlerror())!=NULL)
+				fprintf(stderr,"%s", error);
+			int ret = (*func)();
+			printf("%d\n", ret);
 	
 			unlink(file_tmplate);
 
