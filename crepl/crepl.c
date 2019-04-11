@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
 			void * handle =  dlopen(dl_name, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
+			unlink(dl_name);
 			dlclose(handle);
 
 		}
@@ -81,8 +82,9 @@ int main(int argc, char *argv[]) {
 			int ret = (*func)();
 			printf("%d\n", ret);
 			unlink(file_tmplate);
+			unlink(dl_name);
 			dlclose(handle);	
-
+			
 		}
 
 		printf("\n>> ");
