@@ -60,11 +60,11 @@ int main(int argc, char *argv[]) {
 			//printf("%s\n",GCC);
 			system(GCC);
 			
-			int (* func)(void);
+			//int (* func)(void);
 			void * handle = dlopen("./sl.so", RTLD_LAZY);
 			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
-			func = dlsym(handle, "tmp_func");
+			 dlsym(handle, "tmp_func");
 			fprintf(stderr,"%s", dlerror());
 
 			//printf("%d\n", func());
