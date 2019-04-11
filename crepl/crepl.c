@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	printf(">> ");
 	while( fgets(line, MAX_BUF, stdin) ) {
 		if(judge(line) == QUIT) {
-			printf("\n Hello World!\n");
+			printf("Bye\n");
 			return 0;
 		} else if(judge(line) == FUNC) {
 			char file_tmplate[MAX_F_LEN] = "tmpXXXXXX.c";
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 			
 		}
 
-		printf("\n>> ");
+		printf(">> ");
 	}
 
   return 0;
