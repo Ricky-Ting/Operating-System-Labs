@@ -38,10 +38,10 @@ int main(int argc, char *argv[]) {
 			dprintf(tmpfd, "%s",line);	
 
 			char GCC[MAX_BUF], dl_name[MAX_BUF];
-			sprintf(dl_name,"%s",file_tmplate);
-			dl_name[10] = 's';
-			dl_name[11] = 'o';
-			dl_name[12] = '\0';
+			sprintf(dl_name,"./%s",file_tmplate);
+			dl_name[12] = 's';
+			dl_name[13] = 'o';
+			dl_name[14] = '\0';
 			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			system(GCC);
 			
@@ -60,16 +60,16 @@ int main(int argc, char *argv[]) {
 			dprintf(tmpfd, "int tmp_func(void) { return %s;}",line);	
 			
 			char GCC[MAX_BUF], dl_name[MAX_BUF];
-			sprintf(dl_name,"%s",file_tmplate);
-			dl_name[10] = 's';
-			dl_name[11] = 'o';
-			dl_name[12] = '\0';
+			sprintf(dl_name,"./%s",file_tmplate);
+			dl_name[12] = 's';
+			dl_name[13] = 'o';
+			dl_name[14] = '\0';
 			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			
 			
 			system(GCC);
-		
-			printf("%s\n",line);	
+	
+
 			int (* func)(void);
 			void * handle = dlopen(dl_name, RTLD_LAZY | RTLD_LOCAL);
 			//fprintf(stderr,"%s", dlerror());
