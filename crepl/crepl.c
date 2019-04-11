@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 			printf("\n Hello World!\n");
 			return 0;
 		} else if(judge(line) == FUNC) {
-			int tmpfd = mkstemp("Hello");
+			int tmpfd = mkstemp("HelloXXXXXX");
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			char tmpfilename[MAX_F_LEN], buf[MAX_F_LEN];
 			snprintf(tmpfilename, MAX_F_LEN, "/proc/%ld/fd/%d", (long)getpid(), tmpfd);	
