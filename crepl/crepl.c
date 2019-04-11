@@ -55,7 +55,9 @@ int main(int argc, char *argv[]) {
 			dprintf(tmpfd, "int tmp_func(void) { return %s;}",line);	
 
 			char GCC[MAX_BUF];
+			
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			printf("%s\n",GCC);
 			system(GCC);
 			
 			int (* func)(void);
