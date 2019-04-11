@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <dlfcn.h>
 #include <unistd.h>
 #define QUIT 0
 #define FUNC 1
