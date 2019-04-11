@@ -7,6 +7,9 @@
 #define MAX_BUF 4028
 #define MAX_F_LEN 4028
 
+
+
+
 #define Assert(x,y) if(!x) {printf(y); return 0;}
 
 int judge(char * buf) {
@@ -28,11 +31,16 @@ int main(int argc, char *argv[]) {
 			printf("\n Hello World!\n");
 			return 0;
 		} else if(judge(line) == FUNC) {
-			char file_tmplate[MAX_F_LEN] = "./tmpXXXXXX";
-			int tmpfd = mkstemp(file_tmplate);
+			char file_tmplate[MAX_F_LEN] = "tmpXXXXXX.c";
+			int tmpfd = mkstemps(file_tmplate, 2);
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
-			//unlink(file_tmplate);
 			dprintf(tmpfd, "%s",line);	
+
+			char GCC[MAX_BUF];
+			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", 8*(sizeof(void *)), file_tmplate);			
+			system(GCC);
+			
+			unlink(file_tmplate);
 
 		}
 		else {
