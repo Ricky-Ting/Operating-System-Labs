@@ -37,11 +37,15 @@ int main(int argc, char *argv[]) {
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			dprintf(tmpfd, "%s",line);	
 
-			char GCC[MAX_BUF];
-			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			char GCC[MAX_BUF], char dl_name[MAX_BUF];
+			sprintf(dl_name,"%s",file_tmplate);
+			dl_name[10] = 's';
+			dl_name[11] = 'o';
+			dl_name[12] = '\0';
+			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			system(GCC);
-		
-			/*void * handle*/  dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
+			
+			/*void * handle*/  dlopen(dl_name, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
 			//dlclose(handle);
@@ -54,16 +58,20 @@ int main(int argc, char *argv[]) {
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			
 			dprintf(tmpfd, "int tmp_func(void) { return %s;}",line);	
-
-			char GCC[MAX_BUF];
 			
-			sprintf(GCC, "gcc -shared -fPIC -ldl -m%d  %s -o b.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
-			//printf("%s\n",GCC);
+			char GCC[MAX_BUF], char dl_name[MAX_BUF];
+			sprintf(dl_name,"%s",file_tmplate);
+			dl_name[10] = 's';
+			dl_name[11] = 'o';
+			dl_name[12] = '\0';
+			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
+			
+			
 			system(GCC);
 		
 			printf("%s\n",line);	
 			int (* func)(void);
-			void * handle = dlopen("./b.so", RTLD_LAZY | RTLD_LOCAL);
+			void * handle = dlopen(dl_name, RTLD_LAZY | RTLD_LOCAL);
 			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
 			func = dlsym(handle, "tmp_func");	
