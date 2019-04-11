@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			void * handle = dlopen("sl.so", RTLD_LAZY;
+			void * handle = dlopen("sl.so", RTLD_LAZY);
 			printf("%d\n", tmp_func());
 			dlclose(handle);
 			unlink(file_tmplate);
