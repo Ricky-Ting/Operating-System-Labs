@@ -65,8 +65,10 @@ int main(int argc, char *argv[]) {
 			void * handle = dlopen("./sl.so", RTLD_LAZY);
 			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
-			 dlsym(handle, "tmp_func");
-			fprintf(stderr,"%s", dlerror());
+			 dlsym(handle, "tmp_func");	
+			char * error;
+			if( (error = dlerror())!=NULL)
+			fprintf(stderr,"%s", error);
 
 			//printf("%d\n", func());
 			unlink(file_tmplate);
