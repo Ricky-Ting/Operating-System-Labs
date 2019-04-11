@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
+			void * handle = dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
-			dlclose();
+			dlclose(handle);
 
 		}
 		else {
