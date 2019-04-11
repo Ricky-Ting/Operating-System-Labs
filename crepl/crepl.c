@@ -41,14 +41,7 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			void * handle =dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
-			int (* func)(void);
-			func = dlsym(handle, "f");	
-			char * error;
-			if( (error = dlerror())!=NULL)
-				fprintf(stderr,"%s", error);
-			int ret = (*func)();
-			printf("%d\n", ret);
+			dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
 
