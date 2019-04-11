@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 			char file_tmplate[MAX_F_LEN] = "./tmpXXXXXX";
 			int tmpfd = mkstemp(file_tmplate);
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
-			unlink(file_tmplate);
+			//unlink(file_tmplate);
 			dprintf(tmpfd, "%s",line);	
 
 		}
