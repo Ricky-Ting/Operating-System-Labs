@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	
 	char ** line = NULL;
 	size_t len;
-	printf(">> ");
+	printf(">> \n");
 	while( getline(line, &len, stdin) ) {
 		if(judge(line) == QUIT) {
 			printf("\n Hello World!\n");
