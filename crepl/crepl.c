@@ -60,7 +60,8 @@ int main(int argc, char *argv[]) {
 			system(GCC);
 		
 			void * handle = dlopen("sl.so", RTLD_LAZY);
-			printf("%d\n", tmp_func());
+			*(void **) func = dlsym(handle, "tmp_func");
+			printf("%d\n", func());
 			dlclose(handle);
 			unlink(file_tmplate);
 
