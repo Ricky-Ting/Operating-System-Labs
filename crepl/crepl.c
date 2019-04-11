@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 			void * handle = dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
-			dlclose(handle);
+			//dlclose(handle);
 
 		}
 		else {
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 		
 			printf("%s\n",line);	
 			int (* func)(void);
-			void * handle = dlopen("./b.so", RTLD_LAZY | RTLD_GLOBAL);
+			void * handle = dlopen("./b.so", RTLD_LAZY | RTLD_LOCAL);
 			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
 			func = dlsym(handle, "tmp_func");	
