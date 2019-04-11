@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			dprintf(tmpfd, "%s",line);	
 
-			char GCC[MAX_BUF], char dl_name[MAX_BUF];
+			char GCC[MAX_BUF], dl_name[MAX_BUF];
 			sprintf(dl_name,"%s",file_tmplate);
 			dl_name[10] = 's';
 			dl_name[11] = 'o';
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 			
 			dprintf(tmpfd, "int tmp_func(void) { return %s;}",line);	
 			
-			char GCC[MAX_BUF], char dl_name[MAX_BUF];
+			char GCC[MAX_BUF], dl_name[MAX_BUF];
 			sprintf(dl_name,"%s",file_tmplate);
 			dl_name[10] = 's';
 			dl_name[11] = 'o';
