@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 		} else if(judge(line) == FUNC) {
 			int tmpfd = mkstemp("Hello");
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
-			char tmpfilename[MAX_F_LEN];
+			char tmpfilename[MAX_F_LEN], buf[MAX_F_LEN];
 			snprintf(tmpfilename, MAX_F_LEN, "/proc/%ld/fd/%d", (long)getpid(), tmpfd);	
 			int ret = (readlink(tmpfilename, buf, MAX_F_LEN);
 			Assert( (ret>=0), "\n readlink() failed \n");	
