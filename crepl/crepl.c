@@ -16,7 +16,7 @@ int judge(char ** buf) {
 int main(int argc, char *argv[]) {
 	
 	char ** line;
-	int len;
+	ssize_t len;
 	printf(">> ");
 	while( getline(line, &len, stdin) ) {
 		if(judge(line) == QUIT) {
