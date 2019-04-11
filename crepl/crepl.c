@@ -16,7 +16,7 @@ int judge(char ** buf) {
 
 int main(int argc, char *argv[]) {
 	
-	char line[MAXBUF];
+	char line[MAX_BUF];
 	printf(">> ");
 	while( fgets(line, MAX_BUF, stdin) ) {
 		if(judge(line) == QUIT) {
