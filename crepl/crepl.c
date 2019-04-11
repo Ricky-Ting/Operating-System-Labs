@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			unlink(file_tmplate);
 			printf("%s\n",file_tmplate);	
-			char tmpfilename[MAX_F_LEN], buf[MAX_F_LEN];
+			//char tmpfilename[MAX_F_LEN], buf[MAX_F_LEN];
 			printf(/*tmpfilename,*/ "/proc/%ld/fd/%d\n", (long)getpid(), tmpfd);	
 			//printf("%s\n", tmpfilename);
 			//int ret = readlink(tmpfilename, buf, MAX_F_LEN);
