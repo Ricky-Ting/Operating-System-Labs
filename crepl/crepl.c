@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#define MAXBUF 4028
 
 int main(int argc, char *argv[]) {
 	
 	char ** line;
+	int len;
 	printf(">> ");
-	while( getline(line, MAXBUF) ) {
+	while( getline(line, &len) ) {
 		if(judge(line) == QUIT) {
 			printf("\n Hello World!\n");
 			return 0;
@@ -18,6 +18,8 @@ int main(int argc, char *argv[]) {
 
 
 		}
+
+		free(line);
 
 	}
 
