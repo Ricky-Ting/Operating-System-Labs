@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			system(GCC);
 			
-			/*void * handle*/  dlopen(dl_name, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
+			void * handle  dlopen(dl_name, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
 			dlclose(handle);
