@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 			dl_name[12] = 's';
 			dl_name[13] = 'o';
 			dl_name[14] = '\0';
-			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
+			sprintf(GCC, "gcc -shared -fPIC -m%d -w  %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			system(GCC);
 			
 			void * handle =  dlopen(dl_name, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
 			dl_name[12] = 's';
 			dl_name[13] = 'o';
 			dl_name[14] = '\0';
-			sprintf(GCC, "gcc -shared -fPIC -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
+			sprintf(GCC, "gcc -shared -fPIC -w -m%d   %s -o %s", (int)(8*(sizeof(void *)) ), file_tmplate, dl_name);			
 			
 			
 			system(GCC);
