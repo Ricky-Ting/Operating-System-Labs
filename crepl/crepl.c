@@ -6,9 +6,9 @@
 #define MAX_BUF 4028
 
 int judge(char ** buf) {
-	if( *(*buf+0) == 'q' && *(*buf+1) == 'u' &&  *(*buf+2) == 'i' &&  *(*buf+3) =='t' )
+	if( *(buf+0) == 'q' && *(buf+1) == 'u' &&  *(buf+2) == 'i' &&  *(buf+3) =='t' )
 		return QUIT;
-	else if( *(*buf+0) == 'i' && *(*buf+1) == 'n' &&  *(*buf+2) == 't' )
+	else if( *(buf+0) == 'i' && *(buf+1) == 'n' &&  *(buf+2) == 't' )
 		return FUNC;
 	else
 		return EXPR;
