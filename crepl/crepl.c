@@ -3,6 +3,7 @@
 #define QUIT 0
 #define FUNC 1
 #define EXPR 2 
+#define MAX_BUF 4028
 
 int judge(char ** buf) {
 	if( *(*buf+0) == 'q' && *(*buf+1) == 'u' &&  *(*buf+2) == 'i' &&  *(*buf+3) =='t' )
@@ -15,10 +16,9 @@ int judge(char ** buf) {
 
 int main(int argc, char *argv[]) {
 	
-	char ** line = NULL;
-	size_t len = 4028;
-	printf(">> \n");
-	while( getline(line, &len, stdin) ) {
+	char line[MAXBUF];
+	printf(">> ");
+	while( fgets(line, MAX_BUF, stdin) ) {
 		if(judge(line) == QUIT) {
 			printf("\n Hello World!\n");
 			return 0;
