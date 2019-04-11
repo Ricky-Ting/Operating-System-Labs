@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 			system(GCC);
 		
 			printf("%s\n",line);	
-			int (* func)(void);
+			//int (* func)(void);
 			void * handle = dlopen("./sl.so", RTLD_LAZY);
 			//fprintf(stderr,"%s", dlerror());
 			Assert(handle, "\nCannot dlopen sl.so\n");
