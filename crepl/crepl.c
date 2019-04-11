@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 			int ret = readlink(tmpfilename, buf, MAX_F_LEN);
 			Assert( (ret>=0), "\n readlink() failed \n");	
 	
-			fprintf(tmpfp, "%s",line);	
+			dprintf(tmpfd, "%s",line);	
 
 		}
 		else {
