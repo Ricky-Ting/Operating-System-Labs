@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			void * handle = dlopen("sl.so", RTLD_NOW | RTLD_NODELETE);
+			dlopen("sl.so", RTLD_NOW | RTLD_NODELETE);
 	
 			unlink(file_tmplate);
 
