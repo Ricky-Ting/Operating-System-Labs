@@ -39,11 +39,29 @@ int main(int argc, char *argv[]) {
 			char GCC[MAX_BUF];
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
-			
+		
+			void * handle = dlopen("sl.so", RTLD_NOW | RTLD_NODELETE);
+	
+			dlclose(handle);
 			unlink(file_tmplate);
 
 		}
 		else {
+			
+			char file_tmplate[MAX_F_LEN] = "tmpXXXXXX.c";
+			int tmpfd = mkstemps(file_tmplate, 2);
+			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
+			
+			dprintf(tmpfd, "int tmp_func(void) { return %s;}",line);	
+
+			char GCC[MAX_BUF];
+			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			system(GCC);
+		
+			void * handle = dlopen("sl.so", RTLD_NOW | RTLD_NODELETE);
+			printf("%d\n", tmp_func());
+			dlclose(handle);
+			unlink(file_tmplate);
 
 
 		}
