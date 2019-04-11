@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
 			int tmpfd = mkstemp("HelloXXXXXX");
 			Assert( (tmpfd!=-1),"\nCannot Create tmp File\n");	
 			char tmpfilename[MAX_F_LEN], buf[MAX_F_LEN];
-			snprintf(tmpfilename, MAX_F_LEN-10, "/proc/%ld/fd/%d", (long)getpid(), tmpfd);	
-			printf("%s\n", tmpfilename);
+			sprintf(tmpfilename, "/proc/%ld/fd/%d", (long)getpid(), tmpfd);	
+			//printf("%s\n", tmpfilename);
 			int ret = readlink(tmpfilename, buf, MAX_F_LEN);
 			Assert( (ret>=0), "\n readlink() failed \n");	
 	
