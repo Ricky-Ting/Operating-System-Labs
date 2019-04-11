@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 			func = dlsym(handle, "tmp_func");
 			fprintf(stderr,"%s", dlerror());
 
-			printf("%d\n", func());
+			//printf("%d\n", func());
 			unlink(file_tmplate);
 			dlclose(handle);	
 
