@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 			dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 	
 			unlink(file_tmplate);
+			dlclose();
 
 		}
 		else {
