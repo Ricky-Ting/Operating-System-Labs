@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
 			char GCC[MAX_BUF];
 			
-			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			sprintf(GCC, "gcc -shared -fPIC -Idl -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			//printf("%s\n",GCC);
 			system(GCC);
 		
