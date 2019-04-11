@@ -38,10 +38,10 @@ int main(int argc, char *argv[]) {
 			dprintf(tmpfd, "%s",line);	
 
 			char GCC[MAX_BUF];
-			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			sprintf(GCC, "gcc -shared -fPIC -m%d -L  %s -o a.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
 		
-			void * handle =dlopen("a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
+			void * handle =dlopen("./a.so", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE );
 			int (* func)(void);
 			func = dlsym(handle, "f");	
 			char * error;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 
 			char GCC[MAX_BUF];
 			
-			sprintf(GCC, "gcc -shared -fPIC -ldl -m%d %s -o b.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
+			sprintf(GCC, "gcc -shared -fPIC -ldl -m%d -L  %s -o b.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			//printf("%s\n",GCC);
 			system(GCC);
 		
