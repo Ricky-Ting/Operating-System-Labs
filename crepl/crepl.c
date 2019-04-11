@@ -5,7 +5,7 @@
 #define EXPR 2 
 #define MAX_BUF 4028
 
-int judge(char ** buf) {
+int judge(char * buf) {
 	if( *(buf+0) == 'q' && *(buf+1) == 'u' &&  *(buf+2) == 'i' &&  *(buf+3) =='t' )
 		return QUIT;
 	else if( *(buf+0) == 'i' && *(buf+1) == 'n' &&  *(buf+2) == 't' )
