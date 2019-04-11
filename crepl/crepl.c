@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 			char GCC[MAX_BUF];
 			sprintf(GCC, "gcc -shared -fPIC -m%d %s -o sl.so", (int)(8*(sizeof(void *)) ), file_tmplate);			
 			system(GCC);
-			void * func	
+			void * func;
 			void * handle = dlopen("sl.so", RTLD_LAZY);
 			func = dlsym(handle, "tmp_func");
 			printf("%d\n", func());
