@@ -15,7 +15,6 @@ void mytest(void){
 	printf("hello\n");	
 	//pmm->free(s);
 
-
 	int * c = pmm->alloc(sizeof(int));
 	printf("c=%d\n",c);
 	return;

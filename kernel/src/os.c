@@ -18,7 +18,7 @@ static void hello() {
 static void os_run() {
   hello();
   _intr_write(1);
-	mytest();
+	//mytest();
   while (1) {
     _yield();
   }
