@@ -1,0 +1,321 @@
+systemd-+-systemd-journal
+        |-systemd-udevd
+        |-systemd-resolve
+        |-cron
+        |-rsyslogd-+-{rsyslogd}
+        |          |-{rsyslogd}
+        |          |-{rsyslogd}
+        |-cupsd
+        |-avahi-daemon-+-avahi-daemon
+        |-dbus-daemon
+        |-NetworkManager-+-{NetworkManager}
+        |                |-{NetworkManager}
+        |                |-dhclient
+        |-acpid
+        |-networkd-dispat-+-{networkd-dispat}
+        |-accounts-daemon-+-{accounts-daemon}
+        |                 |-{accounts-daemon}
+        |-wpa_supplicant
+        |-udisksd-+-{udisksd}
+        |         |-{udisksd}
+        |         |-{udisksd}
+        |         |-{udisksd}
+        |-systemd-logind
+        |-ModemManager-+-{ModemManager}
+        |              |-{ModemManager}
+        |-snapd-+-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |       |-{snapd}
+        |-polkitd-+-{polkitd}
+        |         |-{polkitd}
+        |-cups-browsed-+-{cups-browsed}
+        |              |-{cups-browsed}
+        |-whoopsie-+-{whoopsie}
+        |          |-{whoopsie}
+        |-kerneloops
+        |-kerneloops
+        |-gdm3-+-{gdm3}
+        |      |-{gdm3}
+        |      |-gdm-session-wor-+-{gdm-session-wor}
+        |      |                 |-{gdm-session-wor}
+        |      |                 |-gdm-wayland-ses-+-{gdm-wayland-ses}
+        |      |                 |                 |-{gdm-wayland-ses}
+        |      |                 |                 |-gnome-session-b-+-{gnome-session-b}
+        |      |                 |                 |                 |-{gnome-session-b}
+        |      |                 |                 |                 |-{gnome-session-b}
+        |      |                 |                 |                 |-gnome-shell-+-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-Xwayland
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-{gnome-shell}
+        |      |                 |                 |                 |             |-ibus-daemon-+-{ibus-daemon}
+        |      |                 |                 |                 |             |             |-ibus-dconf-+-{ibus-dconf}
+        |      |                 |                 |                 |             |             |            |-{ibus-dconf}
+        |      |                 |                 |                 |             |             |            |-{ibus-dconf}
+        |      |                 |                 |                 |             |             |-{ibus-daemon}
+        |      |                 |                 |                 |             |             |-ibus-engine-sim-+-{ibus-engine-sim}
+        |      |                 |                 |                 |             |             |                 |-{ibus-engine-sim}
+        |      |                 |                 |                 |-gsd-xsettings-+-{gsd-xsettings}
+        |      |                 |                 |                 |               |-{gsd-xsettings}
+        |      |                 |                 |                 |               |-{gsd-xsettings}
+        |      |                 |                 |                 |-gsd-a11y-settin-+-{gsd-a11y-settin}
+        |      |                 |                 |                 |                 |-{gsd-a11y-settin}
+        |      |                 |                 |                 |                 |-{gsd-a11y-settin}
+        |      |                 |                 |                 |-gsd-clipboard-+-{gsd-clipboard}
+        |      |                 |                 |                 |               |-{gsd-clipboard}
+        |      |                 |                 |                 |-gsd-color-+-{gsd-color}
+        |      |                 |                 |                 |           |-{gsd-color}
+        |      |                 |                 |                 |           |-{gsd-color}
+        |      |                 |                 |                 |-gsd-datetime-+-{gsd-datetime}
+        |      |                 |                 |                 |              |-{gsd-datetime}
+        |      |                 |                 |                 |-gsd-housekeepin-+-{gsd-housekeepin}
+        |      |                 |                 |                 |                 |-{gsd-housekeepin}
+        |      |                 |                 |                 |-gsd-keyboard-+-{gsd-keyboard}
+        |      |                 |                 |                 |              |-{gsd-keyboard}
+        |      |                 |                 |                 |              |-{gsd-keyboard}
+        |      |                 |                 |                 |-gsd-media-keys-+-{gsd-media-keys}
+        |      |                 |                 |                 |                |-{gsd-media-keys}
+        |      |                 |                 |                 |                |-{gsd-media-keys}
+        |      |                 |                 |                 |-gsd-mouse-+-{gsd-mouse}
+        |      |                 |                 |                 |           |-{gsd-mouse}
+        |      |                 |                 |                 |-gsd-power-+-{gsd-power}
+        |      |                 |                 |                 |           |-{gsd-power}
+        |      |                 |                 |                 |           |-{gsd-power}
+        |      |                 |                 |                 |-gsd-print-notif-+-{gsd-print-notif}
+        |      |                 |                 |                 |                 |-{gsd-print-notif}
+        |      |                 |                 |                 |-gsd-rfkill-+-{gsd-rfkill}
+        |      |                 |                 |                 |            |-{gsd-rfkill}
+        |      |                 |                 |                 |-gsd-screensaver-+-{gsd-screensaver}
+        |      |                 |                 |                 |                 |-{gsd-screensaver}
+        |      |                 |                 |                 |-gsd-sharing-+-{gsd-sharing}
+        |      |                 |                 |                 |             |-{gsd-sharing}
+        |      |                 |                 |                 |             |-{gsd-sharing}
+        |      |                 |                 |                 |-gsd-smartcard-+-{gsd-smartcard}
+        |      |                 |                 |                 |               |-{gsd-smartcard}
+        |      |                 |                 |                 |               |-{gsd-smartcard}
+        |      |                 |                 |                 |               |-{gsd-smartcard}
+        |      |                 |                 |                 |-gsd-sound-+-{gsd-sound}
+        |      |                 |                 |                 |           |-{gsd-sound}
+        |      |                 |                 |                 |           |-{gsd-sound}
+        |      |                 |                 |                 |-gsd-wacom-+-{gsd-wacom}
+        |      |                 |                 |                 |           |-{gsd-wacom}
+        |      |-gdm-session-wor-+-{gdm-session-wor}
+        |      |                 |-{gdm-session-wor}
+        |      |                 |-gdm-x-session-+-{gdm-x-session}
+        |      |                 |               |-Xorg-+-{Xorg}
+        |      |                 |               |-{gdm-x-session}
+        |      |                 |               |-gnome-session-b-+-ssh-agent
+        |      |                 |               |                 |-{gnome-session-b}
+        |      |                 |               |                 |-{gnome-session-b}
+        |      |                 |               |                 |-{gnome-session-b}
+        |      |                 |               |                 |-gnome-shell-+-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-{gnome-shell}
+        |      |                 |               |                 |             |-ibus-daemon-+-{ibus-daemon}
+        |      |                 |               |                 |             |             |-{ibus-daemon}
+        |      |                 |               |                 |             |             |-ibus-dconf-+-{ibus-dconf}
+        |      |                 |               |                 |             |             |            |-{ibus-dconf}
+        |      |                 |               |                 |             |             |            |-{ibus-dconf}
+        |      |                 |               |                 |             |             |-ibus-engine-sim-+-{ibus-engine-sim}
+        |      |                 |               |                 |             |             |                 |-{ibus-engine-sim}
+        |      |                 |               |                 |-gsd-power-+-{gsd-power}
+        |      |                 |               |                 |           |-{gsd-power}
+        |      |                 |               |                 |           |-{gsd-power}
+        |      |                 |               |                 |-gsd-print-notif-+-{gsd-print-notif}
+        |      |                 |               |                 |                 |-{gsd-print-notif}
+        |      |                 |               |                 |-gsd-rfkill-+-{gsd-rfkill}
+        |      |                 |               |                 |            |-{gsd-rfkill}
+        |      |                 |               |                 |-gsd-screensaver-+-{gsd-screensaver}
+        |      |                 |               |                 |                 |-{gsd-screensaver}
+        |      |                 |               |                 |-gsd-sharing-+-{gsd-sharing}
+        |      |                 |               |                 |             |-{gsd-sharing}
+        |      |                 |               |                 |             |-{gsd-sharing}
+        |      |                 |               |                 |-gsd-smartcard-+-{gsd-smartcard}
+        |      |                 |               |                 |               |-{gsd-smartcard}
+        |      |                 |               |                 |               |-{gsd-smartcard}
+        |      |                 |               |                 |               |-{gsd-smartcard}
+        |      |                 |               |                 |-gsd-sound-+-{gsd-sound}
+        |      |                 |               |                 |           |-{gsd-sound}
+        |      |                 |               |                 |           |-{gsd-sound}
+        |      |                 |               |                 |-gsd-xsettings-+-{gsd-xsettings}
+        |      |                 |               |                 |               |-{gsd-xsettings}
+        |      |                 |               |                 |               |-{gsd-xsettings}
+        |      |                 |               |                 |-gsd-wacom-+-{gsd-wacom}
+        |      |                 |               |                 |           |-{gsd-wacom}
+        |      |                 |               |                 |-gsd-clipboard-+-{gsd-clipboard}
+        |      |                 |               |                 |               |-{gsd-clipboard}
+        |      |                 |               |                 |-gsd-color-+-{gsd-color}
+        |      |                 |               |                 |           |-{gsd-color}
+        |      |                 |               |                 |           |-{gsd-color}
+        |      |                 |               |                 |-gsd-a11y-settin-+-{gsd-a11y-settin}
+        |      |                 |               |                 |                 |-{gsd-a11y-settin}
+        |      |                 |               |                 |                 |-{gsd-a11y-settin}
+        |      |                 |               |                 |-gsd-housekeepin-+-{gsd-housekeepin}
+        |      |                 |               |                 |                 |-{gsd-housekeepin}
+        |      |                 |               |                 |                 |-{gsd-housekeepin}
+        |      |                 |               |                 |-gsd-keyboard-+-{gsd-keyboard}
+        |      |                 |               |                 |              |-{gsd-keyboard}
+        |      |                 |               |                 |              |-{gsd-keyboard}
+        |      |                 |               |                 |-gsd-datetime-+-{gsd-datetime}
+        |      |                 |               |                 |              |-{gsd-datetime}
+        |      |                 |               |                 |              |-{gsd-datetime}
+        |      |                 |               |                 |-gsd-mouse-+-{gsd-mouse}
+        |      |                 |               |                 |           |-{gsd-mouse}
+        |      |                 |               |                 |           |-{gsd-mouse}
+        |      |                 |               |                 |-gsd-media-keys-+-{gsd-media-keys}
+        |      |                 |               |                 |                |-{gsd-media-keys}
+        |      |                 |               |                 |                |-{gsd-media-keys}
+        |      |                 |               |                 |-gnome-software-+-{gnome-software}
+        |      |                 |               |                 |                |-{gnome-software}
+        |      |                 |               |                 |                |-{gnome-software}
+        |      |                 |               |                 |-nautilus-deskto-+-{nautilus-deskto}
+        |      |                 |               |                 |                 |-{nautilus-deskto}
+        |      |                 |               |                 |                 |-{nautilus-deskto}
+        |      |                 |               |                 |-gsd-disk-utilit-+-{gsd-disk-utilit}
+        |      |                 |               |                 |                 |-{gsd-disk-utilit}
+        |      |                 |               |                 |-update-notifier-+-{update-notifier}
+        |      |                 |               |                 |                 |-{update-notifier}
+        |      |                 |               |                 |                 |-{update-notifier}
+        |      |                 |               |                 |-deja-dup-monito-+-{deja-dup-monito}
+        |      |                 |               |                 |                 |-{deja-dup-monito}
+        |      |                 |               |                 |                 |-{deja-dup-monito}
+        |-VBoxService-+-{VBoxService}
+        |             |-{VBoxService}
+        |             |-{VBoxService}
+        |             |-{VBoxService}
+        |             |-{VBoxService}
+        |             |-{VBoxService}
+        |             |-{VBoxService}
+        |-systemd-+-(sd-pam)
+        |         |-dbus-daemon
+        |         |-at-spi-bus-laun-+-{at-spi-bus-laun}
+        |         |                 |-{at-spi-bus-laun}
+        |         |                 |-{at-spi-bus-laun}
+        |         |                 |-dbus-daemon
+        |         |-at-spi2-registr-+-{at-spi2-registr}
+        |         |                 |-{at-spi2-registr}
+        |         |-pulseaudio-+-{pulseaudio}
+        |         |            |-{pulseaudio}
+        |         |-ibus-portal-+-{ibus-portal}
+        |         |             |-{ibus-portal}
+        |-upowerd-+-{upowerd}
+        |         |-{upowerd}
+        |-rtkit-daemon-+-{rtkit-daemon}
+        |              |-{rtkit-daemon}
+        |-ibus-x11-+-{ibus-x11}
+        |          |-{ibus-x11}
+        |-boltd-+-{boltd}
+        |       |-{boltd}
+        |-packagekitd-+-{packagekitd}
+        |             |-{packagekitd}
+        |-colord-+-{colord}
+        |        |-{colord}
+        |-systemd-+-(sd-pam)
+        |         |-dbus-daemon
+        |         |-at-spi-bus-laun-+-{at-spi-bus-laun}
+        |         |                 |-{at-spi-bus-laun}
+        |         |                 |-{at-spi-bus-laun}
+        |         |                 |-dbus-daemon
+        |         |-at-spi2-registr-+-{at-spi2-registr}
+        |         |                 |-{at-spi2-registr}
+        |         |-gvfsd-+-{gvfsd}
+        |         |       |-{gvfsd}
+        |         |       |-gvfsd-trash-+-{gvfsd-trash}
+        |         |       |             |-{gvfsd-trash}
+        |         |-gvfsd-fuse-+-{gvfsd-fuse}
+        |         |            |-{gvfsd-fuse}
+        |         |            |-{gvfsd-fuse}
+        |         |            |-{gvfsd-fuse}
+        |         |            |-{gvfsd-fuse}
+        |         |-ibus-portal-+-{ibus-portal}
+        |         |             |-{ibus-portal}
+        |         |-gnome-shell-cal-+-{gnome-shell-cal}
+        |         |                 |-{gnome-shell-cal}
+        |         |                 |-{gnome-shell-cal}
+        |         |                 |-{gnome-shell-cal}
+        |         |                 |-{gnome-shell-cal}
+        |         |-evolution-sourc-+-{evolution-sourc}
+        |         |                 |-{evolution-sourc}
+        |         |                 |-{evolution-sourc}
+        |         |-goa-daemon-+-{goa-daemon}
+        |         |            |-{goa-daemon}
+        |         |            |-{goa-daemon}
+        |         |-goa-identity-se-+-{goa-identity-se}
+        |         |                 |-{goa-identity-se}
+        |         |                 |-{goa-identity-se}
+        |         |-gvfs-udisks2-vo-+-{gvfs-udisks2-vo}
+        |         |                 |-{gvfs-udisks2-vo}
+        |         |-gvfs-gphoto2-vo-+-{gvfs-gphoto2-vo}
+        |         |                 |-{gvfs-gphoto2-vo}
+        |         |-gvfs-goa-volume-+-{gvfs-goa-volume}
+        |         |                 |-{gvfs-goa-volume}
+        |         |-gvfs-afc-volume-+-{gvfs-afc-volume}
+        |         |                 |-{gvfs-afc-volume}
+        |         |                 |-{gvfs-afc-volume}
+        |         |-gvfs-mtp-volume-+-{gvfs-mtp-volume}
+        |         |                 |-{gvfs-mtp-volume}
+        |         |-evolution-calen-+-{evolution-calen}
+        |         |                 |-{evolution-calen}
+        |         |                 |-{evolution-calen}
+        |         |                 |-{evolution-calen}
+        |         |                 |-evolution-calen-+-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |                 |                 |-{evolution-calen}
+        |         |-dconf-service-+-{dconf-service}
+        |         |               |-{dconf-service}
+        |         |-evolution-addre-+-{evolution-addre}
+        |         |                 |-{evolution-addre}
+        |         |                 |-{evolution-addre}
+        |         |                 |-{evolution-addre}
+        |         |                 |-evolution-addre-+-{evolution-addre}
+        |         |                 |                 |-{evolution-addre}
+        |         |                 |                 |-{evolution-addre}
+        |         |                 |                 |-{evolution-addre}
+        |         |                 |                 |-{evolution-addre}
+        |         |-gnome-terminal--+-{gnome-terminal-}
+        |         |                 |-{gnome-terminal-}
+        |         |                 |-{gnome-terminal-}
+        |         |                 |-bash-+-pstree-32
+        |         |                 |-bash
+        |         |-gvfsd-metadata-+-{gvfsd-metadata}
+        |         |                |-{gvfsd-metadata}
+        |-gnome-keyring-d-+-{gnome-keyring-d}
+        |                 |-{gnome-keyring-d}
+        |                 |-{gnome-keyring-d}
+        |-VBoxClient-+-VBoxClient-+-{VBoxClient}
+        |-VBoxClient-+-VBoxClient
+        |-VBoxClient-+-VBoxClient-+-{VBoxClient}
+        |-VBoxClient-+-VBoxClient-+-{VBoxClient}
+        |            |            |-{VBoxClient}
+        |-pulseaudio-+-{pulseaudio}
+        |            |-{pulseaudio}
+        |-ibus-x11-+-{ibus-x11}
+        |          |-{ibus-x11}
+        |-gsd-printer-+-{gsd-printer}
+        |             |-{gsd-printer}
+        |-fwupd-+-{fwupd}
+        |       |-{fwupd}
+        |       |-{fwupd}
+        |       |-{fwupd}
+        |-systemd-hostnam
