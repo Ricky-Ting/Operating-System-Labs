@@ -40,9 +40,9 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
- 	printf("List \n");
+ 	//printf("List \n");
 	while(iter!=NULL && iter->status!=TASK_READY) {
-		printf("%s\n",iter->name);
+		//printf("%s\n",iter->name);
 		iter = iter->next;
 	}
 	if(iter==NULL) {
@@ -51,7 +51,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 	}	else {
 		if(task_tail[_cpu()]!=iter) {
 			if(task_head[_cpu()] == iter && iter->next!=NULL) {
-				printf("Here\n");
+				//printf("Here\n");
 				task_head[_cpu()] = iter->next;
 			}
 			if(iter->prev!=NULL)
@@ -66,7 +66,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			task_tail[_cpu()] = iter;
 		}	
 		current = iter;
-		printf("Schedule %s\n",current->name);
+		//printf("Schedule %s\n",current->name);
 		return (iter->context);	
 	}
 }
@@ -187,7 +187,7 @@ void kmt_sem_wait(sem_t *sem) {
 			}
 			sem->tail = (sem->tail + 1) % MAXQ;
 			current->status = TASK_SLEEP;	
-			printf("%s to sleep\n", current->name);
+			//printf("%s to sleep\n", current->name);
 		}
 		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
@@ -206,7 +206,7 @@ void kmt_sem_signal(sem_t *sem) {
 	if(sem->queue[sem->head]!=NULL) {
 		//printf("Here %d %d\n",sem->tail, sem->head);
 		sem->queue[sem->head]->status = TASK_READY;
-		printf("Wake %s\n", sem->queue[sem->head]->name);
+		//printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
 		sem->head = (sem->head + 1) % MAXQ;
 	}	
