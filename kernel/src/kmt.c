@@ -5,7 +5,7 @@ int holding(spinlock_t *lock);
 void pushcli(void);
 void popcli(void);
 _Context* kmt_context_save(_Event event, _Context * context);
-_Context* kmt_context_switch(_Eveent event, _Context * context);
+_Context* kmt_context_switch(_Event event, _Context * context);
 
 struct {
 	int ncli;
@@ -45,7 +45,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 	return context;				
 }
 
-_Context* kmt_context_switch(_Eveent event, _Context * context) {
+_Context* kmt_context_switch(_Event event, _Context * context) {
 	struct tasks_on_cpu *iter = task_head[_cpu()];
   
 	while(iter!=NULL && iter->status!=0) {
