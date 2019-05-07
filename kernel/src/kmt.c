@@ -66,7 +66,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
-	task->bind_cpu = rand() % MAXCPU;	
+	task->bind_cpu = rand() % _ncpu();	
 
 	printf("%s on cpu%d\n",name, task->bind_cpu);
 	_Area this_stack;
