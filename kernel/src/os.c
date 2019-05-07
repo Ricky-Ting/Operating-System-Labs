@@ -9,7 +9,7 @@ struct handler_node* handler_head = NULL;
 static void os_init() {
   pmm->init();
 	kmt->init();
-	_vme_init(pmm->alloc, pmm->free);
+	//_vme_init(pmm->alloc, pmm->free);
 	dev->init();
 	//vfs->init();
 	//kmt->create(pmm->alloc(sizeof(task_t)), "input-task", input_task, NULL);
