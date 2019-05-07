@@ -83,7 +83,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 
 
 
-int holding(struct spinlock_t *lock) {
+int holding(spinlock_t *lock) {
 	int r;
 	pushcli();
 	r = lock->locked && lock->cpu == _cpu();
