@@ -41,11 +41,12 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
- 	 
+ 	/* 
 	while(iter!=NULL && iter->status!=TASK_READY) {
 		printf("%s\b",iter->name);
 		iter = iter->next;
 	}	
+	*/
 	if(iter==NULL) {
 		printf("NO other tasks on this cpu %d\n", _cpu());
 		//current->status = TASK_RUNNING;
@@ -155,6 +156,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 }
 
 void kmt_sem_init(sem_t *sem, const char *name, int value){
+	assert(0);
 	kmt_spin_init(&sem->lock, name);
 	sem->count = value;
 	sem->name = name;
