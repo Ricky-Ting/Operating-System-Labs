@@ -15,16 +15,8 @@ struct {
 task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()]) 
 
-struct tasks_on_cpu{
-	//int cpu;
-	int status;  /* 0:ready, 1:wait*/
-	const char *task_name;
-	task_t *task;
-	struct tasks_on_cpu *next; 
-	struct tasks_on_cpu *prev;
-};
-struct tasks_on_cpu* task_head[MAXCPU];
-struct tasks_on_cpu* task_tail[MAXCPU];
+struct task_t* task_head[MAXCPU];
+struct task_t* task_tail[MAXCPU];
 
 void kmt_init() {
 	
@@ -40,14 +32,14 @@ void kmt_init() {
 }
 
 _Context* kmt_context_save(_Event event, _Context * context) {
-	assert(0);
+	//assert(0);
 	if(current)	
-		current->context = *context;
+		current->context = context;
 	return context;				
 }
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
-	struct tasks_on_cpu *iter = task_head[_cpu()];
+	task_t *iter = task_head[_cpu()];
 	printf("This is cpu %d\n",_cpu());
   
 	while(iter!=NULL && iter->status!=0) {
@@ -64,7 +56,8 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		iter->next = NULL;
 		iter->prev = task_tail[_cpu()];
 		task_tail[_cpu()] = iter;
-		return &(iter->task->context);	
+		current = iter;
+		return (iter->context);	
 	}
 }
 
@@ -72,31 +65,32 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
 	printf("%s\n",name);
-	
+	_Area this_stack;
 	task->name = name;
 	task->stack = pmm->alloc(STACK_SIZE);
+	this_stack.start = task->stack;
+	this_stack.end = task->stack + STACK_SIZE; 
+		
 	//task->bind_cpu = rand() % MAXCPU;	
 	task->bind_cpu = _cpu();	
-	struct tasks_on_cpu *this_task = pmm->alloc(sizeof(struct tasks_on_cpu));
-	this_task->task_name = name;
-	this_task->task = task;
-	this_task->status = 0; 
+	task->status = 0;
+	task->context = kcontext(this_stack, entry, arg); 
 	
-	this_task->next = task_head[task->bind_cpu];
-	this_task->prev = NULL;
+	task->next = task_head[task->bind_cpu];
+	task->prev = NULL;
 	if(task_head[task->bind_cpu] != NULL) {
-		task_head[task->bind_cpu]->prev = this_task;
+		task_head[task->bind_cpu]->prev = task;
 	} else {
-		task_tail[task->bind_cpu] = this_task; 
+		task_tail[task->bind_cpu] = task; 
 	}
-	task_head[task->bind_cpu] = this_task;			
+	task_head[task->bind_cpu] = task;			
 
-	return -1;
+	return 1;
 	TRACE_EXIT;
 }
 
 void kmt_teardown(task_t *task) {
-
+	pmm->free(task->stack);
 }
 
 

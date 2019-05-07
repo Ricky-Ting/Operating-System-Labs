@@ -12,12 +12,15 @@ typedef unsigned int uint;
 
 struct task {
 	const char *name;
-	_Context context;
+	_Context *context;
 	int bind_cpu;
+	int status; /* 0: ready */
 	uint8_t fence1[32];
 	//uint8_t stack[STACK_SIZE];
 	void * stack;
 	uint8_t fence2[32];
+	struct task * prev;
+	struct task * next;	
 };
 struct spinlock {
 	int locked; // Is the lock held?
