@@ -15,8 +15,8 @@ struct {
 task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()]) 
 
-struct task_t* task_head[MAXCPU];
-struct task_t* task_tail[MAXCPU];
+task_t* task_head[MAXCPU];
+task_t* task_tail[MAXCPU];
 
 void kmt_init() {
 	
