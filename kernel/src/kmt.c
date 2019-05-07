@@ -95,7 +95,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	}
 	task_head[task->bind_cpu] = task;			
 	
-	tast_t * itera = task_head[_cpu()];
+	task_t * itera = task_head[_cpu()];
 	printf("Start\n");
 	while(itera!=NULL) {
 		printf(":%s\n",itera->name);
