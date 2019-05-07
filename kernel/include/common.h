@@ -4,7 +4,6 @@
 #include <kernel.h>
 #include <nanos.h>
 #include <trace.h>
-#include <x86-qemu.h>
 
 
 #define STACK_SIZE 4096
