@@ -205,7 +205,7 @@ void kmt_sem_wait(sem_t *sem) {
 		TRACE_ENTRY;
 	}
 	TRACE_EXIT;
-	//printf("%s get the lock %s\n", current->name, sem->name);
+	printf("%s get the lock %s\n", current->name, sem->name);
 	kmt_spin_unlock(&sem->lock);
 }
 
@@ -221,7 +221,7 @@ void kmt_sem_signal(sem_t *sem) {
 		//printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
 
 	}	
-	//printf("%s release the lock %s\n", current->name, sem->name);
+	printf("%s release the lock %s\n", current->name, sem->name);
 
 	kmt_spin_unlock(&sem->lock);
 	TRACE_ENTRY;
