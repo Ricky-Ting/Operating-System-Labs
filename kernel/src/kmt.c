@@ -38,6 +38,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 }
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
+	assert(0);
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
  	printf("List \n");
@@ -93,6 +94,13 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 		task_tail[task->bind_cpu] = task; 
 	}
 	task_head[task->bind_cpu] = task;			
+	
+	tast_t * itera = task_head[_cpu()];
+	printf("Start\n");
+	while(itera!=NULL) {
+		printf(":%s\n",itera->name);
+		itera = itera->next;
+	}
 
 	return 1;
 	TRACE_EXIT;
