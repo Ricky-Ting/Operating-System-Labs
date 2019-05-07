@@ -81,6 +81,17 @@ void kmt_spin_unlock(spinlock_t *lk) {
 	TRACE_EXIT;
 }
 
+void kmt_sem_init(sem_t *sem, const char *name, int value){
+
+}
+
+void sem_wait(sem_t *sem) {
+
+}
+
+void sem_signal(sem_t *sem) {
+
+}
 
 
 int holding(spinlock_t *lock) {
