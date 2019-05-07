@@ -1,7 +1,7 @@
 #include <common.h>
 #include <klib.h>
 
-int holding(struct spinlock_t *lock);
+int holding(spinlock_t *lock);
 
 
 struct {
