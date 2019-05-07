@@ -21,7 +21,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 		
 	task->name = name;
 			
-
+	return -1;
 	TRACE_EXIT;
 }
 
