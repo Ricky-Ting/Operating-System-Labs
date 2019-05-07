@@ -209,7 +209,7 @@ void kmt_sem_signal(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
-		//printf("Here %d %d\n",sem->tail, sem->head);
+		printf("Here %d %d\n",sem->tail, sem->head);
 		sem->queue[sem->head]->status = TASK_READY;
 		printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
