@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 
+#define STACK_SIZE 4096
 
 struct {
 	int ncli;
