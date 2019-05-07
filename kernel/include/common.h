@@ -13,8 +13,10 @@ typedef unsigned int uint;
 struct task {
 	const char *name;
 	_Context context;
+	int bind_cpu;
 	uint8_t fence1[32];
-	uint8_t stack[STACK_SIZE];
+	//uint8_t stack[STACK_SIZE];
+	void * statck;
 	uint8_t fence2[32];
 };
 struct spinlock {

@@ -17,8 +17,8 @@ struct node_t{
 
 
 struct node_t * myhead;
-int mylock;
-
+//int mylock;
+spinlock_t alloc_lk;
 uintptr_t func(uintptr_t x) {
 	return (x & 0x7)? (((x>>3)<<3)+0x8) : x;
 } 
@@ -32,7 +32,8 @@ static void pmm_init() {
 	myhead->next= myhead->prev = NULL;
 	myhead->used = 0;
 	myhead->size = pm_end - func(U(pm_start)) - func(U(SIZE(struct node_t))) ;
-	mylock=0;
+	//mylock=0;
+	kmt->spin_init(&alloc_lk, "alloc-lock");
 }
 
 
@@ -55,7 +56,8 @@ void unlock(int * lk) {
 int kcounter = 0;
 
 static void *kalloc(size_t size) {
-	lock(&mylock);
+	//lock(&mylock);
+	kmt->spin_lock(&alloc_lk);
 	printf("In kalloc\n");
 	kcounter++;
 	void * ret=NULL;
@@ -80,7 +82,8 @@ static void *kalloc(size_t size) {
 	assert(kcounter==1);
 	kcounter--; 
 	printf("Out kalloc\n");
-	unlock(&mylock);
+	//unlock(&mylock);
+	kmt->spin_unlock(&alloc_lk);
 	if(ret == NULL) {
 		printf("Out of memory\n");
 		assert(0);
@@ -91,7 +94,8 @@ static void *kalloc(size_t size) {
 static void kfree(void *ptr) {
 	if(ptr==NULL)
 		return;
-	lock(&mylock);
+	//lock(&mylock);
+	kmt->spin_lock(&alloc_lk);
 	struct node_t * midd = (struct node_t *)(ptr - func(U(SIZE(struct node_t))) );
 	midd->used = 0;
 	struct node_t * tmp = midd;
@@ -111,7 +115,8 @@ static void kfree(void *ptr) {
 		tmp2->size =  ((tmp->next==NULL)?pm_end:(uintptr_t)(tmp->next)) - func( ( U(tmp2) ) );
 		tmp = tmp2;
 	}
-	unlock(&mylock);
+	//unlock(&mylock);
+	kmt->spin_unlock(&alloc_lk);
 	return;
 }
 

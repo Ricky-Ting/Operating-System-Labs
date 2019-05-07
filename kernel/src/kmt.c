@@ -4,15 +4,66 @@
 int holding(spinlock_t *lock);
 void pushcli(void);
 void popcli(void);
+_Context* kmt_context_save(_Event event, _Context * context);
+_Context* kmt_context_switch(_Eveent event, _Context * context);
 
 struct {
 	int ncli;
 	int storedint;
 }	int_stack[MAXCPU];
 
+struct task_t current_task[MAXCPU];
+#define current (current_task[_cpu()]) 
+
+struct tasks_on_cpu{
+	//int cpu;
+	int status;  /* 0:ready, 1:wait*/
+	const char *task_name;
+	task_t *task;
+	struct tasks_on_cpu *next; 
+	struct tasks_on_cpu *prev;
+};
+struct tasks_on_cpu* task_head[MAXCPU];
+struct tasks_on_cpu* task_tail[MAXCPU];
+
 void kmt_init() {
 	
+	for(int i=0; i<MAXCPU; i++) {
+		current_task[i] = NULL;	
+		task_head[i] = NULL;
+		task_tail[i] = NULL;
+	}
 	memset(int_stack, 0, sizeof(int_stack));
+
+	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); 
+	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
+}
+
+_Context* kmt_context_save(_Event event, _Context * context) {
+	if(current)	
+		current->context = *context;
+	return context;				
+}
+
+_Context* kmt_context_switch(_Eveent event, _Context * context) {
+	struct tasks_on_cpu *iter = task_head[_cpu()];
+  
+	while(iter!=NULL && iter->status!=0) {
+		iter = iter->next;
+	}	
+	if(iter==NULL) {
+		printf("NO other tasks on this cpu\n");
+		return context;
+	} else {
+		if(iter->prev!=NULL)
+			iter->prev->next = iter->next;
+		if(iter->next!=NULL)
+			iter->next->prev = iter->prev;
+		iter->next = NULL;
+		iter->prev = task_tail[_cpu()];
+		task_tail[_cpu()] = iter;
+		return &(iter->task->context);	
+	}
 }
 
 
@@ -20,7 +71,22 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	TRACE_ENTRY;
 		
 	task->name = name;
-			
+	task->stack = pmm->alloc(STACK_SIZE);
+	//task->bind_cpu = rand() % MAXCPU;	
+	task->bind_cpu = _cpu();	
+	struct tasks_on_cpu *this_task = pmm->alloc(sizeof(struct tasks_on_cpu));
+	this_task->task_name = name;
+	this_task->task = task;
+	this_task->status = 0; 
+	
+	this_task->next = task_head[task->bind_cpu];
+	this_task->prev = NULL:
+	if(task_list[task->bind_cpu] != NULL) {
+		task_head[task->bind_cpu]->prev = this_task;
+		task_tail[task->bind_cpu] = this_task; 
+	}
+	task_head[task->bind_cpu] = this_task;			
+
 	return -1;
 	TRACE_EXIT;
 }
