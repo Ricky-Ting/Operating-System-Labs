@@ -155,7 +155,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 }
 
 void kmt_sem_init(sem_t *sem, const char *name, int value){
-	kmt_spin_init(&sem->lock);
+	kmt_spin_init(&sem->lock, name);
 	sem->count = value;
 	sem->name = name;
 	for(int i=0;i<MAXQ;i++)
