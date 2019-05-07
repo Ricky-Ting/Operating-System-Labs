@@ -5,12 +5,14 @@ void mytest(void);
 
 void fa() {
 	while(1) {
-		//_putc('a');
+		_putc('a');
+		_yield();
 	}
 }
 void fb() {
 	while(1) {
-		//_putc('b');
+		_putc('b');
+		_yield();
 	}
 }
 
