@@ -74,7 +74,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	//task->bind_cpu = rand() % MAXCPU;	
 	task->bind_cpu = _cpu();	
 	task->status = 0;
-	task->context = kcontext(this_stack, entry, arg); 
+	task->context = _kcontext(this_stack, entry, arg); 
 	
 	task->next = task_head[task->bind_cpu];
 	task->prev = NULL;
