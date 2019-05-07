@@ -199,7 +199,8 @@ void kmt_sem_wait(sem_t *sem) {
 		}
 		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
-		_yield();
+		while(current->status == TASK_SLEEP)
+			_yield();
 		kmt_spin_lock(&sem->lock);
 		TRACE_ENTRY;
 	}
