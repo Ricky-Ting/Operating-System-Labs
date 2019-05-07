@@ -7,7 +7,7 @@
 
 
 #define STACK_SIZE 4096
-typedef unsigned int uint
+typedef unsigned int uint;
 
 struct task {
 	const char *name;
