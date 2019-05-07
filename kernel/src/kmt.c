@@ -1,6 +1,5 @@
 #include <common.h>
 #include <klib.h>
-#define TRACEME
 int holding(spinlock_t *lock);
 void pushcli(void);
 void popcli(void);
@@ -47,6 +46,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		iter = iter->next;
 	}
 	if(iter==NULL) {
+		printf("Schedule %s\n",current->name);
 		return context;	
 	}	else {
 		if(iter->prev!=NULL)
@@ -58,6 +58,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		task_tail[_cpu()] = iter;
 			
 		current = iter;
+		printf("Schedule %s\n",current->name);
 		return (iter->context);	
 	}
 }
