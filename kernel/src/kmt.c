@@ -81,8 +81,9 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	
 	this_task->next = task_head[task->bind_cpu];
 	this_task->prev = NULL;
-	if(task_list[task->bind_cpu] != NULL) {
+	if(task_head[task->bind_cpu] != NULL) {
 		task_head[task->bind_cpu]->prev = this_task;
+	} else {
 		task_tail[task->bind_cpu] = this_task; 
 	}
 	task_head[task->bind_cpu] = this_task;			
