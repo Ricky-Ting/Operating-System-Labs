@@ -5,6 +5,10 @@
 #include <nanos.h>
 #include <trace.h>
 
+
+#define STACK_SIZE 4096
+typedef uint unsigned int
+
 struct task {
 	const char *name;
 	_Context context;
