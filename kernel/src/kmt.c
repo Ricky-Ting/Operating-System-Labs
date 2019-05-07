@@ -48,7 +48,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 	}	
 	*/
 	if(iter==NULL) {
-		printf("NO other tasks on this cpu %d\n", _cpu());
+		//printf("NO other tasks on this cpu %d\n", _cpu());
 		//current->status = TASK_RUNNING;
 		return context;
 	} else {
