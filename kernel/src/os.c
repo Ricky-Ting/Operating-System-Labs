@@ -62,7 +62,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		}
 		iter = iter->next;
 	}		
-	assert(ret!=NULL)
+	assert(ret!=NULL);
 	TRACE_EXIT;	
   return ret;
 }
