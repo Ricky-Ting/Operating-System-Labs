@@ -186,6 +186,7 @@ void kmt_sem_wait(sem_t *sem) {
 }
 
 void kmt_sem_signal(sem_t *sem) {
+	assert(0);
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
