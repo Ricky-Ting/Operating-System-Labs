@@ -4,10 +4,12 @@
 void mytest(void);
 
 void fa() {
-	_putc('a');
+	while(1)
+		_putc('a');
 }
 void fb() {
-	_putc('b');
+	while(1)
+		_putc('b');
 }
 
 struct handler_node* handler_head = NULL;
