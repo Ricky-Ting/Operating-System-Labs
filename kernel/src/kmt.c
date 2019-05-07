@@ -1,6 +1,6 @@
 #include <common.h>
 #include <klib.h>
-
+#define TRACEME
 int holding(spinlock_t *lock);
 void pushcli(void);
 void popcli(void);
@@ -104,7 +104,7 @@ void kmt_spin_init(spinlock_t *lk, const char *name) {
 }
 
 void kmt_spin_lock(spinlock_t *lk) {
-	TRACE_ENTRY;
+	//TRACE_ENTRY;
 	pushcli();  // disable interrupts to avoid deadlock.
 	if(holding(lk)) {
 		printf("acquired!\n");
@@ -124,11 +124,11 @@ void kmt_spin_lock(spinlock_t *lk) {
 	lk->cpu = _cpu();
 		
 	//getcallerpcs(&lk, lk->pcs);
-	TRACE_EXIT;	
+	//TRACE_EXIT;	
 }
 
 void kmt_spin_unlock(spinlock_t *lk) {
-	TRACE_ENTRY;
+	//TRACE_ENTRY;
 	if(!holding(lk)) {
 		printf("release\n");
 		assert(0);	
@@ -149,7 +149,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 	asm volatile("movl $0, %0" : "+m" (lk->locked) :);
 	
 	popcli();
-	TRACE_EXIT;
+	//TRACE_EXIT;
 }
 
 void kmt_sem_init(sem_t *sem, const char *name, int value){
@@ -164,6 +164,7 @@ void kmt_sem_init(sem_t *sem, const char *name, int value){
 
 void kmt_sem_wait(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
+	TRACE_ENTRY;
 	sem->count--;
 	//printf("Here %d %d\n",sem->tail, sem->head);
 	while(sem->count<0) {
@@ -177,16 +178,18 @@ void kmt_sem_wait(sem_t *sem) {
 			sem->tail = (sem->tail + 1) % MAXQ;
 			current->status = TASK_SLEEP;	
 		}
+		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
 		_yield();
 		kmt_spin_lock(&sem->lock);
+		TRACE_ENTRY;
 	}
-
+	TRACE_EXIT;
 	kmt_spin_unlock(&sem->lock);
 }
 
 void kmt_sem_signal(sem_t *sem) {
-	assert(0);
+	TRACE_ENTRY;
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
@@ -196,6 +199,7 @@ void kmt_sem_signal(sem_t *sem) {
 		sem->head = (sem->head + 1) % MAXQ;
 	}	
 	kmt_spin_unlock(&sem->lock);
+	TRACE_ENTRY;
 }
 
 
