@@ -41,12 +41,13 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
-  
+ 	 
 	while(iter!=NULL && iter->status!=0) {
+		printf("%s\b",iter->name);
 		iter = iter->next;
 	}	
 	if(iter==NULL) {
-		//printf("NO other tasks on this cpu\n");
+		printf("NO other tasks on this cpu\n");
 		return context;
 	} else {
 		if(iter->prev!=NULL)
