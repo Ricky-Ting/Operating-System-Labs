@@ -171,8 +171,10 @@ void kmt_sem_wait(sem_t *sem) {
 	while(sem->count<0) {
 		// In queue
 		sem->queue[sem->tail] = current;
-		if( (sem->tail + 1)%MAXQ == sem->head )
+		if( (sem->tail + 1)%MAXQ == sem->head ) {
+			printf("%d %d",sem->tail, sem->head);
 			assert(0);
+		}
 		sem->tail = (sem->tail + 1) % MAXQ;
 		current->status = TASK_SLEEP;	
 		kmt_spin_unlock(&sem->lock);
