@@ -26,7 +26,7 @@ void kmt_init() {
 	}
 	memset(int_stack, 0, sizeof(int_stack));
 	
-	kmt_spin_lock(&create_lock, "create-lock");
+	kmt_spin_init(&create_lock, "create-lock");
 	os->on_irq(INT32_MIN, _EVENT_NULL, kmt_context_save); 
 	os->on_irq(INT32_MAX, _EVENT_NULL, kmt_context_switch);
 }
