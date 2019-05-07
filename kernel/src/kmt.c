@@ -5,7 +5,9 @@ void pushcli(void);
 void popcli(void);
 _Context* kmt_context_save(_Event event, _Context * context);
 _Context* kmt_context_switch(_Event event, _Context * context);
-
+void kmt_spin_init(spinlock_t *lk, const char *name);
+void kmt_spin_lock(spinlock_t *lk);
+void kmt_spin_unlock(spinlock_t *lk) 
 struct {
 	int ncli;
 	int storedint;
