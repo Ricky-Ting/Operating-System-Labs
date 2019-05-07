@@ -40,6 +40,7 @@ void kmt_init() {
 }
 
 _Context* kmt_context_save(_Event event, _Context * context) {
+	assert(0);
 	if(current)	
 		current->context = *context;
 	return context;				
@@ -70,7 +71,8 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
-		
+	printf("%s\n",name);
+	
 	task->name = name;
 	task->stack = pmm->alloc(STACK_SIZE);
 	//task->bind_cpu = rand() % MAXCPU;	
