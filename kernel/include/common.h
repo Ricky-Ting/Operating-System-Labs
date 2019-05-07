@@ -6,7 +6,7 @@
 #include <trace.h>
 
 
-#define STACK_SIZE 409600
+#define STACK_SIZE 1<<24
 #define MAXCPU 16
 typedef unsigned int uint;
 #define TASK_READY 0
