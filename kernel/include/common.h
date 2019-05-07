@@ -7,6 +7,7 @@
 
 
 #define STACK_SIZE 4096
+#define MAXCPU 16
 typedef unsigned int uint;
 
 struct task {
