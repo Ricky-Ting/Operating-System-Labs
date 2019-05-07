@@ -12,7 +12,7 @@ struct {
 	int storedint;
 }	int_stack[MAXCPU];
 
-task_t current_task[MAXCPU];
+task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()]) 
 
 struct tasks_on_cpu{
