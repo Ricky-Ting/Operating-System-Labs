@@ -58,7 +58,8 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		if(iter->next!=NULL)
 			iter->next->prev = iter->prev;
 		iter->next = NULL;
-		iter->prev = task_tail[_cpu()];
+		if(task_tail[_cpu()] != iter)
+			iter->prev = task_tail[_cpu()];
 		task_tail[_cpu()] = iter;
 			
 		current = iter;
