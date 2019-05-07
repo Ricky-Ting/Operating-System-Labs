@@ -168,11 +168,12 @@ void kmt_sem_init(sem_t *sem, const char *name, int value){
 void kmt_sem_wait(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count--;
+	printf("Here %d %d\n",sem->tail, sem->head);
 	while(sem->count<0) {
 		// In queue
 		sem->queue[sem->tail] = current;
 		if( (sem->tail + 1)%MAXQ == sem->head ) {
-			printf("%d %d",sem->tail, sem->head);
+			printf("%d %d\n",sem->tail, sem->head);
 			assert(0);
 		}
 		sem->tail = (sem->tail + 1) % MAXQ;
@@ -189,6 +190,7 @@ void kmt_sem_signal(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
+		printf("Here %d %d\n",sem->tail, sem->head);
 		sem->queue[sem->head]->status = TASK_READY;
 		sem->queue[sem->head] = NULL;
 		sem->head = (sem->head + 1) % MAXQ;
