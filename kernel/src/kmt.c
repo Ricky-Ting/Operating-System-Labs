@@ -181,6 +181,7 @@ void kmt_sem_wait(sem_t *sem) {
 			}
 			sem->tail = (sem->tail + 1) % MAXQ;
 			current->status = TASK_SLEEP;	
+			printf("%s to sleep\n", current->name);
 		}
 		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
@@ -199,6 +200,7 @@ void kmt_sem_signal(sem_t *sem) {
 	if(sem->queue[sem->head]!=NULL) {
 		//printf("Here %d %d\n",sem->tail, sem->head);
 		sem->queue[sem->head]->status = TASK_READY;
+		printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
 		sem->head = (sem->head + 1) % MAXQ;
 	}	
