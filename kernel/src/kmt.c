@@ -171,7 +171,7 @@ void kmt_sem_wait(sem_t *sem) {
 	while(sem->count<0) {
 		// In queue
 		sem->queue[sem->tail] = current;
-		sem->tail = (sem->tail++) % MAXQ;
+		sem->tail = (sem->tail + 1) % MAXQ;
 		current->status = TASK_SLEEP;	
 		kmt_spin_unlock(&sem->lock);
 		_yield();
