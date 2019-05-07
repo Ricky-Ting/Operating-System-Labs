@@ -18,7 +18,7 @@ struct task {
 	uint8_t fence2[32];
 };
 struct spinlock {
-	uint locked; // Is the lock held?
+	int locked; // Is the lock held?
 	
 	// For debugging:
 	const char *name;				//Name of the lock
