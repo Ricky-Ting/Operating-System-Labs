@@ -22,17 +22,14 @@ void echo_task(void *name) {
 		char line[128], text[128];
 		sprintf(text, "(%s) $", name); tty_write(tty,0,text,strlen(text));
 		int nread = tty->ops->read(tty, 0, line, sizeof(line));
-		line[nread-1] = '\0';
-		sprintf(text, "Echo: %s.\n", line); tty_write(tty,0,text, strlen(text));
+		line[nread - 1] = '\0';
+		sprintf(text, "Echo: %s.\n", line); tty_write(tty,0,text,strlen(text));
 	}
 }
 
-struct handler_node* handler_head = NULL;
-
 static void os_init() {
-  pmm->init();
+	pmm->init();
 	kmt->init();
-	//_vme_init(pmm->alloc, pmm->free);
 	dev->init();
 	//vfs->init();
 	kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty1");
