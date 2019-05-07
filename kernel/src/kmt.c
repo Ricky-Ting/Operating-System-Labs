@@ -175,6 +175,7 @@ void kmt_sem_init(sem_t *sem, const char *name, int value){
 		sem->queue[i]=NULL;
 	sem->head = 0;
 	sem->tail = 0;
+	printf("Init %s to %d\n",name, value);
 }
 
 void kmt_sem_wait(sem_t *sem) {
@@ -211,11 +212,12 @@ void kmt_sem_signal(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
-		printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
 		sem->queue[sem->head]->status = TASK_READY;
 		printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
 		sem->head = (sem->head + 1) % MAXQ;
+		printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
+
 	}	
 	kmt_spin_unlock(&sem->lock);
 	TRACE_ENTRY;
