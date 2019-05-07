@@ -1,7 +1,8 @@
 #include <common.h>
 #include <klib.h>
 
-#include <kmt.h>
+int holding(struct spinlock_t *lock);
+
 
 struct {
 	int ncli;
