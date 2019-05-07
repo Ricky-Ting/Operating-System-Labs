@@ -58,7 +58,7 @@ int kcounter = 0;
 static void *kalloc(size_t size) {
 	//lock(&mylock);
 	kmt->spin_lock(&alloc_lk);
-	printf("In kalloc\n");
+	//printf("In kalloc\n");
 	kcounter++;
 	void * ret=NULL;
 	struct node_t * tmp = myhead;
@@ -81,7 +81,7 @@ static void *kalloc(size_t size) {
 	}
 	assert(kcounter==1);
 	kcounter--; 
-	printf("Out kalloc\n");
+	//printf("Out kalloc\n");
 	//unlock(&mylock);
 	kmt->spin_unlock(&alloc_lk);
 	if(ret == NULL) {
