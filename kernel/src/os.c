@@ -9,8 +9,8 @@ struct handler_node* handler_head = NULL;
 static void os_init() {
   pmm->init();
 	kmt->init();
-	// _vme_init(pmm->alloc, pmm->free);
-	//dev->init();
+	 _vme_init(pmm->alloc, pmm->free);
+	dev->init();
 	//vfs->init();
 }
 
