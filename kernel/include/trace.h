@@ -1,5 +1,6 @@
 #ifndef __TRACE_H__
 #define __TRACE_H__
+
 #ifdef TRACEME
 	#define TRACE_ENTRY printf("[trace] %s:entry\n", __func__)
 	#define TRACE_EXIT printf("[trace] %s:exit\n", __func__)
