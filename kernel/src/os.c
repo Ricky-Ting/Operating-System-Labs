@@ -26,8 +26,11 @@ void echo_task(void *name) {
 		sprintf(text, "Echo: %s.\n", line); tty_write(tty,0,text,strlen(text));
 	}
 }
+struct handler_node* handler_head;
+
 
 static void os_init() {
+	handler_head = NULL;
 	pmm->init();
 	kmt->init();
 	dev->init();
@@ -38,7 +41,6 @@ static void os_init() {
 	kmt->create(pmm->alloc(sizeof(task_t)), "print", echo_task, "tty4");
 
 };
-
 static void hello() {
   for (const char *ptr = "Hello from CPU #"; *ptr; ptr++) {
     _putc(*ptr);
