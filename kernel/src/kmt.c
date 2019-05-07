@@ -39,8 +39,10 @@ void kmt_spin_init(spinlock_t *lk, const char *name) {
 void kmt_spin_lock(spinlock_t *lk) {
 	TRACE_ENTRY;
 	pushcli();  // disable interrupts to avoid deadlock.
-	if(holding(lk))
-		panic("acquired!");	
+	if(holding(lk)) {
+		printf("acquired!\n");
+		assert(0);	
+	}
 	
 	// The xchg is atomic
 	while(_atomic_xchg(&lk->locked, 1) != 0)
@@ -60,8 +62,10 @@ void kmt_spin_lock(spinlock_t *lk) {
 
 void kmt_spin_unlock(spinlock_t *lk) {
 	TRACE_ENTRY;
-	if(!holding(lk))
-		panic("release");
+	if(!holding(lk)) {
+		printf("release\n");
+		assert(0);	
+	}
 
 	//lk->pcs[0] = 0;
 	lk->cpu = -1;
@@ -112,10 +116,14 @@ void pushcli(void) {
 }
 
 void popcli(void) {
-	if(_intr_read())
-		panic("popcli - interruptible");
-	if(--int_stack[_cpu()].ncli < 0)	
-		panic("popcli");
+	if(_intr_read()) {
+		printf("popcli - interruptible\n");
+		assert(0);
+	}
+	if(--int_stack[_cpu()].ncli < 0){
+		printf("popcli\n");
+		assert(0);
+	}
 	if(int_stack[_cpu()].ncli == 0 && int_stack[_cpu()].storedint)
 		_intr_write(1);
 }
