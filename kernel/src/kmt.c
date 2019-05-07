@@ -2,7 +2,8 @@
 #include <klib.h>
 
 int holding(spinlock_t *lock);
-
+void pushcli(void);
+void popcli(void);
 
 struct {
 	int ncli;
