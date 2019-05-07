@@ -59,7 +59,6 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			
 		current = iter;
 		return (iter->context);	
-	}
 }
 
 
