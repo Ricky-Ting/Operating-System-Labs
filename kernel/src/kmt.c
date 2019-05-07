@@ -40,9 +40,9 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
- 	
+ 	printf("List \n")	
 	while(iter!=NULL && iter->status!=TASK_READY) {
-			//printf("%s\b",iter->name);
+		printf("%s\b",iter->name);
 		iter = iter->next;
 	}
 	if(iter==NULL) {
@@ -58,7 +58,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		if(iter->next!=NULL)
 			iter->next->prev = iter->prev;
 		iter->next = NULL;
-		if(task_tail[_cpu()] != iter)
+		if(task_tail[_cpu()] != iter->prev)
 			iter->prev = task_tail[_cpu()];
 		task_tail[_cpu()] = iter;
 			
