@@ -32,7 +32,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		Can the ret be NULL?
 	*/
 	TRACE_ENTRY;
-	_Context *ret = NULL:
+	_Context *ret = NULL;
 	struct handler_node* iter = handler_head; 		
 	assert(iter!=NULL);
 	while(iter!=NULL) {
