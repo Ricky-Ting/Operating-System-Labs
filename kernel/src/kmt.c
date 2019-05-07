@@ -39,6 +39,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 }
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
+	assert(0);
 	task_t *iter = task_head[_cpu()];
 	printf("This is cpu %d\n",_cpu());
  	 
@@ -65,15 +66,16 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
-	printf("%s on cpu%d\n",name, _cpu());
+	task->bind_cpu = rand() % MAXCPU;	
+
+	printf("%s on cpu%d\n",name, task->bind_cpu);
 	_Area this_stack;
 	task->name = name;
 	task->stack = pmm->alloc(STACK_SIZE);
 	this_stack.start = task->stack;
 	this_stack.end = task->stack + STACK_SIZE; 
 		
-	task->bind_cpu = rand() % MAXCPU;	
-	//task->bind_cpu = _cpu();	
+		//task->bind_cpu = _cpu();	
 	task->status = 0;
 	task->context = _kcontext(this_stack, entry, arg); 
 	
