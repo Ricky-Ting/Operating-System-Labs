@@ -183,7 +183,7 @@ void kmt_sem_wait(sem_t *sem) {
 	TRACE_ENTRY;
 	sem->count--;
 	//printf("Here %d %d\n",sem->tail, sem->head);
-	while(sem->count<0) {
+	if(sem->count<0) {
 		// In queue
 		if(current->status!=TASK_SLEEP) {
 			sem->queue[sem->tail] = current;
