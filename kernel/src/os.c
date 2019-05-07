@@ -1,6 +1,6 @@
 #include <common.h>
 #include <klib.h>
-
+#include <devices.h>
 void mytest(void);
 
 void fa() {
