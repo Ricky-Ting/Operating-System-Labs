@@ -1,6 +1,7 @@
 #include <common.h>
 #include <klib.h>
 
+#include <kmt.h>
 
 struct {
 	int ncli;
@@ -97,7 +98,7 @@ void pushcli(void) {
 	
 }
 
-void pushcli(void) {
+void popcli(void) {
 	if(_intr_read())
 		panic("popcli - interruptible");
 	if(--int_stack[_cpu()].ncli < 0)	
