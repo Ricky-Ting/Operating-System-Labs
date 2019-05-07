@@ -5,6 +5,7 @@
 #include <nanos.h>
 #include <trace.h>
 
+#define TRACEME
 
 #define STACK_SIZE 4096
 #define MAXCPU 16
