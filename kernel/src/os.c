@@ -24,8 +24,8 @@ static void os_init() {
 	//_vme_init(pmm->alloc, pmm->free);
 	dev->init();
 	//vfs->init();
-	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
-	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
+	kmt->create(pmm->alloc(sizeof(task_t)), "a", tty->ops->read, NULL);
+	kmt->create(pmm->alloc(sizeof(task_t)), "b", tty->ops->write, NULL);
 };
 
 static void hello() {
