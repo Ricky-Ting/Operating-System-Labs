@@ -22,10 +22,10 @@ static void os_init() {
   pmm->init();
 	kmt->init();
 	//_vme_init(pmm->alloc, pmm->free);
-	//dev->init();
+	dev->init();
 	//vfs->init();
-	kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
-	kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
+	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
+	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 };
 
 static void hello() {
