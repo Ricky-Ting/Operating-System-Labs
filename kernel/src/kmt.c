@@ -156,7 +156,6 @@ void kmt_spin_unlock(spinlock_t *lk) {
 }
 
 void kmt_sem_init(sem_t *sem, const char *name, int value){
-	assert(0);
 	kmt_spin_init(&sem->lock, name);
 	sem->count = value;
 	sem->name = name;
@@ -167,6 +166,7 @@ void kmt_sem_init(sem_t *sem, const char *name, int value){
 }
 
 void kmt_sem_wait(sem_t *sem) {
+	assert(0);
 	kmt_spin_lock(&sem->lock);
 	sem->count--;
 	while(sem->count<0) {
