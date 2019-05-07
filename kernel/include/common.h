@@ -16,7 +16,7 @@ struct task {
 	int bind_cpu;
 	uint8_t fence1[32];
 	//uint8_t stack[STACK_SIZE];
-	void * statck;
+	void * stack;
 	uint8_t fence2[32];
 };
 struct spinlock {
