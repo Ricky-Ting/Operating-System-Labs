@@ -9,7 +9,7 @@
 	#define TRACE_EXIT ((void)0)
 #endif
 
-
+/*
 
 #ifdef NDEBUG
 	#define assert(ignore) ((void)0)
@@ -22,5 +22,5 @@
 			} \
 		} while(0)
 #endif
-
+*/
 #endif
