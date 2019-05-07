@@ -50,7 +50,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		Can the ret be NULL?
 	*/
 	TRACE_ENTRY;
-	printf("Event: %d\n", ev.event);
+	//printf("Event: %d\n", ev.event);
 	_Context *ret = NULL;
 	struct handler_node* iter = handler_head; 		
 	assert(iter!=NULL);
@@ -62,7 +62,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 		}
 		iter = iter->next;
 	}		
-
+	assert(ret!=NULL)
 	TRACE_EXIT;	
   return ret;
 }
