@@ -35,8 +35,8 @@ void kmt_init() {
 	}
 	memset(int_stack, 0, sizeof(int_stack));
 
-	os->on_irq(INT_MIN, _EVENT_NULL, kmt_context_save); 
-	os->on_irq(INT_MAX, _EVENT_NULL, kmt_context_switch);
+	os->on_irq(INT32_MIN, _EVENT_NULL, kmt_context_save); 
+	os->on_irq(INT32_MAX, _EVENT_NULL, kmt_context_switch);
 }
 
 _Context* kmt_context_save(_Event event, _Context * context) {
