@@ -187,11 +187,11 @@ void kmt_sem_wait(sem_t *sem) {
 		if(current->status!=TASK_SLEEP) {
 			sem->queue[sem->tail] = current;
 			if( (sem->tail + 1)%MAXQ == sem->head ) {
-				printf("%d %d\n",sem->tail, sem->head);
+				printf("%d %d %s\n",sem->tail, sem->head, sem->name);
 				assert(0);
 			}
 			sem->tail = (sem->tail + 1) % MAXQ;
-			printf("%d %d\n",sem->tail, sem->head);
+			printf("%d %d %s\n",sem->tail, sem->head, sem->name);
 
 			current->status = TASK_SLEEP;	
 			printf("%s to sleep\n", current->name);
@@ -211,7 +211,7 @@ void kmt_sem_signal(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
-		printf("Here %d %d\n",sem->tail, sem->head);
+		printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
 		sem->queue[sem->head]->status = TASK_READY;
 		printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
