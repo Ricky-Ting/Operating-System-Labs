@@ -47,7 +47,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			//printf("%s\b",iter->name);
 			iter = iter->next;
 		}
-	while(iter == NULL);	
+	}while(iter == NULL);	
 	
 		if(iter->prev!=NULL)
 			iter->prev->next = iter->next;
