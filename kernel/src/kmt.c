@@ -49,6 +49,9 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		printf("Schedule %s\n",current->name);
 		return context;	
 	}	else {
+		if(task_head[_cpu()] == iter && iter->next!=NULL) {
+			task_head[_cpu()] = iter->next;
+		}
 		if(iter->prev!=NULL)
 			iter->prev->next = iter->next;
 		if(iter->next!=NULL)
