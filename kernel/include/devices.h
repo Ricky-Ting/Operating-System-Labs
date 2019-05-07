@@ -103,4 +103,5 @@ typedef struct {
 
 extern char keymap[], keymap_shift[];
 
+ssize_t tty_write(device_t *dev, off_t offset, const void *buf, size_t count);
 #define TERM_FONT font_sans
