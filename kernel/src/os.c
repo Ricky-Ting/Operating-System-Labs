@@ -3,6 +3,12 @@
 
 void mytest(void);
 
+void fa() {
+	_putc('a');
+}
+void fb() {
+	_putc('b');
+}
 
 struct handler_node* handler_head = NULL;
 
@@ -10,10 +16,10 @@ static void os_init() {
   pmm->init();
 	kmt->init();
 	//_vme_init(pmm->alloc, pmm->free);
-	dev->init();
+	//dev->init();
 	//vfs->init();
-	//kmt->create(pmm->alloc(sizeof(task_t)), "input-task", input_task, NULL);
-	//kmt->create(pmm->alloc(sizeof(task_t)), "tty-task", tty_task, NULL)
+	kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
+	kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL)
 };
 
 static void hello() {
