@@ -34,7 +34,7 @@ static _Context *os_trap(_Event ev, _Context *context) {
 	TRACE_ENTRY;
 	_Context *ret = NULL;
 	struct handler_node* iter = handler_head; 		
-	assert(iter!=NULL);
+	//assert(iter!=NULL);
 	while(iter!=NULL) {
 		if(iter->event==_EVENT_NULL || iter->event == ev.event) {
 			_Context *next = iter->handler(ev, context);
