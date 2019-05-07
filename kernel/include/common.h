@@ -9,12 +9,15 @@
 #define STACK_SIZE 4096
 #define MAXCPU 16
 typedef unsigned int uint;
-
+#define TASK_READY 0
+#define TASK_RUNNING 1
+#define TASK_SLEEP 2
+#define MAXQ 2000
 struct task {
 	const char *name;
 	_Context *context;
 	int bind_cpu;
-	int status; /* 0: ready */
+	int status; /* 0: ready  1: running 2: sleep*/
 	uint8_t fence1[32];
 	//uint8_t stack[STACK_SIZE];
 	void * stack;
@@ -32,7 +35,14 @@ struct spinlock {
 										// that locked the lock.
 	
 };
-struct semaphore {};
+struct semaphore {
+	spinlock_t lock;
+	int count;
+	const char *name;
+	task_t* queue[MAXQ];		
+	int head;
+	int tail;
+};
 
 
 

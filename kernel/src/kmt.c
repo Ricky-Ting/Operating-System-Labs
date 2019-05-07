@@ -42,12 +42,13 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
 	printf("This is cpu %d\n",_cpu());
  	 
-	while(iter!=NULL && iter->status!=0) {
+	while(iter!=NULL && iter->status!=TASK_READY) {
 		printf("%s\b",iter->name);
 		iter = iter->next;
 	}	
 	if(iter==NULL) {
 		printf("NO other tasks on this cpu %d\n", _cpu());
+		//current->status = TASK_RUNNING;
 		return context;
 	} else {
 		if(iter->prev!=NULL)
@@ -57,6 +58,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		iter->next = NULL;
 		iter->prev = task_tail[_cpu()];
 		task_tail[_cpu()] = iter;
+			
 		current = iter;
 		return (iter->context);	
 	}
@@ -76,7 +78,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	this_stack.end = task->stack + STACK_SIZE; 
 		
 		//task->bind_cpu = _cpu();	
-	task->status = 0;
+	task->status = TASK_READY;
 	task->context = _kcontext(this_stack, entry, arg); 
 	
 	task->next = task_head[task->bind_cpu];
@@ -153,15 +155,40 @@ void kmt_spin_unlock(spinlock_t *lk) {
 }
 
 void kmt_sem_init(sem_t *sem, const char *name, int value){
-
+	kmt_spin_init(&sem->lock);
+	sem->count = value;
+	sem->name = name;
+	for(int i=0;i<MAXQ;i++)
+		sem->queue[i]=NULL;
+	sem->head = 0;
+	sem->tail = 0;
 }
 
 void kmt_sem_wait(sem_t *sem) {
+	kmt_spin_lock(&sem->lock);
+	sem->count--;
+	while(sem->count<0) {
+		// In queue
+		sem->queue[sem->tail] = current;
+		sem->tail++;
+		current->status = TASK_SLEEP;	
+		kmt_spin_unlock(&sem->lock);
+		_yield();
+		kmt_spin_lock(&sem->lock);
+	}
 
+	kmt_spin_unlock(&sem->lock);
 }
 
 void kmt_sem_signal(sem_t *sem) {
-
+	kmt_spin_lock(&sem->lock);
+	sem->count++;
+	if(sem->queue[sem->head]!=NULL) {
+		sem->queue[sem->head]->status = TASK_READY;
+		sem->queue[sem->head] = NULL;
+		sem->head = (sem->head + 1) % MAXQ;
+	}	
+	kmt_spin_unlock(&sem->lock);
 }
 
 
