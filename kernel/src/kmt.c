@@ -65,7 +65,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
-	printf("%s\n",name);
+	printf("%s on cpu%d\n",name, _cpu());
 	_Area this_stack;
 	task->name = name;
 	task->stack = pmm->alloc(STACK_SIZE);
