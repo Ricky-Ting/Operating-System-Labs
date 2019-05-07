@@ -166,7 +166,6 @@ void kmt_sem_init(sem_t *sem, const char *name, int value){
 }
 
 void kmt_sem_wait(sem_t *sem) {
-	assert(0);
 	kmt_spin_lock(&sem->lock);
 	sem->count--;
 	while(sem->count<0) {
