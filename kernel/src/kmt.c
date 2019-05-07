@@ -38,7 +38,6 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 }
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
-	assert(0);
 	task_t *iter = task_head[_cpu()];
 	//printf("This is cpu %d\n",_cpu());
  	printf("List \n");
