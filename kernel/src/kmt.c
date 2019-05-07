@@ -192,10 +192,10 @@ void kmt_sem_wait(sem_t *sem) {
 				assert(0);
 			}
 			sem->tail = (sem->tail + 1) % MAXQ;
-			printf("%d %d %s\n",sem->tail, sem->head, sem->name);
+			//printf("%d %d %s\n",sem->tail, sem->head, sem->name);
 
 			current->status = TASK_SLEEP;	
-			printf("%s to sleep\n", current->name);
+			//printf("%s to sleep\n", current->name);
 		}
 		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
@@ -204,7 +204,7 @@ void kmt_sem_wait(sem_t *sem) {
 		TRACE_ENTRY;
 	}
 	TRACE_EXIT;
-	printf("%s get the lock %s\n", current->name, sem->name);
+	//printf("%s get the lock %s\n", current->name, sem->name);
 	kmt_spin_unlock(&sem->lock);
 }
 
@@ -214,13 +214,13 @@ void kmt_sem_signal(sem_t *sem) {
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
 		sem->queue[sem->head]->status = TASK_READY;
-		printf("Wake %s\n", sem->queue[sem->head]->name);
+		//printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
 		sem->head = (sem->head + 1) % MAXQ;
-		printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
+		//printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
 
 	}	
-	printf("%s release the lock %s\n", current->name, sem->name);
+	//printf("%s release the lock %s\n", current->name, sem->name);
 
 	kmt_spin_unlock(&sem->lock);
 	TRACE_ENTRY;
