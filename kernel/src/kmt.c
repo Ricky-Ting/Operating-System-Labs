@@ -59,8 +59,10 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		if(iter->next!=NULL)
 			iter->next->prev = iter->prev;
 		iter->next = NULL;
-		if(task_tail[_cpu()] != iter->prev)
+		if(task_tail[_cpu()] != iter->prev) {
 			iter->prev = task_tail[_cpu()];
+			task_tail[_cpu()]->next = iter;
+		}
 		task_tail[_cpu()] = iter;
 			
 		current = iter;
@@ -95,12 +97,6 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	}
 	task_head[task->bind_cpu] = task;			
 	
-	task_t * itera = task_head[_cpu()];
-	printf("Start\n");
-	while(itera!=NULL) {
-		printf(":%s\n",itera->name);
-		itera = itera->next;
-	}
 
 	return 1;
 	TRACE_EXIT;
