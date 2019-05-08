@@ -19,15 +19,16 @@ task_t* current_task[MAXCPU];
 task_t* task_head[MAXCPU];
 task_t* task_tail[MAXCPU];
 spinlock_t create_lock;
+spinlock_t task_lk[MAXCPU];
 int next_cpu = 0;
 void kmt_init() {
-	
+	memset(int_stack, 0, sizeof(int_stack));
 	for(int i=0; i<MAXCPU; i++) {
 		current_task[i] = NULL;	
 		task_head[i] = NULL;
 		task_tail[i] = NULL;
+		kmt_spin_init(&task_lk[i],"task-lk");
 	}
-	memset(int_stack, 0, sizeof(int_stack));
 	kmt_spin_init(&create_lock, "create-lock");
 	os->on_irq(INT32_MIN, _EVENT_NULL, kmt_context_save); 
 	os->on_irq(INT32_MAX, _EVENT_NULL, kmt_context_switch);
@@ -44,6 +45,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 }
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
+	//kmt_spin_lock(&task_lk[_cpu()]);
 	task_t *iter = task_head[_cpu()];
 	_Context* ret;
 	//assert(0);
@@ -102,7 +104,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		ret = (iter->context);	
 	}
 	//printf("%d CPU out switch\n",_cpu());
-
+	//kmt_spin_unlock(&task_lk[_cpu()]);
 	return ret;
 }
 
@@ -112,6 +114,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	kmt_spin_lock(&create_lock);
 	printf("In lock\n");
 	task->bind_cpu = next_cpu % _ncpu();	
+	//kmt_spin_lock(&task_lk[task->bind_cpu]);
 	next_cpu = (next_cpu + 1) % _ncpu();
 	printf("CPU: %d\n", _ncpu());
 	printf("next : %d\n", next_cpu);
@@ -136,7 +139,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 		task_tail[task->bind_cpu] = task; 
 	}
 	task_head[task->bind_cpu] = task;			
-	
+	//kmt_spin_unlock(&task_lk[task->bind_cpu]);
 	kmt_spin_unlock(&create_lock);
 	printf("Out lock\n");
 	return 1;
@@ -144,7 +147,14 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 }
 
 void kmt_teardown(task_t *task) {
+	//kmt_spin_lock(&create_lock);
+	//int bind_cpu = task->bind_cpu;
+	//kmt_spin_lock(&task_lk[bind_cpu]);
 	pmm->free(task->stack);
+
+	//kmt_spin_unlock(&task_lk[bind_cpu]);
+	//kmt_spin_unlock(&create_lock);
+
 }
 
 
