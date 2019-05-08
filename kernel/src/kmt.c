@@ -93,6 +93,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	kmt_spin_lock(&create_lock);
 	task->bind_cpu = next_cpu % _ncpu();	
 	next_cpu = (next_cpu + 1) & _ncpu();
+	printf("CPU: %d\n", _ncpu());
 	printf("next : %d\n", next_cpu);
 	//rand();
 
