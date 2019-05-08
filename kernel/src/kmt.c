@@ -146,7 +146,7 @@ void kmt_spin_lock(spinlock_t *lk) {
 	// references happen after the lock is acquired.
 	__sync_synchronize();
 
-	printf("%s get spin lock %s\n",current->name, lk->name);
+	//printf("%s get spin lock %s\n",current->name, lk->name);
 	// Record info about lock acquisition for debugging.
 	lk->cpu = _cpu();
 		
@@ -174,7 +174,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 	// This code can't use a C assignment, since it might
 	// not be atomic. A real OS would use C atmoics here.
 	asm volatile("movl $0, %0" : "+m" (lk->locked) :);
-	printf("%s realease spin lock %s\n", current->name, lk->name);	
+	//printf("%s realease spin lock %s\n", current->name, lk->name);	
 	popcli();
 	//TRACE_EXIT;
 }
@@ -228,6 +228,7 @@ void kmt_sem_signal(sem_t *sem) {
 	kmt_spin_lock(&sem->lock);
 	sem->count++;
 	if(sem->queue[sem->head]!=NULL) {
+		assert(sem->count<=0);
 		sem->queue[sem->head]->status = TASK_READY;
 		//printf("Wake %s\n", sem->queue[sem->head]->name);
 		sem->queue[sem->head] = NULL;
