@@ -93,7 +93,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			iter = iter->next;
 		if(iter==NULL) {
 			iter = task_head[_cpu()];
-			while(iter!=NULL || iter->status!=TASK_READY)
+			while(iter!=NULL && iter->status!=TASK_READY)
 				iter = iter->next;
 		}	
 		assert(iter!=NULL);
