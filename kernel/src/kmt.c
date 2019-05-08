@@ -91,6 +91,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
 	kmt_spin_lock(&create_lock);
+	printf("In lock\n");
 	task->bind_cpu = next_cpu % _ncpu();	
 	next_cpu = (next_cpu + 1) & _ncpu();
 	printf("CPU: %d\n", _ncpu());
@@ -118,6 +119,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	task_head[task->bind_cpu] = task;			
 	
 	kmt_spin_unlock(&create_lock);
+	printf("Out lock\n");
 	return 1;
 	TRACE_EXIT;
 }
