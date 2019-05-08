@@ -146,6 +146,7 @@ void kmt_spin_lock(spinlock_t *lk) {
 	// references happen after the lock is acquired.
 	__sync_synchronize();
 
+	printf("%s get spin lock %s",current->name, lk->name);
 	// Record info about lock acquisition for debugging.
 	lk->cpu = _cpu();
 		
@@ -173,7 +174,7 @@ void kmt_spin_unlock(spinlock_t *lk) {
 	// This code can't use a C assignment, since it might
 	// not be atomic. A real OS would use C atmoics here.
 	asm volatile("movl $0, %0" : "+m" (lk->locked) :);
-	
+	printf("%s realease spin lock %s", current->name, lk->name);	
 	popcli();
 	//TRACE_EXIT;
 }
