@@ -98,7 +98,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		}	
 		assert(iter!=NULL);
 		current = iter;
-		printf("Schedule %s\n",current->name);
+		//printf("Schedule %s\n",current->name);
 		ret = (iter->context);	
 	}
 	//printf("%d CPU out switch\n",_cpu());
