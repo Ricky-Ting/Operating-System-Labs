@@ -42,6 +42,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
+	/*
 	for(int i=0; i<MAXCPU; i++) {
 		printf("CPU %d:\n",i);
 		task_t * it = task_head[i];
@@ -50,7 +51,8 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			it = it->next;
 		}
 	}
-	assert(0);
+	*/
+	//assert(0);
 	//printf("This is cpu %d\n",_cpu());
  	//printf("List \n");
 
@@ -206,6 +208,8 @@ void kmt_sem_wait(sem_t *sem) {
 			current->status = TASK_SLEEP;	
 			//printf("%s to sleep\n", current->name);
 		}
+		else 
+			assert(0);
 		TRACE_EXIT;
 		kmt_spin_unlock(&sem->lock);
 		while(current->status == TASK_SLEEP)
