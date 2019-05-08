@@ -220,10 +220,12 @@ void kmt_sem_wait(sem_t *sem) {
 		kmt_spin_unlock(&sem->lock);
 		while(current->status == TASK_SLEEP)
 			_yield();
+		kmt_spin_lock(&sem->lock);
 		TRACE_ENTRY;
 	}
 	TRACE_EXIT;
 	printf("%s get the lock %s\n", current->name, sem->name);
+	kmt_spin_unlock(&sem->lock);
 }
 
 void kmt_sem_signal(sem_t *sem) {
