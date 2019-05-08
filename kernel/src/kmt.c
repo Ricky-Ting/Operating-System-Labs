@@ -42,6 +42,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
+	_Context* ret;
 	//assert(0);
 	/*
 	for(int i=0; i<MAXCPU; i++) {
@@ -56,14 +57,14 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 	//assert(0);
 	//printf("This is cpu %d\n",_cpu());
  	//printf("List \n");
-
+	printf("%d CPU in switch!\n",_cpu());
 	while(iter!=NULL && iter->status!=TASK_READY) {
 		//printf("%s\n",iter->name);
 		iter = iter->next;
 	}
 	if(iter==NULL) {
 		//printf("Schedule %s\n",current->name);
-		return context;	
+		ret = context;	
 	}	else {
 		if(task_tail[_cpu()]!=iter) {
 			if(task_head[_cpu()] == iter && iter->next!=NULL) {
@@ -83,8 +84,11 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		}	
 		current = iter;
 		printf("Schedule %s\n",current->name);
-		return (iter->context);	
+		ret = (iter->context);	
 	}
+	printf("%d CPU out switch\n",_cpu());
+
+	return ret;
 }
 
 
