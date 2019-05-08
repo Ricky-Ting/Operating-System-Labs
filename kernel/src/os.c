@@ -33,7 +33,7 @@ static void os_init() {
 	handler_head = NULL;
 	pmm->init();
 	kmt->init();
-	//dev->init();
+	dev->init();
 	//vfs->init();
 	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
