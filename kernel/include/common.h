@@ -7,7 +7,7 @@
 
 
 #define STACK_SIZE (4096*1024)
-#define MAXCPU 16
+#define MAXCPU 32
 typedef unsigned int uint;
 #define TASK_READY 0
 #define TASK_RUNNING 1
