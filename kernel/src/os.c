@@ -55,7 +55,7 @@ static void os_run() {
   _intr_write(1);
 	//mytest();
   while (1) {
-		printf("CPU:%d\n",_cpu());
+		//printf("CPU:%d\n",_cpu());
     _yield();
   }
 	
