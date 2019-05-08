@@ -58,8 +58,8 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 	}
 	*/
 	//assert(0);
-	printf("This is cpu %d\n",_cpu());
- 	printf("List \n");
+	//printf("This is cpu %d\n",_cpu());
+ 	//printf("List \n");
 	//printf("%d CPU in switch!\n",_cpu());
 	while(iter!=NULL && iter->status!=TASK_READY) {
 		//printf("%s\n",iter->name);
