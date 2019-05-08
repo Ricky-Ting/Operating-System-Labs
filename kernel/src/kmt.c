@@ -36,7 +36,7 @@ void kmt_init() {
 _Context* kmt_context_save(_Event event, _Context * context) {
 
 	if(current)	{
-		printf("%s\n", current->name);
+		//printf("%s\n", current->name);
 		//assert(current->context == context);
 		current->context = context;
 	}
