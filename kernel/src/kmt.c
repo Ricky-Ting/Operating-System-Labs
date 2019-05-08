@@ -28,7 +28,6 @@ void kmt_init() {
 		task_tail[i] = NULL;
 	}
 	memset(int_stack, 0, sizeof(int_stack));
-	next_cpu = 0;	
 	kmt_spin_init(&create_lock, "create-lock");
 	os->on_irq(INT32_MIN, _EVENT_NULL, kmt_context_save); 
 	os->on_irq(INT32_MAX, _EVENT_NULL, kmt_context_switch);
@@ -94,6 +93,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	kmt_spin_lock(&create_lock);
 	task->bind_cpu = next_cpu % _ncpu();	
 	next_cpu = (next_cpu + 1) & _ncpu();
+	printf("next : %d\n", next_cpu);
 	//rand();
 
 	printf("%s on cpu%d\n",name, task->bind_cpu);
