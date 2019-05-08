@@ -83,7 +83,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			task_tail[_cpu()] = iter;
 		}	
 		current = iter;
-		printf("Schedule %s\n",current->name);
+		//printf("Schedule %s\n",current->name);
 		ret = (iter->context);	
 	}
 	//printf("%d CPU out switch\n",_cpu());
@@ -229,7 +229,7 @@ void kmt_sem_wait(sem_t *sem) {
 		TRACE_ENTRY;
 	}
 	TRACE_EXIT;
-	printf("%s get the lock %s\n", current->name, sem->name);
+	//printf("%s get the lock %s\n", current->name, sem->name);
 	kmt_spin_unlock(&sem->lock);
 }
 
@@ -246,7 +246,7 @@ void kmt_sem_signal(sem_t *sem) {
 		//printf("Here %d %d %s\n",sem->tail, sem->head, sem->name);
 
 	}	
-	printf("%s release the lock %s\n", current->name, sem->name);
+	//printf("%s release the lock %s\n", current->name, sem->name);
 
 	kmt_spin_unlock(&sem->lock);
 	TRACE_ENTRY;
