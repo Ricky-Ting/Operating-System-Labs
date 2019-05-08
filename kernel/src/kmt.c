@@ -42,6 +42,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 
 _Context* kmt_context_switch(_Event event, _Context * context) {
 	task_t *iter = task_head[_cpu()];
+	assert(0);
 	/*
 	for(int i=0; i<MAXCPU; i++) {
 		printf("CPU %d:\n",i);
