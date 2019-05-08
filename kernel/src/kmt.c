@@ -19,6 +19,7 @@ task_t* current_task[MAXCPU];
 task_t* task_head[MAXCPU];
 task_t* task_tail[MAXCPU];
 spinlock_t create_lock;
+int next_cpu = 0;
 void kmt_init() {
 	
 	for(int i=0; i<MAXCPU; i++) {
@@ -27,14 +28,15 @@ void kmt_init() {
 		task_tail[i] = NULL;
 	}
 	memset(int_stack, 0, sizeof(int_stack));
-	
+	next_cpu = 0;	
 	kmt_spin_init(&create_lock, "create-lock");
 	os->on_irq(INT32_MIN, _EVENT_NULL, kmt_context_save); 
 	os->on_irq(INT32_MAX, _EVENT_NULL, kmt_context_switch);
 }
 
 _Context* kmt_context_save(_Event event, _Context * context) {
-	//assert(0);
+	assert(0);
+
 	if(current)	
 		current->context = context;
 	return context;				
@@ -90,8 +92,9 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * arg) {
 	TRACE_ENTRY;
 	kmt_spin_lock(&create_lock);
-	task->bind_cpu = rand() % _ncpu();	
-	rand();
+	task->bind_cpu = next_cpu % _ncpu();	
+	next_cpu = (next_cpu + 1) & _ncpu();
+	//rand();
 
 	printf("%s on cpu%d\n",name, task->bind_cpu);
 	_Area this_stack;
