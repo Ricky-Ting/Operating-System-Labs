@@ -37,7 +37,7 @@ _Context* kmt_context_save(_Event event, _Context * context) {
 
 	if(current)	{
 		printf("%s\n", current->name);
-		assert(current->context == context);
+		//assert(current->context == context);
 		current->context = context;
 	}
 	return context;				
@@ -69,6 +69,7 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 		//printf("Schedule %s\n",current->name);
 		ret = context;	
 	}	else {
+		/*	
 		if(task_tail[_cpu()]!=iter) {
 			if(task_head[_cpu()] == iter && iter->next!=NULL) {
 				//printf("Here\n");
@@ -85,6 +86,17 @@ _Context* kmt_context_switch(_Event event, _Context * context) {
 			}
 			task_tail[_cpu()] = iter;
 		}	
+
+		*/
+		iter = current->next;
+		while(iter!=NULL && iter->status!=TASK_READY)
+			iter = iter->next;
+		if(iter==NULL) {
+			iter = list_head[_cpu()];
+			while(iter!=NULL || iter->status!=TASK_READY)
+				iter = iter->next;
+		}	
+		assert(iter!=NULL);
 		current = iter;
 		//printf("Schedule %s\n",current->name);
 		ret = (iter->context);	
