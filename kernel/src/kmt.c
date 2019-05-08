@@ -35,7 +35,6 @@ void kmt_init() {
 
 _Context* kmt_context_save(_Event event, _Context * context) {
 	//assert(0);
-	assert(0);
 	if(current)	
 		current->context = context;
 	return context;				
