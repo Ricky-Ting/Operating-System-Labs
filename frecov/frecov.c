@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <assert.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 int fd;
 
