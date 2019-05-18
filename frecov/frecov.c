@@ -173,7 +173,7 @@ static inline int search_in_entry(void * entry_start) {
 			//dup2(pipe1[1],1);
 			dup2(pipe2[0],0);
 			char buff;
-			scanf("%c",buff);
+			scanf("%c",&buff);
 			printf("%c\n", buff);
 			//execvp("sha1sum", myenv);
 			printf("Shouldn't be here !\n");
