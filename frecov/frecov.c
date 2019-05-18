@@ -182,7 +182,7 @@ static inline int search_in_entry(void * entry_start) {
 			//write(pipe2[1],file_start, filesz);
 			int ret =write(pipe2[1],"hello",6);
 			printf("h%d\n",ret);
-			read(pipe1[0],shasum, MAXBUF-1);	
+			read(pipe1[0],shasum, 5);	
 			printf("hh\n");
 			printf("%s \t %s\n", shasum,filename);	
 
