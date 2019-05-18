@@ -164,6 +164,7 @@ static inline int search_in_entry(void * entry_start) {
 		void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
 		FILE * ffd = fopen(filename, "wb");
 		fwrite(file_start, filesz, 1, ffd);	
+		fclose(ffd);
 		char command[MAXBUF];
 		sprintf(command, "sha1sum %s", filename);
 		system(command);
