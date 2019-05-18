@@ -94,10 +94,10 @@ static inline int search_in_entry(void * entry_start) {
 		if(!( *((uint8_t *)(entry_start + 0x8)) == 0x42 &&  *((uint8_t *)(entry_start + 0x9)) == 0x4D && *((uint8_t *)(entry_start + 0xa)) == 0x50 )  ) {
 			return 1;
 		}
+		char filename[MAXBUF];
+		filename[0] = '\0';
 
 		if(*((uint8_t *)(entry_start + 0x6)) != 0x7e) {
-			char filename[MAXBUF];
-			filename[0] = '\0';
 			char ch;
 			for(int i=0;i<8;i++) {
 				ch = (char)(*(uint8_t*)(entry_start + i));	
@@ -112,8 +112,6 @@ static inline int search_in_entry(void * entry_start) {
 			void * tmp_entry_start = entry_start;
 			uint8_t checksum = *((uint8_t *)(entry_start - 32 + 0xd));
 			//uint16_t filename[MAXBUF];
-			char filename[MAXBUF];
-			filename[0] = '\0';
 			uint16_t ch;
 			int current = 0;
 			do {
