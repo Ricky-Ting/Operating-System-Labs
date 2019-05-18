@@ -90,7 +90,7 @@ static inline int search_in_entry(void * entry_start) {
 	if(entry_start+32>img_start+len)
 		return 0;
 		
-	if(*((uint8_t *)(entry_start + 0xB)) != 0x0f) {
+	if(*((uint8_t *)(entry_start + 0xB)) != 0x0f && *((uint8_t *)(entry_start + 0x6)) != 0x7e) {
 		if(!( *((uint8_t *)(entry_start + 0x8)) == 0x42 &&  *((uint8_t *)(entry_start + 0x9)) == 0x4D && *((uint8_t *)(entry_start + 0xa)) == 0x50 )  ) {
 			return 1;
 		}
