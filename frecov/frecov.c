@@ -90,24 +90,67 @@ static inline int search_in_entry(void * entry_start) {
 	if(entry_start+32>img_start+len)
 		return 0;
 		
-	if(*((uint8_t *)(entry_start + 0xB)) != 0x0f && *((uint8_t *)(entry_start + 0x6)) != 0x7e) {
+	if(*((uint8_t *)(entry_start + 0xB)) != 0x0f) {
 		if(!( *((uint8_t *)(entry_start + 0x8)) == 0x42 &&  *((uint8_t *)(entry_start + 0x9)) == 0x4D && *((uint8_t *)(entry_start + 0xa)) == 0x50 )  ) {
 			return 1;
 		}
 
-		char filename[MAXBUF];
-		filename[0] = '\0';
-		char ch;
-		for(int i=0;i<8;i++) {
-			ch = (char)(*(uint8_t*)(entry_start + i));	
-			if(ch == ' ')
-				break;
-			filename[i] = ch;
-			filename[i+1] = '\0';
+		if(*((uint8_t *)(entry_start + 0x6)) != 0x7e) {
+			char filename[MAXBUF];
+			filename[0] = '\0';
+			char ch;
+			for(int i=0;i<8;i++) {
+				ch = (char)(*(uint8_t*)(entry_start + i));	
+				if(ch == ' ')
+					break;
+				filename[i] = ch;
+				filename[i+1] = '\0';
+			}
+			printf("%s.bmp\n",filename);
+		} else {
+			tmp_entry_start = entry_start;
+			uint8_t checksum = *((uint8_t *)(entry_start - 32 + 0xd));
+			//uint16_t filename[MAXBUF];
+			char filename[MAXBUF];
+			filename[0] = '\0';
+			uint16_t ch;
+			int current = 0;
+			do {
+				tmp_entry_start -= 32;
+				if(checksum!=  *((uint8_t *)(tmp_entry_start + 0xd)) ) {	
+					if(*((uint8_t *)(tmp_entry_start)) != 0xe5) 
+						return 1;
+					break;
+				}
+				for(int i=0;i<5;i++) {
+					ch = *((uint16_t *)(tmp_entry_start + i*2 + 1));
+					if(ch==0x0000)
+						break;	
+					filename[current++] = ch&0xff;
+					filename[current] = '\0';
+				}
+				for(int i=0;i<6;i++) {
+					ch = *((uint16_t *)(tmp_entry_start + 0xe +i*2));
+					if(ch==0xffff)
+						break;	
+					filename[current++] = ch&0xff;
+					filename[current] = '\0';
+				}
+				for(int i=0;i<2;i++) {
+					ch = *((uint16_t *)(tmp_entry_start + 0x1c +i*2));
+					if(ch==0xffff)
+						break;	
+					filename[current++] = ch&0xff;
+					filename[current++] = '\0';
+				}
+				
+			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 )
+			printf("%s\n",filename);
+
 		}
-		printf("%s.bmp\n",filename);
 	
-	}
+	} 
+
 
 
 	return 1;
