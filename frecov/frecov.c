@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <stdint.h>
 
+#define MAXBUF 256
+
 #define BytesPerSectorOff 0x0B
 #define SectorsPerClusterOff 0x0D
 #define ReservedSectorOff 0x0e
