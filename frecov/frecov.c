@@ -153,9 +153,9 @@ static inline int search_in_entry(void * entry_start) {
 		}
 
 
-		//uint32_t filesz = *(uint32_t *)(entry_start + 0x1c);
-		//uint32_t file_cluster = (((uint32_t)(*(uint16_t *)(entry_start + 0x14)))<<16)  +  (((uint32_t)(*(uint16_t *)(entry_start + 0x1a)))&0xffff);
-		//void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
+		uint32_t filesz = *(uint32_t *)(entry_start + 0x1c);
+		uint32_t file_cluster = (((uint32_t)(*(uint16_t *)(entry_start + 0x14)))<<16)  +  (((uint32_t)(*(uint16_t *)(entry_start + 0x1a)))&0xffff);
+		void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
 		//FILE * ffd = fopen(filename, "wb");
 		//fwrite(file_start, filesz, 1, ffd);	
 	
@@ -169,18 +169,14 @@ static inline int search_in_entry(void * entry_start) {
 		pid_t pid = fork();
 		char shasum[MAXBUF];
 		if(pid==0) {
-			//char* myenv[4] = {"sha1sum", "-c","-", NULL}; 
+			char* myenv[4] = {"sha1sum", "-b","-", NULL}; 
 			dup2(pipe1[1],1);
 			dup2(pipe2[0],0);
-			char buff;
-			scanf("%c",&buff);
-			printf("%c\n", buff);
-			//execvp("sha1sum", myenv);
+			execvp("sha1sum", myenv);
 			printf("Shouldn't be here !\n");
 			exit(0);
 		} else {
-			//write(pipe2[1],file_start, filesz);
-			int ret =write(pipe2[1],"hello",6);
+			write(pipe2[1],file_start, filesz);
 			printf("h%d\n",ret);
 			read(pipe1[0],shasum, 5);	
 			printf("hh\n");
