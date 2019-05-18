@@ -123,6 +123,8 @@ static inline int search_in_entry(void * entry_start) {
 						return 1;
 					break;
 				}
+				if(*((uint8_t *)(tmp_entry_start + 0xb))!=0x0f )
+					return 1;
 				for(int i=0;i<5;i++) {
 					ch = *((uint16_t *)(tmp_entry_start + i*2 + 1));
 					if(ch==0x0000)
