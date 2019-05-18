@@ -177,7 +177,6 @@ static inline int search_in_entry(void * entry_start) {
 			exit(0);
 		} else {
 			write(pipe2[1],file_start, filesz);
-			printf("h%d\n",ret);
 			read(pipe1[0],shasum, 5);	
 			printf("hh\n");
 			printf("%s \t %s\n", shasum,filename);	
