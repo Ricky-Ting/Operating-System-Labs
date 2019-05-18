@@ -144,7 +144,7 @@ static inline int search_in_entry(void * entry_start) {
 					filename[current++] = '\0';
 				}
 				
-			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 )
+			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
 			printf("%s\n",filename);
 
 		}
