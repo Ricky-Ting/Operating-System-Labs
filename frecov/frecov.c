@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 #define MAXBUF 256
 
