@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 int fd;
+void * img_start;
 
 int main(int argc, char *argv[]) {
 
@@ -21,7 +22,10 @@ int main(int argc, char *argv[]) {
 	
 	/*Map the file to mem*/
 
-	mmap(NULL, len, PROT_READ, MAP_SHARED, fd, 0);
+	img_start = mmap(NULL, len, PROT_READ, MAP_SHARED, fd, 0);
+	for(int i=0;i<10;i++) {
+		printf("%x ", (char *)(img_start + i) )
+	}
 
 
 
