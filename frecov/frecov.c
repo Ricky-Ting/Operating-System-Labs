@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
 	NumberofFAT = *((uint8_t *)(img_start + NumberofFATOff));
 	SectorsPerFAT = *((uint32_t *)(img_start + SectorsPerFATOff));		
 		
-	printf("%x %x %x %x %x", BytesPerSector, SectorPerCluster, reservedSector, NumberofFAT, SectorsPerFAT);
+	printf("%x %x %x %x %x", BytesPerSector, SectorsPerCluster, reservedSector, NumberofFAT, SectorsPerFAT);
 
 
 
