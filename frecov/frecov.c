@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <types.h>
+#include <stdint.h>
 
 #define BytesPerSectorOff 0x0B
 #define SectorsPerClusterOff 0x0D
