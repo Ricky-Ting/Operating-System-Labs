@@ -178,8 +178,8 @@ static inline int search_in_entry(void * entry_start) {
 			printf("Shouldn't be here !\n");
 		} else {
 			//write(pipe2[1],file_start, filesz);
-			write(pipe2[1],"hello",6);
-			printf("h\n");
+			int ret =write(pipe2[1],"hello",6);
+			printf("h%d\n",ret);
 			read(pipe1[0],shasum, MAXBUF-1);	
 			printf("hh\n");
 			printf("%s \t %s\n", shasum,filename);	
