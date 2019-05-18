@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
+#include <assert.h>
+#include <fcntl.h>
 
 int fd;
 
