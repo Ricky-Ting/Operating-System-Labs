@@ -172,10 +172,13 @@ static inline int search_in_entry(void * entry_start) {
 			dup2(pipe1[1],1);
 			dup2(pipe2[0],0);
 			execvp("sha1sum", myenv);
+			printf("here\n")
 			printf("Shouldn't be here !\n");
 		} else {
 			write(pipe2[1],file_start, filesz);
+			printf("h\n");
 			read(pipe1[0],shasum, MAXBUF-1);	
+			printf("hh\n");
 			printf("%s \t %s\n", shasum,filename);	
 
 		}	
