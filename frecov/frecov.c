@@ -107,7 +107,7 @@ static inline int search_in_entry(void * entry_start) {
 				filename[i+1] = '\0';
 			}
 			sprintf(filename,"%s.bmp", filename);
-			printf("%s.bmp\n",filename);
+			//printf("%s\n",filename);
 		} else {
 			//printf("%p \n", (void *)(entry_start - img_start));
 			void * tmp_entry_start = entry_start;
@@ -147,17 +147,36 @@ static inline int search_in_entry(void * entry_start) {
 				}
 				
 			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
-			printf("%s\n",filename);
+			//printf("%s\n",filename);
 		}
 
 
 		uint32_t filesz = *(uint32_t *)(entry_start + 0x1c);
 		uint32_t file_cluster = (((uint32_t)(*(uint16_t *)(entry_start + 0x14)))<<16)  +  (((uint32_t)(*(uint16_t *)(entry_start + 0x1a)))&0xffff);
 		void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
-		FILE * ffd = fopen(filename, "wb");
-		fwrite(file_start, filesz, 1, ffd);	
+		//FILE * ffd = fopen(filename, "wb");
+		//fwrite(file_start, filesz, 1, ffd);	
+	
+		int pipe1[2], pipe2[2]; 
+		if(pipe(pipe1)!=0) {
+			assert(0);
+		}	
+		if(pipe(pipe2)!=0) 
+			assert(0);
 		
-		
+		pid_t pid = fork();
+		char shasum[MAXBUF];
+		if(pid==0) {
+			dup2(pipe1[1],1);
+			dup2(pipe2[0],0);
+			execvp("sha1sum", "sha1sum");
+			printf("Shouldn't be here !\n");
+		} else {
+			write(pipe2[1],file_start, filesz);
+			read(pipe1[0],shasum, MAXBUF-1);	
+			printf("%s \t %s\n", shasum,filename);	
+
+		}	
 	
 	} 
 
