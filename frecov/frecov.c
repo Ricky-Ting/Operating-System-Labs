@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 
 	img_start = mmap(NULL, len, PROT_READ, MAP_SHARED, fd, 0);
 	for(int i=0;i<10;i++) {
-		printf("%x ", (int) ( *(char *)(img_start + i)) );
+		printf("%x ", (unsigned int) ( *(char *)(img_start + i)) );
 	}
 
 
