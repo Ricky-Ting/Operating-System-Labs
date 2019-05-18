@@ -170,7 +170,7 @@ static inline int search_in_entry(void * entry_start) {
 		if(pid==0) {
 			dup2(pipe1[1],1);
 			dup2(pipe2[0],0);
-			execvp("sha1sum", "sha1sum");
+			execvp("sha1sum", {"sha1sum",NULL});
 			printf("Shouldn't be here !\n");
 		} else {
 			write(pipe2[1],file_start, filesz);
