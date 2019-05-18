@@ -141,7 +141,7 @@ static inline int search_in_entry(void * entry_start) {
 					if(ch==0xffff)
 						break;	
 					filename[current++] = ch&0xff;
-					filename[current++] = '\0';
+					filename[current] = '\0';
 				}
 				
 			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
