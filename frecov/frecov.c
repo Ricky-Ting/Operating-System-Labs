@@ -174,8 +174,9 @@ static inline int search_in_entry(void * entry_start) {
 			char buf[MAXBUF];
 			scanf("%s",buf);
 			printf("%s\n", buf);
-			execvp("sha1sum", myenv);
+			//execvp("sha1sum", myenv);
 			printf("Shouldn't be here !\n");
+			exit(0);
 		} else {
 			//write(pipe2[1],file_start, filesz);
 			int ret =write(pipe2[1],"hello",6);
