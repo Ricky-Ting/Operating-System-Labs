@@ -108,6 +108,7 @@ static inline int search_in_entry(void * entry_start) {
 			}
 			printf("%s.bmp\n",filename);
 		} else {
+			printf("%p \n",entry_start);
 			void * tmp_entry_start = entry_start;
 			uint8_t checksum = *((uint8_t *)(entry_start - 32 + 0xd));
 			//uint16_t filename[MAXBUF];
@@ -146,7 +147,6 @@ static inline int search_in_entry(void * entry_start) {
 				
 			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
 			printf("%s\n",filename);
-
 		}
 	
 	} 
