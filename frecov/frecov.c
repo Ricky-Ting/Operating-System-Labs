@@ -108,7 +108,7 @@ static inline int search_in_entry(void * entry_start) {
 			}
 			printf("%s.bmp\n",filename);
 		} else {
-			tmp_entry_start = entry_start;
+			void * tmp_entry_start = entry_start;
 			uint8_t checksum = *((uint8_t *)(entry_start - 32 + 0xd));
 			//uint16_t filename[MAXBUF];
 			char filename[MAXBUF];
