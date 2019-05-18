@@ -20,9 +20,12 @@ uint32_t SectorsPerFAT;
 
 
 int fd;
+uint32_t len;
 void * img_start;
 void * data_start;
-
+uint32_t EntryPerCluster;
+static inline int search_in_entry(void * entry_start); 
+static inline int search_in_cluster(int NO); 
 int main(int argc, char *argv[]) {
 
 	/*Open the img*/
@@ -33,7 +36,7 @@ int main(int argc, char *argv[]) {
 	struct stat st;
 	int ret = fstat(fd,&st);
 	assert(ret!=-1);
-	int len = st.st_size;
+	len = st.st_size;
 	
 	/*Map the file to mem*/
 
@@ -55,12 +58,60 @@ int main(int argc, char *argv[]) {
 	SectorsPerFAT = *((uint32_t *)(img_start + SectorsPerFATOff));		
 	
 	data_start = img_start + ReservedSector*BytesPerSector + NumberofFAT*SectorsPerFAT*BytesPerSector;	
-	printf("%p\n %p\n",data_start, (void *)(data_start - img_start));
+	EntryPerCluster = SectorsPerCluster * BytesPerSector / 32;
+	//printf("%p\n %p\n",data_start, (void *)(data_start - img_start));
 	//printf("%x %x %x %x %x", BytesPerSector, SectorsPerCluster, ReservedSector, NumberofFAT, SectorsPerFAT);
 
 	
-
-
+	for(int i=0;;i++){
+		int ret = search_in_cluster(i);
+		if(!ret)
+			break;
+	}
+	
 	close(fd);
   return 0;
 }
+
+static inline int search_in_cluster(int NO) {
+	void * this_cluster = data_start + NO*SectorsPerCluster*BytesPerSector;  
+	int ret;
+	for(int i=0; i< EntryPerCluster; i++) {
+		ret = search_in_entry(this_cluster + i*32);
+		if(!ret)
+			return 0;
+	}
+	return 1;
+} 
+
+static inline int search_in_entry(void * entry_start) {
+	if(entry_start+32>img_start+len)
+		return 0;
+		
+	if(*((uint8_t *)(entry_start + 0xB)) != 0x0f) {
+		if(!( *((uint8_t *)(entry_start + 0x8)) == 0x42 &&  *((uint8_t *)(entry_start + 0x9)) == 0x4D && *((uint8_t *)(entry_start + 0xa)) == 0x50 )  ) {
+			return 1;
+		}
+
+		char filename[MAXBUF];
+		filename[0] = '\0';
+		char ch;
+		for(int i=0;i<8;i++) {
+			ch = (char)(*(uint8_t*)(entry_start + i));	
+			if(ch == ' ')
+				break;
+			filename[i] = ch;
+			filename[i+1] = '\0';
+		}
+		printf("%s.bmp\n",filename);
+	
+	}
+
+
+	return 1;
+}
+
+
+
+
+
