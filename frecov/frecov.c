@@ -106,6 +106,7 @@ static inline int search_in_entry(void * entry_start) {
 				filename[i] = ch;
 				filename[i+1] = '\0';
 			}
+			sprintf(filename,"%s.bmp", filename);
 			printf("%s.bmp\n",filename);
 		} else {
 			//printf("%p \n", (void *)(entry_start - img_start));
@@ -155,6 +156,8 @@ static inline int search_in_entry(void * entry_start) {
 		void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
 		FILE * ffd = fopen(filename, "wb");
 		fwrite(file_start, filesz, 1, ffd);	
+		
+		
 	
 	} 
 
