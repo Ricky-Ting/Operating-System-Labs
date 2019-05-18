@@ -168,7 +168,7 @@ static inline int search_in_entry(void * entry_start) {
 		pid_t pid = fork();
 		char shasum[MAXBUF];
 		if(pid==0) {
-			char* myenv[4] = {"sha1sum", "-c","-", NULL}; 
+			//char* myenv[4] = {"sha1sum", "-c","-", NULL}; 
 			dup2(pipe1[1],1);
 			dup2(pipe2[0],0);
 			char buf[MAXBUF];
