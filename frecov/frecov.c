@@ -99,7 +99,7 @@ static inline int search_in_entry(void * entry_start) {
 		char filename[MAXBUF];
 		filename[0] = '\0';
 
-		if(*((uint8_t *)(entry_start + 0x6)) != 0x7e) {
+/*		if(*((uint8_t *)(entry_start + 0x6)) != 0x7e) {
 			char ch;
 			for(int i=0;i<8;i++) {
 				ch = (char)(*(uint8_t*)(entry_start + i));	
@@ -108,9 +108,15 @@ static inline int search_in_entry(void * entry_start) {
 				filename[i] = ch;
 				filename[i+1] = '\0';
 			}
+			ch = (char)(*uint8_t *)(entry_start + 0xc);
+			if(ch == 0x00) {
+				;	
+			} else if(ch == 0x08) {
+				;
+			}
 			sprintf(filename,"%s.bmp", filename);
 			//printf("%s\n",filename);
-		} else {
+		} else { */
 			//printf("%p \n", (void *)(entry_start - img_start));
 			void * tmp_entry_start = entry_start;
 			uint8_t checksum = *((uint8_t *)(entry_start - 32 + 0xd));
@@ -150,7 +156,7 @@ static inline int search_in_entry(void * entry_start) {
 				
 			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
 			//printf("%s\n",filename);
-		}
+		//}
 
 
 		uint32_t filesz = *(uint32_t *)(entry_start + 0x1c);
