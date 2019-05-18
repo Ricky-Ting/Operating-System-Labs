@@ -150,6 +150,13 @@ static inline int search_in_entry(void * entry_start) {
 			} while(!((*((uint8_t *)(tmp_entry_start)))&(0x40)) || *((uint8_t *)(tmp_entry_start)) == 0xe5 );
 			printf("%s\n",filename);
 		}
+
+
+		uint32_t filesz = *(uint32_t *)(entry_start + 0x1c);
+		uint32_t file_cluster = ((uint32_t)(*(uint16_t *)(entry_start + 0x14)))<<16 +  ((uint32_t)(*(uint16_t *)(entry_start + 0x1a)))&0xffff;
+		void *file_start = data_start + (file_cluster-2)*SectorsPerCluster*BytesPerSector;
+		FILE * ffd = fopen(filename, "wb");
+		fwrite(file_start, filesz, 1, ffd);	
 	
 	} 
 
