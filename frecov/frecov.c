@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <pthread.h>
 
 #define MAXBUF 256
 
