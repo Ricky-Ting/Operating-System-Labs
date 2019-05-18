@@ -21,6 +21,7 @@ uint32_t SectorsPerFAT;
 
 int fd;
 void * img_start;
+void * data_start;
 
 int main(int argc, char *argv[]) {
 
@@ -52,9 +53,12 @@ int main(int argc, char *argv[]) {
 	ReservedSector = *((uint16_t *) (img_start + ReservedSectorOff));
 	NumberofFAT = *((uint8_t *)(img_start + NumberofFATOff));
 	SectorsPerFAT = *((uint32_t *)(img_start + SectorsPerFATOff));		
-		
-	printf("%x %x %x %x %x", BytesPerSector, SectorsPerCluster, ReservedSector, NumberofFAT, SectorsPerFAT);
+	
+	data_start = img_start + ReservedSector*BytesPerSector + NumberofFAT*SectorsPerFAT*BytesPerSector;	
+	printf("%x\n %x\n",data_start, data_start - img_start);
+	//printf("%x %x %x %x %x", BytesPerSector, SectorsPerCluster, ReservedSector, NumberofFAT, SectorsPerFAT);
 
+	
 
 
 	close(fd);
