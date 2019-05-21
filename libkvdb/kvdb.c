@@ -2,7 +2,6 @@
 #include <sys/file.h>
 #include <unistd.h>
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 int kvdb_open(kvdb_t *db, const char *filename) {

@@ -5,6 +5,8 @@
 
 #define MB *1024*1024
 
+#include <stdio.h>
+
 struct kvdb {
 	char filename[MAXBUF];
 	int fd;
