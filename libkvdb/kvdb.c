@@ -41,11 +41,11 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	}		
 
 	lseek(db->fd, 0, SEEK_END);
-	write(fd,key,sizeof(key));
+	write(db->fd,key,sizeof(key));
 	sync();
-	write(fd,value,sizeof(value));
+	write(db->fd,value,sizeof(value));
 	sync();
-	write(fd,"\n",1);
+	write(db->fd,"\n",1);
 	sync();
 		
 	ret = flock(db->fd, LOCK_UN);
@@ -72,11 +72,11 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	}
 	
 	char buf[MAXBUF];
-	char valuebuf[16MB];
-	char line[17MB];
+	char valuebuf[16 MB];
+	char line[17 MB];
 	lseek(db->fd,0,SEEK_SET);
 	while(!feof(db->fp)) {
-		fgets(line,17MB,db->fp);
+		fgets(line,17 MB,db->fp);
 		sscanf(line,"%s%s",buf,valuebuf);	
 		if(strcmp(buf,key)==0) {
 			value = malloc(strlen(valuebuf)+1);
