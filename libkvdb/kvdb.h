@@ -1,8 +1,13 @@
 #ifndef __KVDB_H__
 #define __KVDB_H__
 
+#define MAXBUF 1024
 
 struct kvdb {
+	char filename[MAXBUF];
+	int fd;
+	FILE *fp;
+		
 };
 typedef struct kvdb kvdb_t;
 
