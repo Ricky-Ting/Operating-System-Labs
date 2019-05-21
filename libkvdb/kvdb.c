@@ -43,13 +43,13 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	lseek(db->fd, 0, SEEK_END);
 	write(db->fd,key,strlen(key));
 	printf("%d\n",(int)(strlen(key)));
-	//sync();
+	sync();
 	write(db->fd," ",1);
 	write(db->fd,value,strlen(value));
 	printf("%d\n",(int)(strlen(value)));
-	//sync();
+	sync();
 	write(db->fd,"\n",1);
-	//sync();
+	sync();
 		
 	ret = flock(db->fd, LOCK_UN);
 	if(ret<0) {
@@ -91,8 +91,6 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		}
 	}		
 
-
-	
 
 	ret = flock(db->fd, LOCK_UN);
 	if(ret<0) {
