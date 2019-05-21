@@ -68,7 +68,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		return NULL;
 	}
 
-	ret = flock(db->fd, LOCK_SH);
+	ret = flock(db->fd, LOCK_EX);
 	if(ret<0) {
 		perror("lock file failed");
 		return NULL;
@@ -83,7 +83,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		fscanf(db->fp,"%s%s",buf,valuebuf);	
 		//getchar();
 		//printf("%s",line);
-		//printf("%s %s\n",buf, valuebuf);
+		printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
 			//if(value!=NULL)
 				//free(value);
