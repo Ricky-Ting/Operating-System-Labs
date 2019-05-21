@@ -42,10 +42,10 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 
 	lseek(db->fd, 0, SEEK_END);
 	write(db->fd,key,sizeof(key));
-	printf("%d\n",int(sizeof(key)));
+	printf("%d\n",(int)(sizeof(key)));
 	//sync();
 	write(db->fd,value,sizeof(value));
-	printf("%d\n",int(sizeof(value)));
+	printf("%d\n",(int)(sizeof(value)));
 	//sync();
 	write(db->fd,"\n",1);
 	//sync();
