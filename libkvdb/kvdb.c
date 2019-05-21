@@ -80,7 +80,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	while(!feof(db->fp)) {
 		//fgets(line,17 MB,(db->fp));
 		fscanf(db->fp,"%s%s",buf,valuebuf);	
-		getchar();
+		//getchar();
 		//printf("%s",line);
 		printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
