@@ -14,7 +14,7 @@ int kvdb_open(kvdb_t *db, const char *filename) {
 		return -1;
 	}
 	db->fd = fileno(db->fp);
-	pthread_mutex_init(&db->lk);
+	pthread_mutex_init(&db->lk,NULL);
 	return 0;
 }
  
