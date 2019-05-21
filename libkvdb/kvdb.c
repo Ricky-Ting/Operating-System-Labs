@@ -85,8 +85,8 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		//printf("%s",line);
 		//printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
-			if(value!=NULL)
-				free(value);
+			//if(value!=NULL)
+				//free(value);
 			value = malloc(strlen(valuebuf)+1);
 			memcpy(value,valuebuf,sizeof(strlen(valuebuf)+1));
 		}
