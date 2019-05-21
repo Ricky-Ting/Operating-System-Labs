@@ -8,9 +8,9 @@ int kvdb_open(kvdb_t *db, const char *filename) {
 	/* What if the opened db isn't closed */
 	memcpy(db->filename, filename, strlen(filename) + 1);
 
-	db->fp = fopen(filename, O_RDWR | O_CREAT);	 
+	db->fp = fopen(filename, "w+");	 
 	if(db->fp==NULL) {
-		perror("Open file %s failed", filename);
+		perror("Open file failed");
 		return -1;
 	}
 	db->fd = fileno(db->fp);
