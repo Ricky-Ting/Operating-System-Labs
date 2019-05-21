@@ -77,7 +77,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	char line[17 MB];
 	lseek(db->fd,0,SEEK_SET);
 	while(!feof(db->fp)) {
-		fgets(line,17 MB,db->fp);
+		fgets(line,17 MB,(db->fp));
 		sscanf(line,"%s%s",buf,valuebuf);	
 		if(strcmp(buf,key)==0) {
 			value = malloc(strlen(valuebuf)+1);

@@ -8,7 +8,7 @@
 struct kvdb {
 	char filename[MAXBUF];
 	int fd;
-	FILE *fp;
+	FILE * fp;
 		
 };
 typedef struct kvdb kvdb_t;
