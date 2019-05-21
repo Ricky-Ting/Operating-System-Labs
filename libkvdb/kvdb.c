@@ -80,6 +80,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	while(!feof(db->fp)) {
 		fgets(line,17 MB,(db->fp));
 		sscanf(line,"%s%s",buf,valuebuf);	
+		printf("%s",line);
 		printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
 			value = malloc(strlen(valuebuf)+1);
