@@ -42,11 +42,11 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 
 	lseek(db->fd, 0, SEEK_END);
 	write(db->fd,key,strlen(key));
-	printf("%d\n",(int)(strlen(key)));
+	//printf("%d\n",(int)(strlen(key)));
 	sync();
 	write(db->fd," ",1);
 	write(db->fd,value,strlen(value));
-	printf("%d\n",(int)(strlen(value)));
+	//printf("%d\n",(int)(strlen(value)));
 	sync();
 	write(db->fd,"\n",1);
 	sync();
@@ -83,7 +83,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		fscanf(db->fp,"%s%s",buf,valuebuf);	
 		//getchar();
 		//printf("%s",line);
-		printf("%s %s\n",buf, valuebuf);
+		//printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
 			if(value!=NULL)
 				free(value);
