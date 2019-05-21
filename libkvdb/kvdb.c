@@ -80,7 +80,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		sscanf(line,"%s%s",buf,valuebuf);	
 		if(strcmp(buf,key)==0) {
 			value = malloc(strlen(valuebuf)+1);
-			memcpy(value,valuebuf,sizeof(value));
+			memcpy(value,valuebuf,sizeof(strlen(valuebuf)+1));
 			break;	
 		}
 	}		
