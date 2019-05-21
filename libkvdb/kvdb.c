@@ -2,6 +2,7 @@
 #include <sys/file.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 
 int kvdb_open(kvdb_t *db, const char *filename) {
 	/* What if the opened db isn't closed */
