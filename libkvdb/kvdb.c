@@ -42,11 +42,11 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 
 	lseek(db->fd, 0, SEEK_END);
 	write(db->fd,key,sizeof(key));
-	sync();
+	//sync();
 	write(db->fd,value,sizeof(value));
-	sync();
+	//sync();
 	write(db->fd,"\n",1);
-	sync();
+	//sync();
 		
 	ret = flock(db->fd, LOCK_UN);
 	if(ret<0) {
