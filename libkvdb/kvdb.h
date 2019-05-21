@@ -6,12 +6,13 @@
 #define MB *1024*1024
 
 #include <stdio.h>
+#include <pthread.h>
 
 struct kvdb {
 	char filename[MAXBUF];
 	int fd;
 	FILE * fp;
-		
+	pthread_mutex_t lk;	
 };
 typedef struct kvdb kvdb_t;
 

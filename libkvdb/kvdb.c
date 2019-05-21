@@ -14,7 +14,7 @@ int kvdb_open(kvdb_t *db, const char *filename) {
 		return -1;
 	}
 	db->fd = fileno(db->fp);
-
+	pthread_mutex_init(&db->lk);
 	return 0;
 }
  
@@ -29,14 +29,17 @@ int kvdb_close(kvdb_t *db) {
 }
 
 int kvdb_put(kvdb_t *db, const char * key, const char *value) {
+	
 	int ret = 0;
 	if(db->fd<0) {
 		perror("No file opened");
 		return -1;
 	}
+	pthread_mutex_lock(&db->lk);
 	ret = flock(db->fd, LOCK_EX);
 	if(ret<0) {
 		perror("lock file failed");
+		pthread_mutex_unlock(&db->lk);
 		return -1;
 	}		
 
@@ -51,11 +54,8 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	write(db->fd,"\n",1);
 	sync();
 		
-	ret = flock(db->fd, LOCK_UN);
-	if(ret<0) {
-		perror("unlock file failed");
-		return -1;
-	}
+	flock(db->fd, LOCK_UN);
+	pthread_mutex_unlock(&db->lk);
 	return 0;
 }
 
@@ -68,9 +68,11 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		return NULL;
 	}
 
-	ret = flock(db->fd, LOCK_SH);
+	pthread_mutex_lock(&db->lk);
+	ret = flock(db->fd, LOCK_EX);
 	if(ret<0) {
 		perror("lock file failed");
+		pthread_mutex_unlock(&db->lk);	
 		return NULL;
 	}
 	
@@ -89,10 +91,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 
 
 	ret = flock(db->fd, LOCK_UN);
-	if(ret<0) {
-		perror("unlock file failed");
-		return NULL;
-	}	
+	pthread_mutex_unlock(&db->lk);
 
 	return value;
 }
