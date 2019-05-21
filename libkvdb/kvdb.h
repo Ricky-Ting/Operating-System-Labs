@@ -3,6 +3,8 @@
 
 #define MAXBUF 1024
 
+#define MB * 1024 * 1024
+
 struct kvdb {
 	char filename[MAXBUF];
 	int fd;
