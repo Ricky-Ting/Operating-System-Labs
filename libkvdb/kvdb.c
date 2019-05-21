@@ -6,7 +6,7 @@
 
 int kvdb_open(kvdb_t *db, const char *filename) {
 	/* What if the opened db isn't closed */
-	memcpy(db->filename, filename, strlen(filename) + 1);
+	//memcpy(db->filename, filename, strlen(filename) + 1);
 
 	db->fp = fopen(filename, "w+");	 
 	if(db->fp==NULL) {
