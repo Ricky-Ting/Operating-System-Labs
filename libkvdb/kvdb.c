@@ -68,7 +68,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		return NULL;
 	}
 
-	ret = flock(db->fd, LOCK_EX);
+	ret = flock(db->fd, LOCK_SH);
 	if(ret<0) {
 		perror("lock file failed");
 		return NULL;
@@ -79,11 +79,6 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	//char * line = malloc(17 MB);
 	lseek(db->fd,0,SEEK_SET);
 	while(~fscanf(db->fp,"%s%s",buf,valuebuf)) {
-		//fgets(line,17 MB,(db->fp));
-		//fscanf(db->fp,"%s%s",buf,valuebuf);	
-		//getchar();
-		//printf("%s",line);
-		//printf("%s %s\n",buf, valuebuf);
 		if(strcmp(buf,key)==0) {
 			if(value!=NULL)
 				free(value);
