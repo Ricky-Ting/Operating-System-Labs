@@ -114,10 +114,11 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 		lseek(db->logfd,0,SEEK_SET);
 		char buf[MAXBUF];
 		read(db->logfd,buf,MAXBUF-1);
-		if(strcmp(buf,"y")!=0) 
+		if(strcmp(buf,"y")!=0) { 
 			recover(db);
 			lseek(db->logfd,0,SEEK_SET);
 			write(db->logfd,"y",1);
+		}
 	}
 	
 	sync();
@@ -151,6 +152,6 @@ void recover(kvdb_t *db) {
 	lseek(db->fd,len,SEEK_END);
 	write(db->fd, "$DELETED NOUSE!!!!\n",19);
 	
-
+	sync();
 
 }
