@@ -156,7 +156,7 @@ void recover(kvdb_t *db) {
 	int len = strlen(line);
 	len = -len;
 	lseek(db->fd,len,SEEK_END);
-	write(db->fd, "$DELETED NOUSE!!!!\n",19);
+	write(db->fd, "$DELETEDNOSENSE NOUSE!!!!\n",26);
 	free(line);	
 	sync();
 
