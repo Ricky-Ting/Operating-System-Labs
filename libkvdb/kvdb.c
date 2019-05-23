@@ -139,7 +139,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 			memcpy(value,valuebuf,sizeof(strlen(valuebuf)));
 		}
 	}		
-
+	free(valuebuf);
 	ret = flock(db->fd, LOCK_UN);
 	pthread_mutex_unlock(&db->lk);
 
@@ -157,7 +157,7 @@ void recover(kvdb_t *db) {
 	len = -len;
 	lseek(db->fd,len,SEEK_END);
 	write(db->fd, "$DELETED NOUSE!!!!\n",19);
-	
+	free(line);	
 	sync();
 
 }
