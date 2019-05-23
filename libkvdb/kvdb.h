@@ -12,6 +12,7 @@ struct kvdb {
 	char filename[MAXBUF];
 	int fd;
 	FILE * fp;
+	FILE * log;
 	pthread_mutex_t lk;	
 };
 typedef struct kvdb kvdb_t;

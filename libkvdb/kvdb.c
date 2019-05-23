@@ -9,10 +9,15 @@ int kvdb_open(kvdb_t *db, const char *filename) {
 	//memcpy(db->filename, filename, strlen(filename) + 1);
 
 	db->fp = fopen(filename, "a+");	 
-	if(db->fp==NULL) {
+	char logname[MAXBUF];
+	sprintf(logname,"%s.log",filename);
+	db->log = fopen(logname, "a+");
+	if(db->fp==NULL || db->log==NULL) {
 		perror("Open file failed");
 		return -1;
 	}
+
+	prinntf("%d\n",lseek(fileno(dp->log),0,SEEK_END));	
 	db->fd = fileno(db->fp);
 	pthread_mutex_init(&db->lk,NULL);
 	return 0;
