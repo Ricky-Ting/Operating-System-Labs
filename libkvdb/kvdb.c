@@ -69,7 +69,7 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 		read(db->logfd,buf,MAXBUF-1);
 		if(strcmp(buf,"y")!=0) { 
 			recover(db);
-			printf("%s\n",buf);
+			printf("%sh\n",buf);
 		}
 		else
 			write(db->logfd,"n",1);
