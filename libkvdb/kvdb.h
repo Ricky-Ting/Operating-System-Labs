@@ -13,6 +13,7 @@ struct kvdb {
 	int fd;
 	FILE * fp;
 	FILE * log;
+	int logfd;
 	pthread_mutex_t lk;	
 };
 typedef struct kvdb kvdb_t;
