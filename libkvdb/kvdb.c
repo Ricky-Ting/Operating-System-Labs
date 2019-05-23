@@ -47,7 +47,7 @@ int kvdb_close(kvdb_t *db) {
 }
 
 int kvdb_put(kvdb_t *db, const char * key, const char *value) {
-	
+	printf("Put %s %s\n",key, value);
 	int ret = 0;
 	if(db->fd<0) {
 		perror("No file opened");
@@ -94,6 +94,7 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 }
 
 char *kvdb_get(kvdb_t *db, const char *key) {
+	printf("get %s\n",key);
 	char * value = NULL;
 	int ret  = 0;
 	
@@ -142,6 +143,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 }
 
 void recover(kvdb_t *db) {
+	printf("Here recoer\n");
 	char *line = malloc(17 MB);
 	lseek(db->fd,0,SEEK_SET);
 	while((fgets(line, 17 MB, db->fp))!=NULL) {
