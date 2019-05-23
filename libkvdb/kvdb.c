@@ -66,7 +66,7 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	}else {
 		lseek(db->logfd,0,SEEK_SET);
 		char buf[MAXBUF];
-		read(db->logfd,buf,MAXBUF-1);
+		read(db->logfd,buf,1);
 		if(strcmp(buf,"y")!=0) { 
 			recover(db);
 			printf("%sh\n",buf);
