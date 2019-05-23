@@ -17,7 +17,7 @@ int kvdb_open(kvdb_t *db, const char *filename) {
 		return -1;
 	}
 
-	prinntf("%d\n",lseek(fileno(dp->log),0,SEEK_END));	
+	prinntf("%d\n",lseek(fileno(db->log),0,SEEK_END));	
 	db->fd = fileno(db->fp);
 	pthread_mutex_init(&db->lk,NULL);
 	return 0;
