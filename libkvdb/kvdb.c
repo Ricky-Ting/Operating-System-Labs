@@ -71,8 +71,10 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 			recover(db);
 			printf("%sh\n",buf);
 		}
-		else
+		else {
+			lseek(db->logfd,0,SEEK_SET);
 			write(db->logfd,"n",1);
+		}
 	}
 	
 	sync();
