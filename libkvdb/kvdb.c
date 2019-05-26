@@ -3,10 +3,20 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
+
+void __may_crash() {
+	if( rand()%2 == 0) {
+		exit(0);
+	}
+}
 
 int kvdb_open(kvdb_t *db, const char *filename) {
 	/* What if the opened db isn't closed */
 	//memcpy(db->filename, filename, strlen(filename) + 1);
+
+	srand(time());
+
 	char logname[MAXBUF];
 	sprintf(logname,"%s.log",filename);
 
@@ -83,9 +93,15 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	write(db->fd,key,strlen(key));
 	//printf("%d\n",(int)(strlen(key)));
 	write(db->fd," ",1);
+
+	__may_crash();
+
 	write(db->fd,value,strlen(value));
 	//printf("%d\n",(int)(strlen(value)));
+	__may_crash();
+
 	write(db->fd,"\n",1);
+	__may_crash();
 	sync();
 		
 	lseek(db->logfd,0,SEEK_SET);
@@ -159,5 +175,4 @@ void recover(kvdb_t *db) {
 	write(db->fd, "~!@#$%^&*()$DELETEDNOSENSE~!@#$%^&*() NOUSE!!!!\n",48);
 	free(line);	
 	sync();
-
 }
