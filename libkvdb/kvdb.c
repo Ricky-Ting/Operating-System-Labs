@@ -7,6 +7,7 @@
 
 void __may_crash() {
 	if( rand()%2 == 0) {
+		printf("Crash\n");
 		exit(0);
 	}
 }
