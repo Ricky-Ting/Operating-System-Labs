@@ -171,7 +171,7 @@ void recover(kvdb_t *db) {
 		;
 	}		
 	int len = strlen(line);
-	memset(line,'0',sizeof(line));
+	memset(line,'0',17 MB);
 	sprintf(line,"~!@#$&*()$DELETEDNOSENSE~!@#$&*()NOUSE!!!!");
 	line[len+60] = 'h'; line[len+61] = '\n';	
 	len = -len;
