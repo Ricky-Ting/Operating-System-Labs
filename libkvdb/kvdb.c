@@ -154,7 +154,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 			if(value!=NULL)
 				free(value);
 			value = malloc(strlen(valuebuf)+1);
-			memcpy(value,valuebuf,(strlen(valuebuf));
+			memcpy(value,valuebuf,(strlen(valuebuf)+1);
 			printf("In get,%s\n",value);
 
 		}
