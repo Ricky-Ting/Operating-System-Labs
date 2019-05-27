@@ -149,7 +149,7 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 	//char * line = malloc(17 MB);
 	lseek(db->fd,0,SEEK_SET);
 	while(~fscanf(db->fp,"%s%s",buf,valuebuf)) {
-		printf("%s %S \n", buf, valuebuf);
+		printf("%s %s \n", buf, valuebuf);
 		if(strcmp(buf,key)==0) {
 			if(value!=NULL)
 				free(value);
