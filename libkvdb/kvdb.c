@@ -58,7 +58,7 @@ int kvdb_close(kvdb_t *db) {
 }
 
 int kvdb_put(kvdb_t *db, const char * key, const char *value) {
-	printf("Put %s %s\n",key, value);
+	//printf("Put %s %s\n",key, value);
 	int ret = 0;
 	if(db->fd<0) {
 		perror("No file opened");
@@ -80,7 +80,7 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 		read(db->logfd,buf,1);
 		if(buf[0]!='y') { 
 			recover(db);
-			printf("%sh\n",buf);
+			//printf("%sh\n",buf);
 		}
 		else {
 			lseek(db->logfd,0,SEEK_SET);
@@ -95,14 +95,14 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 	//printf("%d\n",(int)(strlen(key)));
 	write(db->fd," ",1);
 
-	__may_crash();
+	//__may_crash();
 
 	write(db->fd,value,strlen(value));
 	//printf("%d\n",(int)(strlen(value)));
-	__may_crash();
+	//__may_crash();
 
 	write(db->fd,"\n",1);
-	__may_crash();
+	//__may_crash();
 	sync();
 		
 	lseek(db->logfd,0,SEEK_SET);
@@ -115,7 +115,7 @@ int kvdb_put(kvdb_t *db, const char * key, const char *value) {
 }
 
 char *kvdb_get(kvdb_t *db, const char *key) {
-	printf("get %s\n",key);
+	//printf("get %s\n",key);
 	char * value = NULL;
 	int ret  = 0;
 	
@@ -164,16 +164,18 @@ char *kvdb_get(kvdb_t *db, const char *key) {
 }
 
 void recover(kvdb_t *db) {
-	printf("Here recoer\n");
+	//printf("Here recoer\n");
 	char *line = malloc(17 MB);
 	lseek(db->fd,0,SEEK_SET);
 	while((fgets(line, 17 MB, db->fp))!=NULL) {
 		;
 	}		
 	int len = strlen(line);
+	sprintf(line,"~!@#$%^&*()$DELETEDNOSENSE~!@#$%^&*()NOUSE!!!!");
+	line[len+60] = 'h'; line[len+61] = '\n';	
 	len = -len;
 	lseek(db->fd,len,SEEK_END);
-	write(db->fd, "~!@#$%^&*()$DELETEDNOSENSE~!@#$%^&*() NOUSE!!!!\n",48);
+	write(db->fd, line , -len+62);
 	free(line);	
 	sync();
 }
