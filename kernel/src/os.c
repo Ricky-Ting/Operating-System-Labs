@@ -22,9 +22,11 @@ static void os_init() {
 	dev->init();
 	vfs->init();
 	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+	int ret = vfs->access("/",0);
+	printf("Access is %d\n",ret);
 	int fd = vfs->open("/a.txt",0);
 	printf("The fd is %d\n",fd);
-	int ret = vfs->write(fd,"123\n",4);
+	ret = vfs->write(fd,"123\n",4);
 	printf("Written %d bytes\n",ret);
 	ret = vfs->lseek(fd,0,SEEK_SET);
 	printf("The offset is set to %d\n",ret);
