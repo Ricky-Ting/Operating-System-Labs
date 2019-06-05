@@ -6,22 +6,22 @@ extern task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()])
 filesystem_t *whichfs(const char *path) {
 
-	printf("In whichfs, %s\n", current->name);
+	//printf("In whichfs, %s\n", current->name);
 	filesystem_t *ret = NULL;
 	mnt_t* current_mnt = myvfs->mnthead;
 	int current_max = 0;
 	int len1,len2;
 	len1 = strlen(path);
 	//assert(current_mnt != NULL);
-	printf("In whichfs the path is %s\n",path);
+	//printf("In whichfs the path is %s\n",path);
 
   while(current_mnt!=NULL) {
-		printf("In whichfs current fs is %s\n",current_mnt->path);
+		//printf("In whichfs current fs is %s\n",current_mnt->path);
 		int iter = 0;
 		len2 = strlen(current_mnt->path);
 		while(iter<len1 && iter<len2 && path[iter]==current_mnt->path[iter])
 			iter++;
-		printf("In whichfs iter = %d\n",iter);
+		//printf("In whichfs iter = %d\n",iter);
 		if( iter==len2 && iter>current_max ) {
 			current_max = iter;
 			ret = current_mnt->fs;
