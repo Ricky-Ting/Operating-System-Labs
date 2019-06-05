@@ -70,6 +70,7 @@ int vfs_access(const char *path, int mode) {
 int vfs_mount(const char *path, filesystem_t *fs) {
 	// Need mount LOCK
 	mnt_t *new_mount = pmm->alloc(sizeof(sizeof(mnt_t)));
+	assert(fs!=NULL);
 	new_mount->fs = fs;
 	strncpy(new_mount->path, path, MAXNAME);
 	new_mount->prev = new_mount->next = NULL;
