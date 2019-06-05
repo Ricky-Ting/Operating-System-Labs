@@ -13,6 +13,7 @@
 typedef unsigned int uint;
 #define TASK_READY 0
 #define TASK_RUNNING 1
+#define NOFILE 1024
 #define TASK_SLEEP 2
 #define MAXQ 20000
 struct task {

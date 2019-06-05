@@ -139,6 +139,9 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 		task_tail[task->bind_cpu] = task; 
 	}
 	task_head[task->bind_cpu] = task;			
+
+	for(int i=0; i<NOFILE; i++) 
+		task->files[i] = NULL;
 	//kmt_spin_unlock(&task_lk[task->bind_cpu]);
 	kmt_spin_unlock(&create_lock);
 	printf("Out lock\n");
