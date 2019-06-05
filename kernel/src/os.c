@@ -1,7 +1,6 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
-void mytest(void);
 void echo_task(void *name) {
 	device_t *tty = dev_lookup(name);
 	while(1) {
@@ -15,7 +14,7 @@ void echo_task(void *name) {
 struct handler_node* handler_head;
 
 
-void test(void) {
+void test() {
 	int ret = vfs->access("/",0);
 	printf("Access is %d\n",ret);
 	int fd = vfs->open("/a.txt",0);
