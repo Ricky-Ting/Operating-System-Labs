@@ -84,7 +84,6 @@ int vfs_mount(const char *path, filesystem_t *fs) {
 	sprintf(fs->mount_path, "%s",path);
 	fs->mount_path[strlen(path)] = '\0';
 	myvfs->mnthead = new_mount;
-	assert()
 	return 1;
 	// Unlock	
 }
