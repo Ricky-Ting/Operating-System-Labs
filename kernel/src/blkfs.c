@@ -272,6 +272,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 	char block_bitmap[MAX_BLOCK_NUM]; 
 	int block_iter = 0;
 	fs->dev->ops->read(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
+	printf("In blkfs_inode_write: start_block = %d, end_block= %d \n",start_block, end_block);
 
 	for(int i=start_block; i<=end_block; i++) {
 		if(current_inode->block_id[i]==-1) {
