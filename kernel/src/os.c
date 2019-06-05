@@ -45,7 +45,6 @@ static void os_init() {
 	vfs->init();
 vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
 
-	//task_t tmptask;
 		//kmt->create(&tmptask, "test", test, NULL);
 
 	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);

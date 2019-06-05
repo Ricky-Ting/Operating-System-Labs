@@ -71,7 +71,7 @@ int vfs_access(const char *path, int mode) {
 
 int vfs_mount(const char *path, filesystem_t *fs) {
 	// Need mount LOCK
-	mnt_t *new_mount = pmm->alloc(sizeof(sizeof(mnt_t)));
+	mnt_t *new_mount = pmm->alloc((sizeof(mnt_t)));
 	assert(fs!=NULL);
 	new_mount->fs = fs;
 	strncpy(new_mount->path, path, MAXNAME);
@@ -84,6 +84,7 @@ int vfs_mount(const char *path, filesystem_t *fs) {
 	sprintf(fs->mount_path, "%s",path);
 	fs->mount_path[strlen(path)] = '\0';
 	myvfs->mnthead = new_mount;
+	assert()
 	return 1;
 	// Unlock	
 }
