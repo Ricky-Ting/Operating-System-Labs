@@ -90,7 +90,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			
 		int found = 0;	
 		for(int i=2; i< (current_inode->filesize / 32); i++) {
-			fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_block_id + i*32, current_dire, sizeof(blkdire));
+			fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_block_id + i*32, current_dire, sizeof(blkdire_t));
 			if(strcmp(current_dire->filename,buf)==0) {
 				current_inode_id = current_dire->inode_id;
 				fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*current_inode_id, current_inode, INODE_SIZE);
