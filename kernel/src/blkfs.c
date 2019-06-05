@@ -108,7 +108,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	if(flag) {
 		if(!(current_inode->has_inode_t)) {
 			ret = pmm->alloc(sizeof(inode_t));
-			ret->id = current_inode->inode_id;
+			ret->id = current_dire->inode_id;
 			ret->fs = fs;
 			ret->refcnt = 0;
 			ret->ops = fs->iops;
@@ -149,7 +149,7 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 	memcpy(buf, name, iter+1);
 	buf[iter+1] = '\0';	
 	
-	node = fs->lookup(fs, buf, 0);
+	node = fs->ops->lookup(fs, buf, 0);
 	if(node == NULL)
 		return -1;
 
@@ -253,6 +253,7 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 }
 
 ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
+	filesystem_t *fs = file->inode->fs;
 	uint32_t write_start = file->offset;
 	uint32_t write_end = write_start + size;
 	uint32_t ret = 0;
