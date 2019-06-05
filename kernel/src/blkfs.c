@@ -128,7 +128,7 @@ int blkfs_close(inode_t *inode) {
 	
 }
 
-int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem *fs) {
+int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs) {
 	inode_t *node = fs->ops->lookup(fs, name, 0);
 	file->offset = 0;
 	file->refcnt = 1;
@@ -329,7 +329,7 @@ off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	return file->offset = new_offset;
 }
 
-int blkfs_inode_mkdir(const char *name, filesystem *fs) {
+int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	/*
 	 *	Create only one directory
 	 */
@@ -404,7 +404,7 @@ int blkfs_inode_mkdir(const char *name, filesystem *fs) {
 	return 0;
 }
 
-int blkfs_inode_rmdir(const char *name, filesystem *fs) {
+int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	int len = strlen(name);
 	int iter = len-1;
 	while(iter>0 && name[iter]!='/') 
@@ -467,7 +467,7 @@ int blkfs_inode_rmdir(const char *name, filesystem *fs) {
 
 }
 
-int blkfs_inode_link(const char *name, inode_t *inode, filesystem *fs) {
+int blkfs_inode_link(const char *name, inode_t *inode, filesystem_t *fs) {
 	int len = strlen(name);
 	int iter = len-1;
 	while(iter>0 && name[iter]!='/') 
@@ -505,7 +505,7 @@ int blkfs_inode_link(const char *name, inode_t *inode, filesystem *fs) {
 	return 1;
 }
 
-int blkfs_inode_unlink(const char *name, filesystem *fs){
+int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 	inode_t * node1 = fs->ops->lookup(fs, name, 0);
 	if(node1 == NULL)
 		return -1;

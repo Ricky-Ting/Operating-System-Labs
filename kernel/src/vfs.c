@@ -121,7 +121,7 @@ int vfs_mkdir(const char *path) {
 }
 
 int vfs_rmdir(const char *path) {
-	filesystem* fs = whichfs(path); 
+	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
 		return -1;
 	}
@@ -142,8 +142,8 @@ int vfs_rmdir(const char *path) {
 }
 
 int vfs_link(const char *oldpath, const char *newpath) {
-	filesystem* fs1 = whichfs(oldpath);
-	filesystem* fs2 = whichfs(newpath);
+	filesystem_t* fs1 = whichfs(oldpath);
+	filesystem_t* fs2 = whichfs(newpath);
 	if(fs1==NULL)
 		return -1;
 	if(fs1!=fs2)
@@ -173,7 +173,7 @@ int vfs_link(const char *oldpath, const char *newpath) {
 }	
 
 int vfs_unlink(const char *path) {
-	filesystem* fs = whichfs(path); 
+	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
 		return -1;
 	}
@@ -196,7 +196,7 @@ int vfs_unlink(const char *path) {
 }
 
 int vfs_open(const char *path, int flags) {
-	filesystem* fs = whichfs(path); 
+	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
 		return -1;
 	}
