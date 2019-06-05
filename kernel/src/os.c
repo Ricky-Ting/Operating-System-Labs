@@ -21,7 +21,7 @@ static void os_init() {
 	kmt->init();
 	dev->init();
 	vfs->init();
-	vfs->mount("/",create_blkfs("ramdisk0",dev->lookup("ramdisk0")));
+	vfs->mount("/",create_blkfs("ramdisk0",dev->dev_lookup("ramdisk0")));
 	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
