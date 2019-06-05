@@ -23,6 +23,7 @@ filesystem_t *whichfs(const char *path) {
 		if( iter==len2 && iter>current_max ) {
 			current_max = iter;
 			ret = current_mnt->fs;
+			assert(current_mnt->fs!=NULL);
 		}	
 
 		current_mnt = current_mnt->next;
