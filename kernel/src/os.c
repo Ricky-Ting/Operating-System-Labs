@@ -34,7 +34,8 @@ static void os_init() {
 	pmm->init();
 	kmt->init();
 	dev->init();
-	//vfs->init();
+	vfs->init();
+	
 	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");

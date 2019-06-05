@@ -578,3 +578,16 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 }
 
 
+inodeops_t blkinodeops = {
+	.open = blkfs_inode_open,
+	.close = blkfs_inode_close,
+	.read = blkfs_inode_read,
+	.write = blkfs_inode_write,
+	.lseek = blkfs_inode_lseek,
+	.mkdir = blkfs_inode_mkdir,
+	.rmdir = blkfs_inode_rmdir,
+	.link = blkfs_inode_link,
+	.unlink = blkfs_inode_unlink,
+};
+
+
