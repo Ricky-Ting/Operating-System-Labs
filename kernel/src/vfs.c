@@ -1,6 +1,8 @@
 #include <common.h>
 
 
+extern current_task[MAXCPU];
+#define current (current_task[_cpu()])
 filesystem *whichfs(const char *path) {
 	filesystem *ret = NULL;
 	mnt_t* current_mnt = vfilesystem.mnthead;
