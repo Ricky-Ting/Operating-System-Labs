@@ -15,6 +15,8 @@ struct handler_node* handler_head;
 
 
 void test() {
+	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+
 	int ret = vfs->access("/",0);
 	printf("Access is %d\n",ret);
 	int fd = vfs->open("/a.txt",0);
@@ -42,8 +44,7 @@ static void os_init() {
 	kmt->init();
 	dev->init();
 	vfs->init();
-	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
-	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
+		kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print2", echo_task, "tty2");
