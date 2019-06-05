@@ -19,6 +19,7 @@ filesystem_t *whichfs(const char *path) {
 		len2 = strlen(current_mnt->path);
 		while(iter<len1 && iter<len2 && path[iter]==current_mnt->path[iter])
 			iter++;
+		printf("In whichfs iter = %d\n",iter);
 		if( iter==len2 && iter>current_max ) {
 			current_max = iter;
 			ret = current_mnt->fs;
