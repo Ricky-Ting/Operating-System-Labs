@@ -40,7 +40,7 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	fs->dev = dev;		
 	// 实现根目录 根目录的inode编号为0
 	assert(INODE_SIZE == sizeof(blkinode_t));
-	assert(BLOCK_SIZE == 32);
+	assert(sizeof(blkdire_t) == 32);
 	blkinode_t* root = pmm->alloc(sizeof(blkinode_t));
 	root->filesize = 64;
 	root->block_id[0] = 0;
