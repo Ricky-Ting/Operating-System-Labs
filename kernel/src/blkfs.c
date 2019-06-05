@@ -264,7 +264,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 		
 	uint32_t inode_id = file->inode->id;
 	blkinode_t *current_inode = pmm->alloc(sizeof(blkinode_t));
-	fs->dev->ops->read(fd->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
+	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
 
 	char block_bitmap[MAX_BLOCK_NUM]; 
 	int block_iter = 0;
@@ -310,7 +310,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 
 off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	uint32_t inode_id = file->inode->id;
-	filesystem_t *fs = file->indoe->fs;
+	filesystem_t *fs = file->inode->fs;
    	blkinode_t * current_inode = pmm->alloc(sizeof(blkinode_t));
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
 	uint32_t filesize = current_inode->filesize;
@@ -346,7 +346,7 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	memcpy(buf, name, iter+1);
 	buf[iter+1] = '\0';	
 	
-	inode_t *node = fs->lookup(fs, buf, 0);
+	inode_t *node = fs->ops->lookup(fs, buf, 0);
 	if(node == NULL)
 		return -1;
 
@@ -385,7 +385,7 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	memcpy(new_dire->filename, name+iter+1, strlen(name) - iter -1 );
 	new_dire->filename[strlen(name)- iter - 1] = '\0';
 	new_dire->f_or_d = ISDIRE;
-	fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + current_inode->filesize, new_dire, sizeof(blkdire));
+	fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + current_inode->filesize, new_dire, sizeof(blkdire_t));
 		
 	current_inode->filesize += 32;
 	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
@@ -418,8 +418,8 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	memcpy(buf, name, iter+1);
 	buf[iter+1] = '\0';	
 	
-	inode_t *node1 = fs->lookup(fs, buf, 0);
-	inode_t *node2 = fs->lookup(fs, name, 0);
+	inode_t *node1 = fs->ops->lookup(fs, buf, 0);
+	inode_t *node2 = fs->ops->lookup(fs, name, 0);
 	if(node1 == NULL || node2 == NULL)
 		return -1;
 
@@ -447,12 +447,12 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	fs->dev->ops->write(fs->dev, INODE_BITMAP_OFF, inode_bitmap, MAX_INODE_NUM);
 	fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
 	
-	pmm->free(delete->inode);
+	pmm->free(delete_inode);
 
 	blkdire_t *delete_dire = pmm->alloc(sizeof(blkdire_t));
 			
 	for(int i=2; i<(current_inode->filesize/32); i++) {
-		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire));
+		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
 		if(delete_dire->inode_id == node2->id) {
 			if(i != (current_inode->filesize/32 - 1)) {
 				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + 32 *(current_inode->filesize/32 -1), delete_dire, sizeof(blkdire) );
@@ -488,18 +488,18 @@ int blkfs_inode_link(const char *name, inode_t *inode, filesystem_t *fs) {
 	blkdire_t* new_dire = pmm->alloc(sizeof(blkdire_t));	
 	
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
-	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SZIE);
+	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
 	new_dire->inode_id = inode->id;
 	new_dire->filesize = link_inode->filesize;
 	new_dire->f_or_d = ISFILE;
 	memcpy(new_dire->filename, name+iter+1, strlen(name)-iter-1);
 	new_dire->filename[strlen(name)-iter-1] = '\0';
 
-	fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + current_inode->filesize, new_dire, sizeof(blkdire));
+	fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + current_inode->filesize, new_dire, sizeof(blkdire_t));
 	current_inode->filesize += 32;	
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
 	link_inode->refcnt += 1;
-	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SZIE);
+	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
 
 	pmm->free(current_inode);
 	pmm->free(link_inode);
