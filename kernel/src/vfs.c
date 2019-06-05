@@ -255,12 +255,12 @@ int vfs_close(int fd) {
 	//filesystem *fs = current->file[fd]->inode->fs;
 	//fs->iops->close(current->file[fd])	
 	current->files[fd]->refcnt--;
-	if(current->file[fd]->refcnt>0)
+	if(current->files[fd]->refcnt>0)
 		return 0;
 	else {
-		current->file[fd]->inode->refcnt--;
-		pmm->free(current->file[fd]);
-		current->file[fd] = NULL;
+		current->files[fd]->inode->refcnt--;
+		pmm->free(current->files[fd]);
+		current->files[fd] = NULL;
 		return 0;
 	}
 	
