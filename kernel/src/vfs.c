@@ -61,9 +61,9 @@ int vfs_access(const char *path, int mode) {
 
 int vfs_mount(const char *path, filesystem_t *fs) {
 	// Need mount LOCK
-	mnt_t *new_mount = pmm->alloc(sizeof(sizeof(mnt)));
+	mnt_t *new_mount = pmm->alloc(sizeof(sizeof(mnt_t)));
 	new_mount->fs = fs;
-	strncpy(new_mount->path, path, MAXPATHNAME);
+	strncpy(new_mount->path, path, MAXNAME);
 	new_mount->prev = new_mount->next = NULL;
 	
 	if(vfilesystem.mnthead!=NULL) {
@@ -80,7 +80,7 @@ int vfs_unmount(const char *path) {
 	// Need mount LOCK
 	mnt_t * iter = vfilesystem.mnthead;
 	while(iter != NULL) {
-		if(strncmp(iter->path, path, MAXPATHNAME)==0) {
+		if(strncmp(iter->path, path, MAXNAME)==0) {
 			if(iter->next!=NULL) {
 				iter->next->prev = iter->prev;
 			}
