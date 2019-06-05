@@ -26,6 +26,10 @@ static void os_init() {
 	printf("Access is %d\n",ret);
 	int fd = vfs->open("/a.txt",0);
 	printf("The fd is %d\n",fd);
+	
+	ret = vfs->access("/a.txt",0);
+	printf("a.xtxt is %d\n",ret);
+	
 	ret = vfs->write(fd,"123\n",4);
 	printf("Written %d bytes\n",ret);
 	ret = vfs->lseek(fd,0,SEEK_SET);
