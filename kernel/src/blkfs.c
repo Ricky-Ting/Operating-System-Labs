@@ -490,7 +490,7 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	}
 	fs->dev->ops->write(fs->dev, INODE_OFF + node1->id*INODE_SIZE, current_inode, INODE_SIZE);
 	pmm->free(node2);
-	return 1;
+	return 0;
 
 }
 
@@ -594,7 +594,7 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 		fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
 		pmm->free(node1);			
 	}
-	return 1;
+	return 0;
 }
 
 
