@@ -262,8 +262,8 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 	uint32_t ret = 0;
 	if(size==0)
 		return 0;
-	uint32_t start_block = write_start % BLOCK_SIZE;
-	uint32_t end_block = (write_end-1) % BLOCK_SIZE;	
+	uint32_t start_block = write_start / BLOCK_SIZE;
+	uint32_t end_block = (write_end-1) / BLOCK_SIZE;	
 		
 	uint32_t inode_id = file->inode->id;
 	blkinode_t *current_inode = pmm->alloc(sizeof(blkinode_t));
