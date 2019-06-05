@@ -16,12 +16,12 @@ struct handler_node* handler_head;
 
 void test() {
 	
-	int ret = vfs->access("/",0);
+	int ret = vfs->access("/mnt",0);
 	printf("Access is %d\n",ret);
-	int fd = vfs->open("/a.txt",0);
+	int fd = vfs->open("/mnt/a.txt",0);
 	printf("The fd is %d\n",fd);
 	
-	ret = vfs->access("/a.txt",0);
+	ret = vfs->access("/mnt/a.txt",0);
 	printf("a.xtxt is %d\n",ret);
 	
 	ret = vfs->write(fd,"helloworld\n",11);
@@ -34,16 +34,16 @@ void test() {
 	printf("Read %s\n",buf);
 	
 
-	ret = vfs->mkdir("/ricky");
+	ret = vfs->mkdir("/mnt/ricky");
 	printf("mkdir return %d\n",ret);
-	int fd2 = vfs->open("/ricky/cir.txt",0);
+	int fd2 = vfs->open("/mnt/ricky/cir.txt",0);
 	printf("create cir, %d\n",fd2);
 
-	ret = vfs->access("/ricky",0);
+	ret = vfs->access("/mnt/ricky",0);
 	printf("access /ricky, %d\n",ret);
 	
-	ret = vfs->access("/ricky/cir.txt",0);
-	printf("access /ricky/cir.txt %d\n",ret);
+	ret = vfs->access("/mnt/ricky/cir.txt",0);
+	printf("access /mnt/ricky/cir.txt %d\n",ret);
 
 	char buf2[200],buf3[20];	
 	vfs->write(fd2,"hello,",6);
@@ -57,18 +57,18 @@ void test() {
 	printf("%s\n",buf3); 
 
 
-	ret = vfs->link("/ricky/cir.txt", "/ricky/rir.txt");
+	ret = vfs->link("/mnt/ricky/cir.txt", "/mnt/ricky/rir.txt");
 	printf("link return %d\n",ret);
 
 
 	char buf4[30];
-	int fd3 = vfs->open("/ricky/rir.txt",0);
+	int fd3 = vfs->open("/mnt/ricky/rir.txt",0);
 	vfs->read(fd3,buf4,20);
 	printf("rir:%sh\n");
 
-	ret = vfs->unlink("/ricky/cir.txt");
+	ret = vfs->unlink("/mnt/ricky/cir.txt");
 	printf("unlink return %d\n",ret);
-	ret = vfs->rmdir("/ricky");
+	ret = vfs->rmdir("/mnt/ricky");
 	printf("rm return %d\n",ret);
 }
 
@@ -79,7 +79,7 @@ static void os_init() {
 	kmt->init();
 	dev->init();
 	vfs->init();
-vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+vfs->mount("/mnt",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
 
 		//kmt->create(&tmptask, "test", test, NULL);
 
