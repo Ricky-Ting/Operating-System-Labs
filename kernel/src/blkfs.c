@@ -230,6 +230,7 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	if(read_start == read_end)
 		return 0;
 
+	printf("In blkfs_inode_read \n");
 	uint32_t block_start = read_start/BLOCK_SIZE;
 	uint32_t block_end = (read_end-1)/BLOCK_SIZE;
 	
