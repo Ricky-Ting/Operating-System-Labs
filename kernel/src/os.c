@@ -43,6 +43,8 @@ static void os_init() {
 	dev->init();
 	vfs->init();
 	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+	int ret = vfs->access("/",0);
+	printf("Access is %d\n",ret);
 	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
