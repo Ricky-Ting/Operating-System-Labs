@@ -198,6 +198,7 @@ int vfs_unlink(const char *path) {
 int vfs_open(const char *path, int flags) {
 	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
+		printf("No filesystem\n");
 		return -1;
 	}
 	char buf[MAXNAME];
