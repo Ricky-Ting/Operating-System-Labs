@@ -84,11 +84,11 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			continue;
 		}	
 		int iter2 = iter;
-		while(iter2<len-1 && path[iter2]!='/')
+		while(iter2<len-1 && path[iter2+1]!='/')
 			iter2++;
 		memcpy(buf, path+iter, iter2-iter+1);	
 		buf[iter2-iter+1] = '\0';
-		printf("In blkfs_lookup, buf is %shh\n",buf);
+		printf("In blkfs_lookup, buf is %s\n",buf);
 			
 		int found = 0;	
 		for(int i=2; i< (current_inode->filesize / 32); i++) {
@@ -106,6 +106,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			flag = 0;
 			break;	
 		}
+		iter = iter2;
 	}
 	if(flag) {
 		if(!(current_inode->has_inode_t)) {
