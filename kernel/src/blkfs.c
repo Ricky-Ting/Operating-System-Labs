@@ -52,12 +52,18 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	root->refcnt = 1;
 	root->f_or_d = ISDIRE;	
 	root->has_inode_t = 0;
+
+	kmt->spin_lock(&(fs->fs_lock));
 	dev->ops->write(dev, INODE_OFF, (void *)root, sizeof(blkinode_t));
+	kmt->spin_unlock(&(fs->fs_lock));
 
 	char inode_bitmap[MAX_INODE_NUM];
 	memset(inode_bitmap,0,MAX_INODE_NUM);
    	inode_bitmap[0] = 1;	
+
+	kmt->spin_lock(&(fs->fs_lock));
 	dev->ops->write(dev, INODE_BITMAP_OFF, inode_bitmap, MAX_INODE_NUM);
+	kmt->spin_unlock(&(fs->fs_lock));
 
 	char block_bitmap[MAX_BLOCK_NUM];
 	memset(block_bitmap,0,MAX_BLOCK_NUM);
