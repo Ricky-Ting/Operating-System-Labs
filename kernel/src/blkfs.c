@@ -41,14 +41,14 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	// 实现根目录 根目录的inode编号为0
 	assert(INODE_SIZE == sizeof(blkinode_t));
 	assert(sizeof(blkdire_t) == 32);
-	blkinode_t* root = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1;
+	blkinode_t* root = &tmp1;
 	root->filesize = 64;
 	root->block_id[0] = 0;
 	root->refcnt = 1;
 	root->f_or_d = ISDIRE;	
 	root->has_inode_t = 0;
 	dev->ops->write(dev, INODE_OFF, (void *)root, sizeof(blkinode_t));
-	pmm->free(root);
 
 	char inode_bitmap[MAX_INODE_NUM];
 	memset(inode_bitmap,0,MAX_INODE_NUM);
@@ -72,10 +72,12 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	uint32_t iter = 0;
 	char buf[1024];
 	int len = strlen(path);
-	blkinode_t* current_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1,tmp2; blkdire_t tmp3;
+
+	blkinode_t* current_inode = &tmp1;
 	fs->dev->ops->read(fs->dev,	INODE_OFF + INODE_SIZE*current_inode_id, current_inode, INODE_SIZE);
 
-	blkdire_t* current_dire = pmm->alloc(sizeof(blkdire_t));	
+	blkdire_t* current_dire = &tmp3;
 	
 	printf("In blkfs_lookup, path is %s\n",path);
 	while(iter<len) {
@@ -124,8 +126,6 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 		}
 	}
 
-	pmm->free(current_inode);
-	pmm->free(current_dire);
 	return ret;
 }
 
@@ -156,7 +156,8 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 	if(node == NULL)
 		return -1;
 
-	blkinode_t *upper_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1,tmp2; blkdire_t tmp3;
+	blkinode_t *upper_inode = &tmp1;
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, upper_inode, INODE_SIZE);
 
 
@@ -179,11 +180,11 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 	fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
 	
 
-	blkdire_t *new_dire = pmm->alloc(sizeof(blkdire_t));
-	blkinode_t *new_file = pmm->alloc(sizeof(blkinode_t));
+	blkdire_t *new_dire = &tmp3;
+	blkinode_t *new_file = &tmp2;
 
 	new_dire->inode_id = inode_iter;
-  	new_dire->filesize = 0;
+  new_dire->filesize = 0;
 	memcpy(new_dire->filename, name+iter+1, strlen(name) - iter -1 );
 	new_dire->filename[strlen(name)- iter - 1] = '\0';
 	new_dire->f_or_d = ISFILE;
@@ -201,9 +202,6 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 
 	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*node->id, upper_inode, INODE_SIZE);
 	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*inode_iter, new_file, INODE_SIZE);
-	pmm->free(new_dire);
-	pmm->free(new_file);
-	pmm->free(upper_inode);
 	
 	file->inode = fs->ops->lookup(fs,name,0);
 	assert(file->inode!=NULL);
@@ -221,7 +219,8 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	assert(fs!=NULL);
 	uint64_t off = file->offset;
 	uint32_t inode_id = file->inode->id;
-	blkinode_t *read_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1;
+	blkinode_t *read_inode = &tmp1;
 	assert(read_inode!=NULL);
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, read_inode, INODE_SIZE);
 	uint32_t filesize = read_inode->filesize;
@@ -269,7 +268,8 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 	uint32_t end_block = (write_end-1) / BLOCK_SIZE;	
 		
 	uint32_t inode_id = file->inode->id;
-	blkinode_t *current_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1,tmp2;
+	blkinode_t *current_inode = &tmp1;
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
 
 	char block_bitmap[MAX_BLOCK_NUM]; 
@@ -371,11 +371,11 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	if(node == NULL)
 		return -1;
 
-	blkinode_t *current_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1,tmp2;
+	blkinode_t *current_inode = &tmp1;
 	fs->dev->ops->read(fs->dev, INODE_OFF + node->id*INODE_SIZE, current_inode, INODE_SIZE);
 	
 	if(current_inode->f_or_d == ISFILE) {
-		pmm->free(current_inode);
 		return -1;
 	}
 	
@@ -399,8 +399,8 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	
 
 	
-
-	blkdire_t *new_dire = pmm->alloc(sizeof(blkdire_t));
+	blkdire_t tmp3;
+	blkdire_t *new_dire = &tmp3;
 	new_dire->inode_id = inode_iter;
 	new_dire->filesize = 64;
 	memcpy(new_dire->filename, name+iter+1, strlen(name) - iter -1 );
@@ -411,7 +411,7 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	current_inode->filesize += 32;
 	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
 
-	blkinode_t *new_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t *new_inode = &tmp2;
 	new_inode->filesize = 64;
 	new_inode->block_id[0] = block_iter;
 	new_inode->refcnt = 1;
@@ -420,10 +420,6 @@ int blkfs_inode_mkdir(const char *name, filesystem_t *fs) {
 	fs->dev->ops->write(fs->dev, INODE_OFF + inode_iter*INODE_SIZE, new_inode, INODE_SIZE);	
 
 
-
-	pmm->free(new_dire);
-	pmm->free(current_inode);
-	pmm->free(new_inode);
 
 	return 0;
 }
@@ -444,15 +440,14 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	if(node1 == NULL || node2 == NULL)
 		return -1;
 
-	blkinode_t *current_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t tmp1,tmp2;
+	blkinode_t *current_inode = &tmp1;
 	fs->dev->ops->read(fs->dev, INODE_OFF + node1->id*INODE_SIZE, current_inode, INODE_SIZE);
 
-	blkinode_t * delete_inode = pmm->alloc(sizeof(blkinode_t));
+	blkinode_t * delete_inode = &tmp2;
    	fs->dev->ops->read(fs->dev, INODE_OFF + node2->id*INODE_SIZE, delete_inode, INODE_SIZE);	
 	
 	if(current_inode->f_or_d == ISFILE || delete_inode->f_or_d == ISFILE || delete_inode->filesize>64 ) {
-		pmm->free(current_inode);
-		pmm->free(delete_inode);
 		return -1;
 	}
 	
@@ -468,9 +463,9 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 	fs->dev->ops->write(fs->dev, INODE_BITMAP_OFF, inode_bitmap, MAX_INODE_NUM);
 	fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
 	
-	pmm->free(delete_inode);
 
-	blkdire_t *delete_dire = pmm->alloc(sizeof(blkdire_t));
+	blkdire_t tmp3;
+	blkdire_t *delete_dire = &tmp3;
 			
 	for(int i=2; i<(current_inode->filesize/32); i++) {
 		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
@@ -484,8 +479,6 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 		}
 	}
 	fs->dev->ops->write(fs->dev, INODE_OFF + node1->id*INODE_SIZE, current_inode, INODE_SIZE);
-	pmm->free(current_inode);
-	pmm->free(delete_dire);
 	pmm->free(node2);
 	return 1;
 
@@ -504,9 +497,11 @@ int blkfs_inode_link(const char *name, inode_t *inode, filesystem_t *fs) {
 	
 	inode_t * node = fs->ops->lookup(fs,buf,0);
 	
-	blkinode_t* current_inode = pmm->alloc(sizeof(blkinode_t));
-	blkinode_t* link_inode = pmm->alloc(sizeof(blkinode_t));
-	blkdire_t* new_dire = pmm->alloc(sizeof(blkdire_t));	
+	blkinode_t tmp1, tmp2; blkdire_t tmp3;
+
+	blkinode_t* current_inode = &tmp1;
+	blkinode_t* link_inode = &tmp2;
+	blkdire_t* new_dire = &tmp3;
 	
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
@@ -521,11 +516,6 @@ int blkfs_inode_link(const char *name, inode_t *inode, filesystem_t *fs) {
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
 	link_inode->refcnt += 1;
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
-
-	pmm->free(current_inode);
-	pmm->free(link_inode);
-	pmm->free(new_dire);
-
 	return 1;
 }
 
@@ -550,9 +540,11 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 	if(node2 == NULL)
 		return -1;
 	
-	blkinode_t *delete_inode = pmm->alloc(sizeof(blkinode_t));
-	blkinode_t *upper_inode = pmm->alloc(sizeof(blkinode_t));
-	blkdire_t *delete_dire = pmm->alloc(sizeof(blkdire_t));
+	blkinode_t tmp1, tmp2; blkdire_t tmp3;
+	
+	blkinode_t *delete_inode = &tmp1;
+	blkinode_t *upper_inode = &tmp2;
+	blkdire_t *delete_dire = &tmp3;
 
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node1->id, delete_inode, INODE_SIZE);
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node2->id, upper_inode, INODE_SIZE);
@@ -592,9 +584,6 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 		fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
 		pmm->free(node1);			
 	}
-	pmm->free(delete_inode);
-	pmm->free(upper_inode);
-	pmm->free(delete_dire);
 	return 1;
 }
 
