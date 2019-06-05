@@ -67,6 +67,7 @@ void test() {
 	printf("rir:%sh\n");
 
 	ret = vfs->unlink("/mnt/ricky/cir.txt");
+	vfs->unlink("/mnt/ricky/rir.txt");
 	printf("unlink return %d\n",ret);
 	ret = vfs->rmdir("/mnt/ricky");
 	printf("rm return %d\n",ret);
