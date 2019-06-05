@@ -1,7 +1,7 @@
 #include <common.h>
 
 
-extern current_task[MAXCPU];
+extern task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()])
 filesystem *whichfs(const char *path) {
 	filesystem *ret = NULL;
