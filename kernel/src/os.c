@@ -47,9 +47,12 @@ void test() {
 
 	char buf2[200],buf3[20];	
 	vfs->write(fd2,"hello,",6);
+	vfs->lseek(fd2,0,SEEK_SET);
 	vfs->read(fd2,buf2,6);
 	printf("%s\n",buf2);
+	vfs->lseek(fd2,0,SEEK_END);
 	vfs->write(fd2,"world",5);
+	vfs->lseek(fd2,0,SEEK_SET);
 	vfs->read(fd2,buf3,11);
 	printf("%s\n",buf3); 
 }
