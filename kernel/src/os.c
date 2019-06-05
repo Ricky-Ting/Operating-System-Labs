@@ -31,7 +31,7 @@ void test() {
 	char buf[200];
 	ret = vfs->read(fd,buf,4);
 	printf("Read %d bytes \n",ret);
-	printf("Read %s",buf);
+	printf("Read %s\n",buf);
 	
 
 }
