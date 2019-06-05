@@ -34,6 +34,8 @@ void test() {
 	printf("Read %s\n",buf);
 	
 
+	ret = vfs->mkdir("/ricky");
+	printf("mkdir return %d\n",ret);
 }
 
 
