@@ -66,7 +66,7 @@ struct vfilesystem{
 	int mntcnt;				// the counter for mount point
 	mnt_t* mnthead;
 };
-vfilesystem_t *vfs;
+vfilesystem_t *myvfs;
 
 struct mnt {
 	char path[MAXNAME];
