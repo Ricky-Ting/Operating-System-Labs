@@ -60,6 +60,7 @@ struct handler_node {
 
 
 /*BEGIN: FOR vfs*/
+#define MAXNAME 1024
 
 struct {
 	int mntcnt;				// the counter for mount point
