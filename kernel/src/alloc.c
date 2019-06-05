@@ -79,7 +79,7 @@ static void *kalloc(size_t size) {
 		}
 		
 	}
-	assert(kcounter==1);
+	//assert(kcounter==1);
 	kcounter--; 
 	//printf("Out kalloc\n");
 	//unlock(&mylock);
