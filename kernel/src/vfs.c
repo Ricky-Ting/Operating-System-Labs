@@ -239,7 +239,7 @@ int vfs_open(const char *path, int flags) {
 ssize_t vfs_read(int fd, void *buf, size_t nbyte) {
 	if(fd<0 || fd>=NOFILE || current->files[fd]==NULL)
 		return -1;	
-	printf("In vfs_read\n");
+	printf("In vfs_read, fd = %d\n",fd);
 	
 	printf("In vfs_read %d\n",current->files[fd]->inode->refcnt);
 	int ret = current->files[fd]->inode->fs->iops->read(current->files[fd],buf,nbyte);
@@ -250,6 +250,9 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte) {
 ssize_t vfs_write(int fd, void *buf, size_t nbyte) {
 	if(fd<0 || fd>=NOFILE || current->files[fd]==NULL)
 		return -1;	
+	printf("In vfs_write, fd =%d\n",fd);
+	printf("In vfs_write %d\n",current->files[fd]->inode->refcnt);
+
 	int ret = current->files[fd]->inode->fs->iops->write(current->files[fd],buf,nbyte);
 	return ret;
 
