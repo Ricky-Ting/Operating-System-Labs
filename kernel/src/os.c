@@ -2,20 +2,6 @@
 #include <klib.h>
 #include <devices.h>
 void mytest(void);
-
-void fa() {
-	while(1) {
-		_putc('a');
-		_yield();
-	}
-}
-void fb() {
-	while(1) {
-		_putc('b');
-		_yield();
-	}
-}
-
 void echo_task(void *name) {
 	device_t *tty = dev_lookup(name);
 	while(1) {
@@ -35,7 +21,7 @@ static void os_init() {
 	kmt->init();
 	dev->init();
 	vfs->init();
-	
+	vfs->mount("/",create_blkfs("ramdisk0",dev->lookup("ramdisk0")));
 	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");

@@ -596,3 +596,12 @@ fsops_t blkfsops = {
 	.close = blkfs_close,
 };
 
+filesystem_t *create_blkfs(const char *fsname, device_t *dev) {
+	assert(dev!=NULL);
+	filesystem_t *fs = pmm->alloc(sizeof(filesystem_t));
+	fs->ops = &blkfsops;
+	fs->iops = &blkinodeops;
+	fs->ops->init(fs, fsname, dev);
+	return fs;
+}
+

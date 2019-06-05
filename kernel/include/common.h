@@ -116,6 +116,8 @@ struct file{
 	uint64_t offset;
 };
 
+filesystem_t *create_blkfs(const char *fsname, device_t *dev);
+
 /*END: FOR vfs*/
 
 
