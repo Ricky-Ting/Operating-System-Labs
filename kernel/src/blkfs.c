@@ -240,7 +240,7 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	if(block_start == block_end) {
 		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE * read_inode->block_id[block_start] + read_start%BLOCK_SIZE, buf, size);
 		file->offset = read_end;
-		printf("In blkfs_read, %s\n",buf);
+		printf("In blkfs_read, %d\n", read_inode->block_id[block_start]);
 		return read_end - read_start;
 	}
 
