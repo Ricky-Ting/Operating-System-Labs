@@ -5,6 +5,8 @@
 extern task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()])
 filesystem_t *whichfs(const char *path) {
+
+	printf("In whichfs, %s\n", current->name);
 	filesystem_t *ret = NULL;
 	mnt_t* current_mnt = myvfs->mnthead;
 	int current_max = 0;
