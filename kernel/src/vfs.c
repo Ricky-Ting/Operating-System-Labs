@@ -241,7 +241,7 @@ ssize_t vfs_read(int fd, void *buf, size_t nbyte) {
 		return -1;	
 	printf("In vfs_read\n");
 	
-	printf("In vfs_read %s\n",current->files[fd]->inode->fs->fsname);
+	printf("In vfs_read %d\n",current->files[fd]->inode->refcnt);
 	int ret = current->files[fd]->inode->fs->iops->read(current->files[fd],buf,nbyte);
 	return ret;
 
