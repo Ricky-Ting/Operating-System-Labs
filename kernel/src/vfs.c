@@ -11,9 +11,10 @@ filesystem_t *whichfs(const char *path) {
 	int len1,len2;
 	len1 = strlen(path);
 	//assert(current_mnt != NULL);
+	printf("In whichfs the path is %s\n",path);
 
   while(current_mnt!=NULL) {
-		printf("current fs is %s\n",current_mnt->path);
+		printf("In whichfs current fs is %s\n",current_mnt->path);
 		int iter = 0;
 		len2 = strlen(current_mnt->path);
 		while(iter<len1 && iter<len2 && path[iter]==current_mnt->path[iter])
