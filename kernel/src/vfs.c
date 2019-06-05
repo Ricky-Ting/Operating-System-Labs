@@ -36,7 +36,7 @@ int vfs_access(const char *path, int mode) {
 	 * 	check the existence of the file
 	 */
 
-	filesystem* fs = whichfs(path); 
+	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
 		return -1;
 	}
