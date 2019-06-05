@@ -266,6 +266,9 @@ off_t vfs_lseek(int fd, off_t offset, int whence) {
 	printf("In vfs_lseek %d\n",current->files[fd]->inode->fs);
 
 	int ret = current->files[fd]->inode->fs->iops->lseek(current->files[fd],offset,whence);
+	printf("In vfs_lseek, fd =%d\n",fd);
+	printf("In vfs_lseek %d\n",current->files[fd]->inode->fs);
+
 	return ret;
 
 
