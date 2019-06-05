@@ -87,7 +87,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 		while(iter2<len-1 && path[iter2]!='/')
 			iter2++;
 		memcpy(buf, path+iter, iter2-iter+1);	
-		buf[iter2-iter+2] = '\0';
+		buf[iter2-iter+1] = '\0';
 		printf("In blkfs_lookup, buf is %s\n",buf);
 			
 		int found = 0;	
