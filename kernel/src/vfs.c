@@ -262,6 +262,9 @@ ssize_t vfs_write(int fd, void *buf, size_t nbyte) {
 off_t vfs_lseek(int fd, off_t offset, int whence) {
 	if(fd<0 || fd>=NOFILE || current->files[fd]==NULL)
 		return -1;	
+	printf("In vfs_lseek, fd =%d\n",fd);
+	printf("In vfs_lseek %d\n",current->files[fd]->inode->fs);
+
 	int ret = current->files[fd]->inode->fs->iops->lseek(current->files[fd],offset,whence);
 	return ret;
 
