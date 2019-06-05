@@ -56,6 +56,9 @@ void test() {
 	vfs->read(fd2,buf3,11);
 	printf("%s\n",buf3); 
 
+
+	ret = vfs->unlink("/ricky/cir.txt");
+	printf("unlink return %d\n",ret);
 	ret = vfs->rmdir("/ricky");
 	printf("rm return %d\n",ret);
 }
