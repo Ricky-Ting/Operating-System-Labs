@@ -79,7 +79,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 
 	blkdire_t* current_dire = &tmp3;
 	
-	printf("In blkfs_lookup, path is %s\n",path);
+	//printf("In blkfs_lookup, path is %s\n",path);
 	while(iter<len) {
 		if(path[iter]=='/') {
 			iter++;
@@ -90,7 +90,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			iter2++;
 		memcpy(buf, path+iter, iter2-iter+1);	
 		buf[iter2-iter+1] = '\0';
-		printf("In blkfs_lookup, buf is %s\n",buf);
+		//printf("In blkfs_lookup, buf is %s\n",buf);
 			
 		int found = 0;	
 		for(int i=2; i< (current_inode->filesize / 32); i++) {
@@ -213,7 +213,7 @@ int blkfs_inode_close(file_t *file) {
 }
 
 ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
-	printf("Enter blkfs_inode_read\n");
+	//printf("Enter blkfs_inode_read\n");
 	ssize_t ret = 0;
 	filesystem_t *fs = file->inode->fs;
 	assert(fs!=NULL);
@@ -230,17 +230,17 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	if(read_start == read_end)
 		return 0;
 
-	printf("IN blkfs_read, read_start = %d, read_end = %d\n",read_start, read_end);
+	//printf("IN blkfs_read, read_start = %d, read_end = %d\n",read_start, read_end);
 	uint32_t block_start = read_start/BLOCK_SIZE;
 	uint32_t block_end = (read_end-1)/BLOCK_SIZE;
 	
-	printf("IN blkfs_read, block_start = %d, block_end = %d\n",block_start, block_end);
+	//printf("IN blkfs_read, block_start = %d, block_end = %d\n",block_start, block_end);
 
 
 	if(block_start == block_end) {
 		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE * read_inode->block_id[block_start] + read_start%BLOCK_SIZE, buf, size);
 		file->offset = read_end;
-		printf("In blkfs_read, off = %d\n", BLOCK_OFF + BLOCK_SIZE * read_inode->block_id[block_start] + read_start%BLOCK_SIZE);
+		//printf("In blkfs_read, off = %d\n", BLOCK_OFF + BLOCK_SIZE * read_inode->block_id[block_start] + read_start%BLOCK_SIZE);
 		return read_end - read_start;
 	}
 
@@ -279,7 +279,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 	char block_bitmap[MAX_BLOCK_NUM]; 
 	int block_iter = 0;
 	fs->dev->ops->read(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
-	printf("In blkfs_inode_write: start_block = %d, end_block= %d \n",start_block, end_block);
+	//printf("In blkfs_inode_write: start_block = %d, end_block= %d \n",start_block, end_block);
 
 	for(int i=start_block; i<=end_block; i++) {
 		if(current_inode->block_id[i]==-1) {
@@ -299,7 +299,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 			fs->dev->ops->read(fs->dev, BLOCK_OFF + current_inode->block_id[i] + write_start%BLOCK_SIZE, buf1, write_end - write_start);
 			printf("In blkfs_write, %s\n",buf1);
 			*/
-			printf("In blkfs_read, off = %d\n",BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[i] + write_start%BLOCK_SIZE);
+			//printf("In blkfs_read, off = %d\n",BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[i] + write_start%BLOCK_SIZE);
 			break;
 		}
 		if(i == start_block) {
@@ -314,7 +314,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 			ret += BLOCK_SIZE;
 		}
 	}					
-	printf("In blk_inode_write: ret:%d, write_end:%d, write_start:%d\n",ret, write_end,write_start);		
+	//printf("In blk_inode_write: ret:%d, write_end:%d, write_start:%d\n",ret, write_end,write_start);		
 	assert(ret == write_end - write_start);
 	if(write_end > current_inode->filesize)
 		current_inode->filesize = write_end;		
@@ -327,18 +327,18 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 
 off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	uint32_t inode_id = file->inode->id;
-	printf("In blkfs_inode_lseek, inode_id = %d\n", inode_id);
+	//printf("In blkfs_inode_lseek, inode_id = %d\n", inode_id);
 	filesystem_t *fs = file->inode->fs;
-	printf("In blkfs_lseek, h%d\n",file->inode->fs);
+	//printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
 	blkinode_t tmp1;
   blkinode_t * current_inode = &tmp1;
 	assert(current_inode!=NULL);
-	printf("In blkfs_lseek, cuinode = %d, inode = %d, INODE_SIZE = %d\n", current_inode, file->inode, INODE_SIZE);
-	printf("In blkfs_lseek, h%d\n",file->inode->fs);
+	//printf("In blkfs_lseek, cuinode = %d, inode = %d, INODE_SIZE = %d\n", current_inode, file->inode, INODE_SIZE);
+	//printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
-	printf("In blkfs_lseek, h%d\n",file->inode->fs);
+	//printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
 	uint32_t filesize = current_inode->filesize;
 	off_t new_offset = 0;
@@ -358,7 +358,7 @@ off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	if(new_offset<0 || new_offset>filesize)
 		return -1;
 
-	printf("In blkfs_lseek, h%d\n",file->inode->fs);
+	//printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
 	return file->offset = new_offset;
 }

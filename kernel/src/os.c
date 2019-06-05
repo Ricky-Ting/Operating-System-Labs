@@ -24,12 +24,12 @@ void test() {
 	ret = vfs->access("/a.txt",0);
 	printf("a.xtxt is %d\n",ret);
 	
-	ret = vfs->write(fd,"123\n",4);
+	ret = vfs->write(fd,"helloworld\n",11);
 	printf("Written %d bytes\n",ret);
 	ret = vfs->lseek(fd,0,SEEK_SET);
 	printf("The offset is set to %d\n",ret);
 	char buf[200];
-	ret = vfs->read(fd,buf,4);
+	ret = vfs->read(fd,buf,11);
 	printf("Read %d bytes \n",ret);
 	printf("Read %s\n",buf);
 	
