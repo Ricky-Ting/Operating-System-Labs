@@ -10,7 +10,7 @@ filesystem_t *whichfs(const char *path) {
 	int current_max = 0;
 	int len1,len2;
 	len1 = strlen(path);
-	assert(current_mnt != NULL);
+	//assert(current_mnt != NULL);
   while(current_mnt!=NULL) {
 		printf("current fs is %s\n",current_mnt->path);
 		int iter = 0;
@@ -74,6 +74,7 @@ int vfs_mount(const char *path, filesystem_t *fs) {
 	}
 	sprintf(fs->mount_path, "%s",path);
 	fs->mount_path[strlen(path)] = '\0';
+	vfilesystem.mnthead = new_mount;
 	return 1;
 	// Unlock	
 }
