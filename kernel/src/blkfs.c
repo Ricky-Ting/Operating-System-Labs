@@ -303,7 +303,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 		current_inode->filesize = write_end;		
 	file->offset = write_end;
 	fs->dev->ops->write(fs->dev, BLOCK_BITMAP_OFF, block_bitmap, MAX_BLOCK_NUM);
-	fs->dev->ops->write(fd->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
+	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
 	
 	return ret;
 }
@@ -455,7 +455,7 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE *current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
 		if(delete_dire->inode_id == node2->id) {
 			if(i != (current_inode->filesize/32 - 1)) {
-				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + 32 *(current_inode->filesize/32 -1), delete_dire, sizeof(blkdire) );
+				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + 32 *(current_inode->filesize/32 -1), delete_dire, sizeof(blkdire_t) );
 				fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire));
 			}
 			current_inode->filesize -= 32;
@@ -538,11 +538,11 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 	
 
 	for(int i=2; i<(upper_inode->filesize/32); i++) {
-		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire));
+		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
 		if(strcmp(filename, delete_dire->filename)==0) {
 			if(i != (upper_inode->filesize/32)-1) {
-				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + 32 * (upper_inode->filesize/32 -1), delete_dire, sizeof(blkdire));
-				fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire));
+				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + 32 * (upper_inode->filesize/32 -1), delete_dire, sizeof(blkdire_t));
+				fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*upper_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
 			}		
 			upper_inode->filesize -=32;
 			break;
