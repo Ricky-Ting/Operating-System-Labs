@@ -6,7 +6,7 @@ extern task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()])
 filesystem_t *whichfs(const char *path) {
 	filesystem_t *ret = NULL;
-	mnt_t* current_mnt = vfilesystem.mnthead;
+	mnt_t* current_mnt = myvfs->mnthead;
 	int current_max = 0;
 	int len1,len2;
 	len1 = strlen(path);
@@ -33,8 +33,9 @@ filesystem_t *whichfs(const char *path) {
 
 
 void vfs_init() {
-	vfilesystem.mntcnt = 0;
-	vfilesystem.mnthead = NULL;
+	myvfs = pmm->alloc(sizeof(vfilesystem_t));
+	myvfs->mntcnt = 0;
+	myvfs->mnthead = NULL;
 }
 
 int vfs_access(const char *path, int mode) {
@@ -73,20 +74,20 @@ int vfs_mount(const char *path, filesystem_t *fs) {
 	strncpy(new_mount->path, path, MAXNAME);
 	new_mount->prev = new_mount->next = NULL;
 	
-	if(vfilesystem.mnthead!=NULL) {
-		vfilesystem.mnthead->prev = new_mount;
-		new_mount->next = vfilesystem.mnthead;
+	if(myvfs->mnthead!=NULL) {
+		myvfs->mnthead->prev = new_mount;
+		new_mount->next = myvfs->mnthead;
 	}
 	sprintf(fs->mount_path, "%s",path);
 	fs->mount_path[strlen(path)] = '\0';
-	vfilesystem.mnthead = new_mount;
+	myvfs->mnthead = new_mount;
 	return 1;
 	// Unlock	
 }
 
 int vfs_unmount(const char *path) {
 	// Need mount LOCK
-	mnt_t * iter = vfilesystem.mnthead;
+	mnt_t * iter = myvfs->mnthead;
 	while(iter != NULL) {
 		if(strncmp(iter->path, path, MAXNAME)==0) {
 			if(iter->next!=NULL) {
@@ -95,8 +96,8 @@ int vfs_unmount(const char *path) {
 			if(iter->prev!=NULL) {
 				iter->prev->next = iter->next;
 			}
-			if(iter == vfilesystem.mnthead) {
-				vfilesystem.mnthead = iter->next;
+			if(iter == myvfs->mnthead) {
+				myvfs->mnthead = iter->next;
 			}
 			iter->fs->mount_path[0] = '\0';
 			pmm->free(iter);

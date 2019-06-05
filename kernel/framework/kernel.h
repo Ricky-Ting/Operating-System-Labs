@@ -61,6 +61,7 @@ typedef struct inodeops inodeops_t;
 typedef struct inode inode_t;
 typedef struct file file_t;
 typedef struct mnt mnt_t;
+typedef struct vfilesystem vfilesystem_t;
 
 
 #define SEEK_SET 0

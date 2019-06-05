@@ -62,10 +62,11 @@ struct handler_node {
 /*BEGIN: FOR vfs*/
 #define MAXNAME 1024
 
-struct {
+struct vfilesystem{
 	int mntcnt;				// the counter for mount point
 	mnt_t* mnthead;
-}vfilesystem;
+};
+vfilesystem_t *vfs;
 
 struct mnt {
 	char path[MAXNAME];
