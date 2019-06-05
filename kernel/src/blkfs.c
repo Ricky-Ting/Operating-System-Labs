@@ -106,7 +106,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			flag = 0;
 			break;	
 		}
-		iter = iter2;
+		iter = iter2+1;
 	}
 	if(flag) {
 		if(!(current_inode->has_inode_t)) {
