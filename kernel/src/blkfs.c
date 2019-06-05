@@ -300,7 +300,7 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 			ret += BLOCK_SIZE;
 		}
 	}					
-		
+	printf("In blk_inode_write: ret:%d, write_end:%d, write_start:%d\n",ret, write_end,write_start);		
 	assert(ret == write_end - write_start);
 	if(write_end > current_inode->filesize)
 		current_inode->filesize = write_end;		
