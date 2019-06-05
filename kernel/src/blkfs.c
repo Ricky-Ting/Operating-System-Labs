@@ -524,9 +524,10 @@ int blkfs_inode_link(const char *name, inode_t *inode, filesystem_t *fs) {
 	fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + current_inode->filesize, new_dire, sizeof(blkdire_t));
 	printf("In blkfs_link, %d\n", current_inode->filesize);
 	current_inode->filesize += 32;	
-	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
+	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*node->id, current_inode, INODE_SIZE);
+
 	link_inode->refcnt += 1;
-	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
+	fs->dev->ops->write(fs->dev, INODE_OFF + INODE_SIZE*inode->id, link_inode, INODE_SIZE);
 	return 0;
 }
 
