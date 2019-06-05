@@ -44,13 +44,14 @@ void test() {
 	
 	ret = vfs->access("/ricky/cir.txt",0);
 	printf("access /ricky/cir.txt %d\n",ret);
-	
+
+	char buf2[200],buf3[20];	
 	vfs->write(fd2,"hello,",6);
-	vfs->read(fd2,buf,6);
-	printf("%s\n",buf);
+	vfs->read(fd2,buf2,6);
+	printf("%s\n",buf2);
 	vfs->write(fd2,"world",5);
-	vfs->read(fd2,buf,11);
-	printf("%s\n",buf); 
+	vfs->read(fd2,buf3,11);
+	printf("%s\n",buf3); 
 }
 
 
