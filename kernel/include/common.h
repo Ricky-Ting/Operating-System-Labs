@@ -6,6 +6,8 @@
 #include <trace.h>
 
 
+/*BEGIN: FOR kmt*/
+
 #define STACK_SIZE (4096*1024)
 #define MAXCPU 32
 typedef unsigned int uint;
@@ -19,9 +21,9 @@ struct task {
 	int bind_cpu;
 	int status; /* 0: ready  1: running 2: sleep*/
 	uint8_t fence1[32];
-	//uint8_t stack[STACK_SIZE];
 	void * stack;
 	uint8_t fence2[32];
+	file_t *files[NOFILE];
 	struct task * prev;
 	struct task * next;	
 };
@@ -45,11 +47,74 @@ struct semaphore {
 };
 
 
-
 struct handler_node {
 	int seq;
 	int event;
 	handler_t handler;	
 	struct handler_node* next;
 };
+
+/*END: FOR kmt*/
+
+
+
+/*BEGIN: FOR vfs*/
+
+struct {
+	int mntcnt;				// the counter for mount point
+	mnt_t* mnthead;
+}vfilesystem;
+
+struct mnt {
+	char path[MAXNAME];
+	filesystem_t *fs;
+	mnt_t *prev;
+	mnt_t *next;
+};
+
+struct filesystem{
+	char fsname[MAXNAME];
+	char mount_path[MAXNAME];
+	fsops_t *ops;
+	dev_t *dev;
+	inodeops_t *iops;
+};
+
+struct fsops{
+	void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
+	inode_t *(*lookup)(struct filesystem *fs, const char *path, int flags);
+	int (*close)(inode_t *inode);
+};
+
+struct inodeops{
+	int (*open)(file_t *file, int flags);
+	int (*close)(file_t *file);
+	ssize_t (*read)(file_t *file, char *buf, size_t size);
+	ssize_t (*write)(file_t *file, const char *buf, size_t size);
+	off_t (*lseek)(file_t *file, off_t offset, int whence);
+	int (*mkdir)(const char *name);
+	int (*rmdir)(const char *name);
+	int (*link)(const char *name, inode_t *inode);
+	int (*unlink)(const char *name);
+};
+
+
+struct inode{
+	int refcnt;			// 有多少个file_t 指向inode，为0时free inode
+	int id; 			//在磁盘上的inode编号
+	//void *ptr;
+	
+	filesystem_t *fs;
+	inodeops_t *ops;
+};
+
+struct file{
+	int refcnt;
+	inode_t *inode;
+	uint64_t offset;
+};
+
+/*END: FOR vfs*/
+
+
 #endif
