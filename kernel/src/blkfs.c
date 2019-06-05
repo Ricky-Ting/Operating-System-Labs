@@ -1,4 +1,5 @@
 #include <common.h>
+#include <klib.h>
 
 #define MAX_INODE_NUM 1024
 #define MAX_BLOCK_NUM 1024

@@ -1,4 +1,5 @@
 #include <common.h>
+#include <klib.h>
 
 
 extern task_t* current_task[MAXCPU];
