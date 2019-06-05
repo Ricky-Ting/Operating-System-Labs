@@ -91,7 +91,7 @@ int vfs_unmount(const char *path) {
 				vfilesystem.mnthead = iter->next;
 			}
 			iter->fs->mount_path[0] = '\0';
-			free(iter);
+			pmm->free(iter);
 			return 0;
 		}	
 		iter = iter->next;
@@ -100,7 +100,7 @@ int vfs_unmount(const char *path) {
 }
 
 int vfs_mkdir(const char *path) {
-	filesystem* fs = whichfs(path); 
+	filesystem_t* fs = whichfs(path); 
 	if( fs == NULL ) {
 		return -1;
 	}
