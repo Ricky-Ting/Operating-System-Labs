@@ -41,7 +41,7 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	assert(INODE_SIZE == sizeof(blkinode_t));
 	assert(BLOCK_SIZE == 32);
 	blkinode_t* root = pmm->alloc(sizeof(blkinode_t));
-	root->filseize = 64;
+	root->filesize = 64;
 	root->block_id[0] = 0;
 	root->refcnt = 1;
 	root->f_or_d = ISDIRE;	
@@ -64,7 +64,7 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 }
 
 inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
-	inode_t *ret = NULL:
+	inode_t *ret = NULL;
 	int flag = 1;
 	uint32_t current_inode_id = 0;
 	uint32_t current_block_id = 0;
