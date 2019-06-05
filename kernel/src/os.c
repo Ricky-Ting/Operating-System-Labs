@@ -60,6 +60,12 @@ void test() {
 	ret = vfs->link("/ricky/cir.txt", "/ricky/rir.txt");
 	printf("link return %d\n",ret);
 
+
+	char buf4[30];
+	int fd3 = vfs->open("/ricky/rir.txt",0);
+	vfs->read(fd3,buf4,20);
+	printf("rir:%sh\n");
+
 	ret = vfs->unlink("/ricky/cir.txt");
 	printf("unlink return %d\n",ret);
 	ret = vfs->rmdir("/ricky");
