@@ -22,6 +22,17 @@ static void os_init() {
 	dev->init();
 	vfs->init();
 	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+	int fd = vfs->open("/a.txt",0);
+	printf("The fd is %d\n",fd);
+	int ret = vfs->write(fd,"123\n",4);
+	printf("Written %d bytes\n",ret);
+	ret = vfs->lseek(fd,0,SEEK_SET);
+	printf("The offset is set to %d\n",ret);
+	char buf[200];
+	ret = vfs->read(fd,buf,4);
+	printf("Read %d bytes \n",ret);
+	printf("Read %s",buf);
+	
 	//kmt->create(pmm->alloc(sizeof(task_t)), "a", fa, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
