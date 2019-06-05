@@ -65,6 +65,7 @@ struct handler_node {
 struct vfilesystem{
 	int mntcnt;				// the counter for mount point
 	mnt_t* mnthead;
+	spinlock_t mnt_lock;
 };
 vfilesystem_t *myvfs;
 

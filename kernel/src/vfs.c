@@ -38,6 +38,7 @@ void vfs_init() {
 	myvfs = pmm->alloc(sizeof(vfilesystem_t));
 	myvfs->mntcnt = 0;
 	myvfs->mnthead = NULL;
+	kmt->spin_init(&(myvfs->mnt_lock),"mount_lock");
 }
 
 int vfs_access(const char *path, int mode) {
@@ -71,6 +72,7 @@ int vfs_access(const char *path, int mode) {
 
 int vfs_mount(const char *path, filesystem_t *fs) {
 	// Need mount LOCK
+	kmt->spin_lock(&(myvfs->mnt_lock));
 	mnt_t *new_mount = pmm->alloc(sizeof(mnt_t));
 	assert(fs!=NULL);
 	new_mount->fs = fs;
@@ -84,12 +86,15 @@ int vfs_mount(const char *path, filesystem_t *fs) {
 	sprintf(fs->mount_path, "%s",path);
 	fs->mount_path[strlen(path)] = '\0';
 	myvfs->mnthead = new_mount;
+	kmt->spin_unlock(&(myvfs->mnt_lock));
+
 	return 1;
 	// Unlock	
 }
 
 int vfs_unmount(const char *path) {
 	// Need mount LOCK
+	kmt->spin_lock(&(myvfs->mnt_lock));
 	mnt_t * iter = myvfs->mnthead;
 	while(iter != NULL) {
 		if(strncmp(iter->path, path, MAXNAME)==0) {
@@ -104,10 +109,13 @@ int vfs_unmount(const char *path) {
 			}
 			iter->fs->mount_path[0] = '\0';
 			pmm->free(iter);
+	
+			kmt->spin_unlock(&(myvfs->mnt_lock));
 			return 0;
 		}	
 		iter = iter->next;
 	}		
+	kmt->spin_unlock(&(myvfs->mnt_lock));
 	return -1;
 }
 
