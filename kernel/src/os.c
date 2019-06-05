@@ -42,7 +42,7 @@ void test() {
 	ret = vfs->access("/ricky",0);
 	printf("access /ricky, %d\n",ret);
 	
-	ret = vfs->access("/ricky/cir.txt");
+	ret = vfs->access("/ricky/cir.txt",0);
 	printf("access /ricky/cir.txt %d\n",ret);
 }
 
