@@ -77,6 +77,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 
 	blkdire_t* current_dire = pmm->alloc(sizeof(blkdire_t));	
 	
+	printf("In blkfs_lookup, path is %s\n",path);
 	while(iter<len) {
 		if(path[iter]=='/') {
 			iter++;
