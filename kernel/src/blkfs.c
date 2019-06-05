@@ -590,4 +590,9 @@ inodeops_t blkinodeops = {
 	.unlink = blkfs_inode_unlink,
 };
 
+fsops_t blkfsops = {
+	.init = blkfs_init,
+	.lookup = blkfs_lookup,
+	.close = blkfs_close,
+};
 
