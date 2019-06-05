@@ -51,12 +51,7 @@ typedef struct devops {
 typedef struct {
   void (*init)();
 } MODULE(dev);
-extern struct device {
-  const char *name;
-  int id;
-  void *ptr;
-  devops_t *ops;
-};
+extern struct device;
 
 
 
