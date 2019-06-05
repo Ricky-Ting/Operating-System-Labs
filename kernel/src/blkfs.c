@@ -222,6 +222,7 @@ ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	uint32_t inode_id = file->inode->id;
 	blkinode_t *read_inode = pmm->alloc(sizeof(blkinode_t));
 	assert(read_inode!=NULL);
+	assert(0);
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, read_inode, INODE_SIZE);
 	uint32_t filesize = read_inode->filesize;
 	uint32_t read_start = off;
