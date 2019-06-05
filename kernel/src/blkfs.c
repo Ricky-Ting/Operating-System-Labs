@@ -325,7 +325,7 @@ off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	off_t new_offset = 0;
 		
 
-	printf("In blkfs_lseek, h%d\n",file->inode->fs);
+	printf("In blkfs_lseek, h%d\n",fs);
 
 	if(whence == SEEK_SET) {
 		new_offset = offset;
