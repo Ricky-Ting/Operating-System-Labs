@@ -168,7 +168,7 @@ int vfs_link(const char *oldpath, const char *newpath) {
 	inode_t * node2 = fs2->ops->lookup(fs2,buf2, 0);
 	if(node2!=NULL)
 		return -1;
-	int ret = fs1->iops->link(buf2, node);
+	int ret = fs1->iops->link(buf2, node, fs1);
 	return ret;
 }	
 
