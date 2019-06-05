@@ -322,7 +322,7 @@ off_t blkfs_inode_lseek(file_t *file, off_t offset, int whence) {
 	printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
   blkinode_t * current_inode = pmm->alloc(INODE_SIZE);
-	assert(current_inode)!=NULL
+	assert(current_inode!=NULL);
 	printf("In blkfs_lseek, h%d\n",file->inode->fs);
 
 	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*inode_id, current_inode, INODE_SIZE);
