@@ -149,7 +149,7 @@ int vfs_link(const char *oldpath, const char *newpath) {
 	if(fs1!=fs2)
 		return -1;
 	char buf1[MAXNAME], buf2[MAXNAME];
-	int len = strlen(fs->mount_path);
+	int len = strlen(fs1->mount_path);
 	if(len!=1) {
 		memcpy(buf1, oldpath+len, strlen(oldpath)-len);
 		memcpy(buf2, newpath+len, strlen(newpath)-len);
