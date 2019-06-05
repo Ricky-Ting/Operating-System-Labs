@@ -290,6 +290,11 @@ ssize_t blkfs_inode_write(file_t *file, const char *buf, size_t size) {
 			assert(ret == 0);
 			fs->dev->ops->write(fs->dev, BLOCK_OFF + current_inode->block_id[i] + write_start%BLOCK_SIZE, buf+ ret, write_end - write_start);
 			ret += write_end - write_start;
+		
+			char buf1[200];
+			fs->dev->ops->read(fs->dev, BLOCK_OFF + current_inode->block_id[i] + write_start%BLOCK_SIZE, buf1, write_end - write_start);
+			printf("In blkfs_write, %s\n",buf1);
+
 			break;
 		}
 		if(i == start_block) {
