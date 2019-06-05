@@ -456,7 +456,7 @@ int blkfs_inode_rmdir(const char *name, filesystem_t *fs) {
 		if(delete_dire->inode_id == node2->id) {
 			if(i != (current_inode->filesize/32 - 1)) {
 				fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + 32 *(current_inode->filesize/32 -1), delete_dire, sizeof(blkdire_t) );
-				fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire));
+				fs->dev->ops->write(fs->dev, BLOCK_OFF + BLOCK_SIZE*current_inode->block_id[0] + i*32, delete_dire, sizeof(blkdire_t));
 			}
 			current_inode->filesize -= 32;
 			break;
