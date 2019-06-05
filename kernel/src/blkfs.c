@@ -217,6 +217,7 @@ int blkfs_inode_close(file_t *file) {
 ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
 	ssize_t ret = 0;
 	filesystem_t *fs = file->inode->fs;
+	assert(fs!=NULL);
 	uint64_t off = file->offset;
 	uint32_t inode_id = file->inode->id;
 	blkinode_t *read_inode = pmm->alloc(sizeof(blkinode_t));
