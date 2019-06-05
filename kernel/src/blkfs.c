@@ -88,7 +88,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			iter2++;
 		memcpy(buf, path+iter, iter2-iter+1);	
 		buf[iter2-iter+1] = '\0';
-		printf("In blkfs_lookup, buf is %s\n",buf);
+		printf("In blkfs_lookup, buf is %s\nhh",buf);
 			
 		int found = 0;	
 		for(int i=2; i< (current_inode->filesize / 32); i++) {
