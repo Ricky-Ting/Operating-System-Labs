@@ -55,6 +55,9 @@ void test() {
 	vfs->lseek(fd2,0,SEEK_SET);
 	vfs->read(fd2,buf3,11);
 	printf("%s\n",buf3); 
+
+	ret = vfs->rmdir("/ricky");
+	printf("rm return %d\n",ret);
 }
 
 
