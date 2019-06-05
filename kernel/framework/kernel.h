@@ -42,6 +42,14 @@ typedef struct {
 } MODULE(kmt);
 
 typedef struct device device_t;
+struct device {
+  const char *name;
+  int id;
+  void *ptr;
+  devops_t *ops;
+};
+
+
 typedef struct devops {
   int (*init)(device_t *dev);
   ssize_t (*read)(device_t *dev, off_t offset, void *buf, size_t count);
