@@ -51,7 +51,6 @@ typedef struct devops {
 typedef struct {
   void (*init)();
 } MODULE(dev);
-extern struct device;
 
 
 
