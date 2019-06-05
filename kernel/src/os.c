@@ -45,10 +45,10 @@ static void os_init() {
 	vfs->init();
 vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
 
-	task_t tmptask;
-		kmt->create(&tmptask, "test", test, NULL);
+	//task_t tmptask;
+		//kmt->create(&tmptask, "test", test, NULL);
 
-	//kmt->create(pmm->alloc(sizeof(task_t)), "b", fb, NULL);
+	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print2", echo_task, "tty2");
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print3", echo_task, "tty3");
