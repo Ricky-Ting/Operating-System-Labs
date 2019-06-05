@@ -127,7 +127,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 }
 
 int blkfs_close(inode_t *inode) {
-	
+	return 0;	
 }
 
 int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs) {
@@ -208,7 +208,7 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 }
 
 int blkfs_inode_close(file_t *file) {
-	
+	return 0;	
 }
 
 ssize_t blkfs_inode_read(file_t *file, char *buf, size_t size) {
