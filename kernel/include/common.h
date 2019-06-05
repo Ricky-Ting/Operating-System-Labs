@@ -78,12 +78,12 @@ struct filesystem{
 	char fsname[MAXNAME];
 	char mount_path[MAXNAME];
 	fsops_t *ops;
-	dev_t *dev;
+	device_t *dev;
 	inodeops_t *iops;
 };
 
 struct fsops{
-	void (*init)(struct filesystem *fs, const char *name, dev_t *dev);
+	void (*init)(struct filesystem *fs, const char *name, device_t *dev);
 	inode_t *(*lookup)(struct filesystem *fs, const char *path, int flags);
 	int (*close)(inode_t *inode);
 };
