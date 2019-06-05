@@ -36,14 +36,21 @@ void test() {
 
 	ret = vfs->mkdir("/ricky");
 	printf("mkdir return %d\n",ret);
-	ret = vfs->open("/ricky/cir.txt",0);
-	printf("create cir, %d\n",ret);
+	int fd2 = vfs->open("/ricky/cir.txt",0);
+	printf("create cir, %d\n",fd2);
 
 	ret = vfs->access("/ricky",0);
 	printf("access /ricky, %d\n",ret);
 	
 	ret = vfs->access("/ricky/cir.txt",0);
 	printf("access /ricky/cir.txt %d\n",ret);
+	
+	vfs->write(fd2,"hello,",6);
+	vfs->read(fd2,buf,6);
+	printf("%s\n",buf);
+	vfs->write(fd2,"world",5);
+	vfs->read(fd2,buf,11);
+	printf("%s\n",buf); 
 }
 
 
