@@ -233,6 +233,7 @@ int vfs_open(const char *path, int flags) {
 		iter++;
 	assert(iter<NOFILE);
 	current->files[iter] = open_file;
+	printf("In vfs_open, fd= %d, %d\n",iter, current->files[iter]->inode->refcnt);
 	return iter;
 }
 
