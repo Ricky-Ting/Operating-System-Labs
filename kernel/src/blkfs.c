@@ -17,6 +17,8 @@
 #define ISFILE 1
 #define ISDIRE 0
 
+
+
 struct blkinode{
 	uint32_t filesize;		// 4B
 	uint32_t block_id[20];	// 20*4 = 80B
@@ -36,6 +38,8 @@ struct blkdire{
 typedef struct blkdire blkdire_t;
 
 void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
+	
+	kmt->spin_init(&(fs->fs_lock),"fs_lock");
 	strncpy(fs->fsname, name, MAXNAME);
 	fs->dev = dev;		
 	// 实现根目录 根目录的inode编号为0
