@@ -4,8 +4,8 @@
 
 extern task_t* current_task[MAXCPU];
 #define current (current_task[_cpu()])
-filesystem *whichfs(const char *path) {
-	filesystem *ret = NULL;
+filesystem_t *whichfs(const char *path) {
+	filesystem_t *ret = NULL;
 	mnt_t* current_mnt = vfilesystem.mnthead;
 	int current_max = 0;
 	int len1,len2;
