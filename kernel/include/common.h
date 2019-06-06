@@ -109,6 +109,8 @@ struct inode{
 	int id; 			//在磁盘上的inode编号
 	//void *ptr;
 	
+	int devfs_cnt;
+	
 	filesystem_t *fs;
 	inodeops_t *ops;
 };
