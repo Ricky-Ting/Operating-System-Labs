@@ -53,7 +53,7 @@ inode_t *devfs_lookup(struct filesystem *fs, const char *path) {
 
 
 int devfs_open(const char *name, file_t *file, int flags, filesystem_t *fs) {
-	inode_t *node = fs->lookup(fs, name);
+	inode_t *node = fs->ops->lookup(fs, name);
 	if(node==NULL)
 		return -1;
 	file->offset = 0;
