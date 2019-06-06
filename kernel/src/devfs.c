@@ -39,7 +39,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 }
 
 
-inode_t *devfs_lookup(struct filesystem *fs, const char *path) {
+inode_t *devfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	for(int i=0; i<NUM_OF_DEVS; i++) {
 		if(strcmp(path, devfs_name[i])==0) {
 			return &devfs_inodes[i].inode;
@@ -53,7 +53,7 @@ inode_t *devfs_lookup(struct filesystem *fs, const char *path) {
 
 
 int devfs_open(const char *name, file_t *file, int flags, filesystem_t *fs) {
-	inode_t *node = fs->ops->lookup(fs, name);
+	inode_t *node = fs->ops->lookup(fs, name, flags);
 	if(node==NULL)
 		return -1;
 	file->offset = 0;
