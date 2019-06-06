@@ -34,7 +34,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inodes[i].inode.ops = fs->iops;	
 		devfs_inodes[i].dev = dev_lookup(devfs_name[i]);
 	}
-	strncpy(fs->name,name,MAXNAME);
+	strncpy(fs->fsname,name,MAXNAME);
 	return ;
 }
 
