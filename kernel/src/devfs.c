@@ -20,6 +20,8 @@ typedef struct devfs_inode {
 
 
 char* devfs_name[NUM_OF_DEVS] = {"/ramdisk0","/ramdisk1","/tty1", "/tty2", "/tty3", "/tty4"};
+char* dev_name[NUM_OF_DEVS] = {"ramdisk0","ramdisk1","tty1", "tty2", "tty3", "tty4"};
+
 
 devfs_inode_t	devfs_inodes[NUM_OF_DEVS]; 
 devfs_inode_t root;
@@ -33,7 +35,8 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inodes[i].inode.fs = fs;
 		devfs_inodes[i].inode.f_or_d = ISFILE;
 		devfs_inodes[i].inode.ops = fs->iops;	
-		devfs_inodes[i].dev = dev_lookup(devfs_name[i]);
+	
+		devfs_inodes[i].dev = dev_lookup(dev_name[i]);
 		assert(devfs_inodes[i].dev!=NULL);
 	}
 
