@@ -17,7 +17,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 
 inode_t *procfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	int len = strlen(path);
-	char buf;
+	char buf[MAXNAME];
 	memcpy(buf,path+1, len-1);
 	buf[len-1] = '\0';
 	int pid = -1;
