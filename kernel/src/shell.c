@@ -37,7 +37,7 @@ void shell_thread() {
 			printf("In shell cd %s\n",line);
 			int ret = vfs->access(line,0);
 			if(ret != ISDIRE) {
-				printf("cd Error\n");
+				printf("cd Error ret = %d\n",ret);
 			} else {
 				strcpy(pwd, line);
 			}
