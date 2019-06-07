@@ -231,7 +231,7 @@ int blkfs_inode_open(const char *name, file_t *file, int flags, filesystem_t *fs
 	
 	file->inode = fs->ops->lookup(fs,name,0);
 	printf("In blkfs_open, name is %s\n",name);
-	assert(file->inode!=NULL);
+	//assert(file->inode!=NULL);
 	return 0;
 }
 
