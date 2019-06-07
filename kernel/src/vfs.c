@@ -54,7 +54,7 @@ int vfs_access(const char *path, int mode) {
 
 	char buf[MAXNAME];
 	int len = strlen(fs->mount_path);
-	if(len!=1) {
+	if(len!=strlen(path)) {
 		memcpy(buf, path+len, strlen(path)-len);
 		buf[strlen(path)-len] = '\0';	
 	} else {
