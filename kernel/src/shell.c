@@ -27,7 +27,7 @@ void shell_thread() {
 			if(ret<0)
 				printf("ls Error\n");
 			else {
-				vfs->write(stdout, buf, strlen(output));
+				vfs->write(stdout, output, strlen(output));
 			}
 		} else if(line[0] == 'c' && line[1] == 'd') {
 			int len = strlen(line);
