@@ -83,6 +83,24 @@ void shell_thread() {
 			if(ret != ISDIRE) {
 				printf("rm %s failed\n",line);
 			}
+		} else if(line[0] == 'c' && line[1] == 'a' && line[2] == 't') {
+			int len = strlen(line);
+			memmove(line, line+4, len-4);
+			line[len-4] = '\0';
+
+			char readbuf[128];
+			int fd = vfs->open(line,0);
+			int nread = 0;
+			do{
+				nread = vfs->read(fd, readbuf,128);
+				if(nread<0) {
+					printf("cat %s failed\n",line);
+					break;
+				}	
+				vfs->write(stdout, readbuf, nread);
+			}while( nread==128)
+
+
 		}
 
 
