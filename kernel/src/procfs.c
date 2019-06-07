@@ -17,7 +17,7 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 
 inode_t *procfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	int len = strlen(path);
-	memmove(ptah,path+1, len-1);
+	memmove(path,path+1, len-1);
 	int pid = -1;
 	sscanf(path, "%d",&pid);
 
