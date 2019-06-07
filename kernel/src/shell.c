@@ -8,8 +8,10 @@ void shell_thread() {
 	char pwd[1024], prompt[1024];
 	pwd[0] = '/'; pwd[1] = '\0';	
 	sprintf(buf, "/dev/tty%d",tty_id);
-	int stdin = vfs->open(buf, O_RDONLY);
-	int stdout = vfs->open(buf, O_RDONLY);
+	int stdin = vfs->open(buf, 0);
+	int stdout = vfs->open(buf, 0);
+
+	char line[2048];
 
 	while(1) {
 		sprintf(prompt, "%s>", pwd);
