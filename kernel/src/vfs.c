@@ -318,7 +318,7 @@ int vfs_readdir(const char *path, void *buf) {
 		tmpbuf[strlen(path)] = '\0';
 	}
 
-	printf("In vfs_readdir fs name is %d\n",fs->fsname);
+	printf("In vfs_readdir fs name is %s\n",fs->fsname);
 	return fs->iops->readdir(tmpbuf,buf, fs);
 }
 
