@@ -26,8 +26,8 @@ void shell_thread() {
 			if(ret<0)
 				printf("ls Error\n");
 			else {
-				int tmplen = strlen(output);
-				output[tmplen] = '\n'; output[tmplen +1 ] = '\0'; 
+				//int tmplen = strlen(output);
+				//output[tmplen] = '\n'; output[tmplen +1 ] = '\0'; 
 				vfs->write(stdout, output, strlen(output));
 			}
 		} else if(line[0] == 'c' && line[1] == 'd') {
@@ -56,6 +56,18 @@ void shell_thread() {
 		
 		} else if(line[0] == 'u') {
 				printf("Mor\n");
+
+		} else if(line[0] == 't' && line[1] == 'o' && line[2] == 'u' && line[3] == 'c' && line[4] == 'h') {
+			int len = strlen(line);
+			memmove(line, line+6, len-6);
+			line[len-6] = '\0';
+			int ret = vfs->open(line,0);
+			if(ret<0) {
+				printf("touch %s failed\n",line);
+			} else {
+				
+			}
+
 
 		}
 
