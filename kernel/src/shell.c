@@ -83,6 +83,7 @@ void shell_thread() {
 			if(ret != ISDIRE) {
 				printf("rm %s failed\n",line);
 			}
+		}
 
 
 
