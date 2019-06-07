@@ -47,7 +47,9 @@ void shell_thread() {
 
 		} else if(line[0] =='l' && line[1] == 'n') {
 		
-		} else if(line[0] == 'u')
+		} else if(line[0] == 'u') {
+
+		}
 
 	}
 
