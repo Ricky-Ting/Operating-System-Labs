@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <devices.h>
 
-extern void shell_thread(int tty_id);
+extern void shell_thread(void);
 
 
 void echo_task(void *name) {
@@ -88,7 +88,7 @@ static void os_init() {
 	vfs->mount("/mnt",create_blkfs("ramdisk1",dev_lookup("ramdisk1")));
 
 		//kmt->create(&tmptask, "test", test, NULL);
-	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread, 1)
+	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread );
 
 	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
