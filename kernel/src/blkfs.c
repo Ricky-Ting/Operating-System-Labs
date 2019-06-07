@@ -37,6 +37,7 @@ struct blkdire{
 };
 typedef struct blkdire blkdire_t;
 
+
 void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	
 	//kmt->spin_init(&(fs->fs_lock),"fs_lock");
@@ -52,6 +53,14 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	root->refcnt = 1;
 	root->f_or_d = ISDIRE;	
 	root->has_inode_t = 0;
+
+
+	fs->root_inode.f_or_d = ISDIRE;
+	fs->root_inode.id = 0;
+	fs->root_inode.refcnt = 1;
+	fs->root_inode.fs = fs;
+	fs->root_inode.ops = fs->iops;
+	
 
 	//kmt->spin_lock(&(fs->fs_lock));
 	dev->ops->write(dev, INODE_OFF, (void *)root, sizeof(blkinode_t));
@@ -79,6 +88,11 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 }
 
 inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
+
+	if(strcmp(path,"/")==0)
+		return &(fs->root_inode);
+
+
 	inode_t *ret = NULL;
 	int flag = 1;
 	uint32_t current_inode_id = 0;
