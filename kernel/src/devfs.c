@@ -138,7 +138,7 @@ int devfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 
 	int off  = 0;
 	char tmpbuf[20];
-	for(int i=0; i< NUM_OF_DEVS;I++) {
+	for(int i=0; i< NUM_OF_DEVS;i++) {
 		sprintf(tmpbuf, "%s\n",devfs_name[i]);
 		memcpy(buf+off,tmpbuf,strlen(tmpbuf));
 		off += strlen(tmpbuf);
