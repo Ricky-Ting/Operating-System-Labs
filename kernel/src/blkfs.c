@@ -685,7 +685,7 @@ int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 	if(off == 0) {
 		//memcpy(buf,"\n\0",2);
 	}
-	memcpy(buf+off,'\0',1);
+	sprintf(buf,"\n");
 	printf("In blkfs_readdir, %sh\n",buf);
 	return 0;
 }
