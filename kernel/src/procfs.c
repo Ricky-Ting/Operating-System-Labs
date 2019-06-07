@@ -55,7 +55,7 @@ int	procfs_close(file_t *file) {
 ssize_t procfs_read(file_t *file, char *buf, size_t size) {
 	char mybuf[2048];
 	task_t *task = file->inode->task;
-	sprintf(mybuf,"task name: %s\ntotal cpu: %d\ncurrent cpu: %d\nstack start: %d\nstack_end: %d\nstack_size: %d\n", task->name, _ncpu(), task->bind_cpu, stack, (int)(stack) + STACK_SIZE, STACK_SIZE );
+	sprintf(mybuf,"task name: %s\ntotal cpu: %d\ncurrent cpu: %d\nstack start: %d\nstack_end: %d\nstack_size: %d\n", task->name, _ncpu(), task->bind_cpu, task->stack, (int)(task->stack) + STACK_SIZE, STACK_SIZE );
 
 
 	int read_start = file->offset;
