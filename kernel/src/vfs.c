@@ -318,7 +318,7 @@ int vfs_readdir(const char *path, void *buf) {
 		tmpbuf[strlen(path)] = '\0';
 	}
 
-	return fs->iops->readdir(tmpbuf,buf);
+	return fs->iops->readdir(tmpbuf,buf, fs);
 }
 
 
