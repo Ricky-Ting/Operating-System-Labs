@@ -44,6 +44,7 @@ void shell_thread() {
 			int ret = vfs->unlink(line);
 			if(ret != ISDIRE) {
 				printf("rm Error\n");
+			}
 
 		} else if(line[0] =='l' && line[1] == 'n') {
 				printf("More\n");
@@ -54,6 +55,4 @@ void shell_thread() {
 		}
 
 	}
-
-
 }
