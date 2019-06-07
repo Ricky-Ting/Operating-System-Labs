@@ -42,8 +42,23 @@ void shell_thread() {
 				strcpy(pwd, line);
 			}
 		} else if(line[0] =='l' && line[1] == 'n') {
-				printf("More\n");
-		
+			int len = strlen(line);
+			memmove(line, line+3, len-3);
+			line[len-3] = '\0';
+			
+			char oldpath[200];
+			char newpath[200];
+			int it =0;
+			while(it<len-3 && line[it]!=' ')
+				it++;
+			
+			memcpy(oldpath, line, it);
+			oldpath[it] = '\0';
+			memcpy(newpath, line+it+1, len-3 - it -1);
+			newpath[len-3-it-1] = '\0';
+			int ret = vfs->link(oldpath, newpath);
+			if(ret<0)
+				printf("link %s %s failed\n", oldpath, newpath);
 		} else if(line[0] == 'u') {
 				printf("Mor\n");
 
@@ -55,7 +70,7 @@ void shell_thread() {
 			if(ret<0) {
 				printf("touch %s failed\n",line);
 			} else{
-
+				
 			} 
 		} else if(line[0] == 'm' && line[1] == 'k' && line[2] == 'd' && line[3] == 'i' && line[4] == 'r'){
 			int len = strlen(line);
@@ -100,7 +115,8 @@ void shell_thread() {
 				vfs->write(stdout, readbuf, nread);
 			}while( nread==128);
 
-
+		} else if(line[0]=='e' && line[1]=='c' && line[2]=='h' && line[3] == 'o') {
+				
 		}
 
 
