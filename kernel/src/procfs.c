@@ -58,8 +58,8 @@ ssize_t procfs_read(file_t *file, char *buf, size_t size) {
 	sprintf(mybuf,"task name: %s\ntotal cpu: %d\ncurrent cpu: %d\nstack start: %d\nstack_end: %d\nstack_size: %d\n", task->name, _ncpu(), task->bind_cpu, stack, (int)(stack) + STACK_SIZE, STACK_SIZE );
 
 
-	read_start = file->offset;
-	read_end = file->offset + size;
+	int read_start = file->offset;
+	int read_end = file->offset + size;
 	if(read_end>strlen(mybuf))
 		read_end = strlen(mybuf);
 
