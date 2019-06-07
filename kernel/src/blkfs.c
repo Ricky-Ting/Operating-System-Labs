@@ -54,12 +54,13 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 	root->f_or_d = ISDIRE;	
 	root->has_inode_t = 0;
 
+	fs->root_inode = pmm->alloc(sizeof(inode_t));
 
-	fs->root_inode.f_or_d = ISDIRE;
-	fs->root_inode.id = 0;
-	fs->root_inode.refcnt = 1;
-	fs->root_inode.fs = fs;
-	fs->root_inode.ops = fs->iops;
+	fs->root_inode->f_or_d = ISDIRE;
+	fs->root_inode->id = 0;
+	fs->root_inode->refcnt = 1;
+	fs->root_inode->fs = fs;
+	fs->root_inode->ops = fs->iops;
 	
 
 	//kmt->spin_lock(&(fs->fs_lock));
