@@ -151,6 +151,7 @@ void shell_thread() {
 				it3--;
 			}			
 			int fd = vfs->open(filename, 0);
+			vfs->lseek(fd,off, SEEK_SET);
 			vfs->write(fd, line, strlen(line));
 		}
 
