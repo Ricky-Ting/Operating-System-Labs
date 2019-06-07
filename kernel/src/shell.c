@@ -125,7 +125,7 @@ void shell_thread() {
 			int it1=0; int it2 = 0;
 			char filename[200];
 			char off_string[20];
-			int off;
+			int off = 0;
 
 			while(it1<len && line[it1]!=' ')
 				it1++;
