@@ -664,9 +664,9 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 	int off = 0;
 	char tmpbuf[200];
-	blkinode tmp1; blkdire tmp2;
-	blkinode *current_inode = &tmp1;
-	blkdire *current_dire = &tmp2;
+	blkinode_t tmp1; blkdire_t tmp2;
+	blkinode_t *current_inode = &tmp1;
+	blkdire_t *current_dire = &tmp2;
 
 	inode_t *node = fs->ops->lookup(fs,path,0);
 	if(node == NULL)
