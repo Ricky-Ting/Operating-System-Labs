@@ -135,6 +135,10 @@ int vfs_mkdir(const char *path) {
 	if(len!=1) {
 		memcpy(buf, path+len, strlen(path)-len);
 		buf[strlen(path)-len] = '\0';	
+		if(strlen(buf)==0) {
+			buf[0] = '/';
+			buf[1] = '\0';
+		}
 	} else {
 		memcpy(buf, path, strlen(path));
 		buf[strlen(path)] = '\0';
@@ -156,6 +160,10 @@ int vfs_rmdir(const char *path) {
 	if(len!=1) {
 		memcpy(buf, path+len, strlen(path)-len);
 		buf[strlen(path)-len] = '\0';	
+		if(strlen(buf)==0) {
+			buf[0] = '/';
+			buf[1] = '\0';
+		}
 	} else {
 		memcpy(buf, path, strlen(path));
 		buf[strlen(path)] = '\0';
@@ -180,6 +188,14 @@ int vfs_link(const char *oldpath, const char *newpath) {
 		memcpy(buf2, newpath+len, strlen(newpath)-len);
 		buf1[strlen(oldpath)-len] = '\0';	
 		buf2[strlen(newpath)-len] = '\0';	
+		if(strlen(buf1)==0) {
+			buf1[0] = '/';
+			buf1[1] = '\0';
+		}
+		if(strlen(buf2)==0) {
+			buf2[0] = '/';
+			buf2[1] = '\0';
+		}
 	} else {
 		memcpy(buf1, oldpath, strlen(oldpath));
 		buf1[strlen(oldpath)] = '\0';
@@ -208,6 +224,10 @@ int vfs_unlink(const char *path) {
 	if(len!=1) {
 		memcpy(buf, path+len, strlen(path)-len);
 		buf[strlen(path)-len] = '\0';	
+		if(strlen(buf)==0) {
+			buf[0] = '/';
+			buf[1] = '\0';
+		}
 	} else {
 		memcpy(buf, path, strlen(path));
 		buf[strlen(path)] = '\0';
@@ -231,6 +251,10 @@ int vfs_open(const char *path, int flags) {
 	if(len!=1) {
 		memcpy(buf, path+len, strlen(path)-len);
 		buf[strlen(path)-len] = '\0';	
+		if(strlen(buf)==0) {
+			buf[0] = '/';
+			buf[1] = '\0';
+		}
 	} else {
 		memcpy(buf, path, strlen(path));
 		buf[strlen(path)] = '\0';
@@ -318,6 +342,10 @@ int vfs_readdir(const char *path, void *buf) {
 	if(len!=1) {
 		memcpy(tmpbuf, path+len, strlen(path)-len);
 		tmpbuf[strlen(path)-len] = '\0';	
+		if(strlen(tmpbuf)==0) {
+			tmpbuf[0] = '/';
+			tmpbuf[1] = '\0';
+		}
 	} else {
 		memcpy(tmpbuf, path, strlen(path));
 		tmpbuf[strlen(path)] = '\0';
