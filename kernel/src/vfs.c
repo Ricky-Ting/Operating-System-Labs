@@ -353,25 +353,19 @@ int vfs_readdir(const char *path, void *buf) {
 		tmpbuf[strlen(path)] = '\0';
 	}
 
+
+	char tmp2buf[200];
 	printf("In vfs_readdir fs name is %s\n",fs->fsname);
+	if(strcmp(path,"/")==0) {
+		mnt_t* current_mnt = myvfs->mnthead;
+		while(current_mnt!=NULL) {
+			sprintf(tmp2buf,"%s\n" ,current_mnt->path);
+			strcat(buf,tmp2buf);
+		}
+		
+	}
 	return fs->iops->readdir(tmpbuf,buf, fs);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
