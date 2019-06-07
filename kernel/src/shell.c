@@ -41,16 +41,6 @@ void shell_thread() {
 			} else {
 				strcpy(pwd, line);
 			}
-		} else if(line[0] == 'r' && line[1] == 'm') {
-			int len = strlen(line);
-			memmove(line, line+3, len-3);
-			line[len-3] = '\0';
-
-			int ret = vfs->unlink(line);
-			if(ret != ISDIRE) {
-				printf("rm Error\n");
-			}
-
 		} else if(line[0] =='l' && line[1] == 'n') {
 				printf("More\n");
 		
@@ -75,9 +65,26 @@ void shell_thread() {
 			if(ret<0) {
 				printf("mkdir %s failed\n",line);
 			}
+		} else if (line[0] == 'r' && line[1] == 'm' && line[2] == 'd' && line[3] == 'i' && line[4] == 'r') {
+			int len = strlen(line);
+			memmove(line, line+6, len-6);
+			line[len-6] = '\0';
+			int ret = vfs->rmdir(line);
+			if(ret<0) {
+				printf("rmdir %s failed\n",line);
+			}
+
+		} else if(line[0] == 'r' && line[1] == 'm') {
+			int len = strlen(line);
+			memmove(line, line+3, len-3);
+			line[len-3] = '\0';
+
+			int ret = vfs->unlink(line);
+			if(ret != ISDIRE) {
+				printf("rm %s failed\n",line);
+			}
 
 
-		}
 
 	}
 }
