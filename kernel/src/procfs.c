@@ -17,9 +17,22 @@ void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 
 inode_t *procfs_lookup(struct filesystem *fs, const char *path, int flags) {
 	int len = strlen(path);
-	memmove(path,path+1, len-1);
+	char buf;
+	memcpy(buf,path+1, len-1);
+	buf[len-1] = '\0';
 	int pid = -1;
-	sscanf(path, "%d",&pid);
+	//sscanf(path, "%d",&pid);
+	int it = len-2;
+	int ans = 0;
+	int jie = 1;
+	while(it>=0) {
+		if(buf[it] - '0'<0 || buf[it] - '0'>9)
+			return NULL;
+		ans += jie * (buf[it] - '0');
+		jie *= 10;
+		it--;
+	}
+	pid = ans;
 
 	if(pid<0 || pid>=MAXTHREAD || pid>=pid_counter)
 		return NULL;
@@ -78,7 +91,7 @@ off_t procfs_lseek(file_t *file, off_t offset, int whence) {
 
 	char mybuf[2048];
 	task_t *task = file->inode->task;
-	sprintf(mybuf,"task name: %s\ntotal cpu: %d\ncurrent cpu: %d\nstack start: %d\nstack_end: %d\nstack_size: %d\n", task->name, _ncpu(), task->bind_cpu, stack, (int)(stack) + STACK_SIZE, STACK_SIZE );
+	sprintf(mybuf,"task name: %s\ntotal cpu: %d\ncurrent cpu: %d\nstack start: %d\nstack_end: %d\nstack_size: %d\n", task->name, _ncpu(), task->bind_cpu, task->stack, (int)(task->stack) + STACK_SIZE, STACK_SIZE );
 	
 
 	int new_offset;
