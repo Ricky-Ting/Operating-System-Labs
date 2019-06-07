@@ -115,8 +115,43 @@ void shell_thread() {
 				vfs->write(stdout, readbuf, nread);
 			}while( nread==128);
 
-		} else if(line[0]=='e' && line[1]=='c' && line[2]=='h' && line[3] == 'o') {
+		} else if(line[0]=='w' && line[1]=='r' && line[2]=='i' && line[3] == 't' && line[4] == 'e') {
+			// write filename offset content
+			int len = strlen(line);
+			memmove(line, line+6, len-6);
+			line[len-6] = '\0';
+			len = len -6;			
+	
+			int it1=0; int it2 = 0;
+			char filename[200];
+			char off_string[20];
+			int off;
+
+			while(it1<len && line[it1]!=' ')
+				it1++;
+			it2 = it1+1;
+			while(it2<len && line[it2]!=' ')
+				it2++;						
 				
+			memcpy(filename, line, it1);
+			line[it1] = '\0';
+
+			memcpy(off_string, line+it1+1, it2-it1-1);
+			off_string[it2-it1-1] = '\0';
+		
+			memmove(line, line+it2+1, len - it2 -1);
+			line[len - it2 - 1] = '\0';
+			
+			int len2 = strlen(off_string);
+			int it3 = len2-1;
+			int jie =1;
+			while(it3>=0) {
+				off += (jie*(off_string[it3]-'0'));
+				jie*=10;
+				it3--;
+			}			
+			int fd = vfs->open(filename, 0);
+			vfs->write(fd, line, strlen(line));
 		}
 
 
