@@ -63,6 +63,7 @@ int vfs_access(const char *path, int mode) {
 	}
 
 	inode_t * p = fs->ops->lookup(fs, buf, 0);
+	printf("here\n");
 	if(p!=NULL)
 		return p->f_or_d;
 	else
