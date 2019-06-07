@@ -62,8 +62,8 @@ int vfs_access(const char *path, int mode) {
 		buf[strlen(path)] = '\0';
 	}
 
+	printf("In access buf is %s\n",buf);
 	inode_t * p = fs->ops->lookup(fs, buf, 0);
-	printf("here\n");
 	if(p!=NULL)
 		return p->f_or_d;
 	else
