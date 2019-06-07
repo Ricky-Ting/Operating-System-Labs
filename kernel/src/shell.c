@@ -21,6 +21,7 @@ void shell_thread() {
 		line[nread - 1] = '\0';
 		
 		if(strcmp(line,"ls")==0) {
+			printf("In sheell, buf is %s\n",buf);
 			int ret = vfs->readdir(pwd,buf);
 			if(ret<0)
 				printf("ls Error\n");
