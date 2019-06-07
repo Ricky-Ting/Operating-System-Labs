@@ -2,7 +2,6 @@
 #include <devices.h>
 
 
-
 typedef struct devfs_inode {
 	char dev_name[MAXNAME];
 	inode_t inode;
@@ -22,7 +21,8 @@ typedef struct devfs_inode {
 
 char* devfs_name[NUM_OF_DEVS] = {"/ramdisk0","/ramdisk1","/tty1", "/tty2", "/tty3", "/tty4"};
 
-devfs_inode_t	devfs_inodes[6]; 
+devfs_inode_t	devfs_inodes[NUM_OF_DEVS]; 
+devfs_inode_t root;
 
 
 
@@ -31,9 +31,15 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		strncpy(devfs_inodes[i].dev_name, devfs_name[i], MAXNAME);
 		devfs_inodes[i].inode.refcnt = 0;
 		devfs_inodes[i].inode.fs = fs;
+		devfs_inodes[i].inode.f_or_d = ISFILE;
 		devfs_inodes[i].inode.ops = fs->iops;	
 		devfs_inodes[i].dev = dev_lookup(devfs_name[i]);
 	}
+
+	root.inode.refcnt = 0;
+	root.inode.fs = fs;
+	root.inode.f_or_d = ISDIRE;
+	root.inode.ops = fs->iops;
 	strncpy(fs->fsname,name,MAXNAME);
 	return ;
 }
@@ -45,6 +51,9 @@ inode_t *devfs_lookup(struct filesystem *fs, const char *path, int flags) {
 			return &devfs_inodes[i].inode;
 		}
 	} 
+	if(strcmp("/",path)==0)
+		return &root.inode;
+
 	return NULL;
 }
 
@@ -123,7 +132,21 @@ int devfs_unlink(const char *name, filesystem_t *fs) {
 	return -1;
 }
 
+int devfs_readdir(const char *path, void *buf, filesystem_t *fs) {
+	if(strcmp(path,"ls")!=0)
+		return -1;
 
+	int off  = 0;
+	char tmpbuf[20];
+	for(int i=0; i< NUM_OF_DEVS;I++) {
+		sprintf(tmpbuf, "%s\n",devfs_name[i]);
+		memcpy(buf+off,tmpbuf,strlen(tmpbuf));
+		off += strlen(tmpbuf);
+	}
+	buf[off] = '\0';
+	return 0;
+
+}
 
 
 inodeops_t devinodeops = {
@@ -136,6 +159,7 @@ inodeops_t devinodeops = {
 	.rmdir = devfs_rmdir,
 	.link = devfs_link,
 	.unlink = devfs_unlink,
+	.readdir = devfs_readdir,
 };
 
 

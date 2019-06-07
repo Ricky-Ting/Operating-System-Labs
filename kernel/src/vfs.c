@@ -64,7 +64,7 @@ int vfs_access(const char *path, int mode) {
 
 	inode_t * p = fs->ops->lookup(fs, buf, 0);
 	if(p!=NULL)
-		return 0;
+		return p->f_or_d;
 	else
 		return -1;
 }
@@ -302,7 +302,24 @@ int vfs_close(int fd) {
 }
 
 
+int vfs_readdir(const char *path, void *buf) {
+	filesystem_t* fs = whichfs(path); 
+	if( fs == NULL ) {
+		printf("No filesystem\n");
+		return -1;
+	}
+	char tmpbuf[MAXNAME];
+	int len = strlen(fs->mount_path);
+	if(len!=1) {
+		memcpy(tmpbuf, path+len, strlen(path)-len);
+		tmpbuf[strlen(path)-len] = '\0';	
+	} else {
+		memcpy(tmpbuf, path, strlen(path));
+		tmpbuf[strlen(path)] = '\0';
+	}
 
+	return fs->iops->readdir(tmpbuf,buf);
+}
 
 
 
@@ -336,5 +353,6 @@ MODULE_DEF(vfs) {
 	.write = vfs_write,
 	.lseek = vfs_lseek,
 	.close = vfs_close,
+	.readdir = vfs_readdir,
 };
 

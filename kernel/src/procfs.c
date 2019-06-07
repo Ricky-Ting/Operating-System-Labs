@@ -5,17 +5,28 @@
 #define MAXTHREAD 1024
 
 inode_t proc_inodes[MAXTHREAD];
+inode_t root;
 
 extern int pid_counter;
 extern task_t* task_head[MAXCPU];
 
 void procfs_init(filesystem_t *fs, const char *name, device_t *dev){
 	strncpy(fs->fsname,name,MAXNAME);
+	
+	root.refcnt = 1;
+	root.f_or_d = ISDIRE;
+	root.fs = fs;
+	root.ops = fs->iops;
+
 	return ;
 }
 
 
 inode_t *procfs_lookup(struct filesystem *fs, const char *path, int flags) {
+
+	if(strcmp(path,"/")==0)
+		return &root;
+
 	int len = strlen(path);
 	char buf[MAXNAME];
 	memcpy(buf,path+1, len-1);
@@ -136,6 +147,22 @@ int procfs_unlink(const char *name, filesystem_t *fs) {
 	return -1;
 }
 
+
+int procfs_readdir(const char *path, void *buf, filesystem_t *fs) {
+	if(strcmp(path,"/")!=0)
+		return -1;
+	int off = 0;
+	char tmpbuf[20];
+	for(int i=0;i<pid_counter;i++) {
+		sprintf(tmpbuf,"%d\n",i);
+		memcpy(buf+off, tmpbuf, strlen(tmpbuf));
+		off+=strlen(tmpbuf);
+	}	
+	buf[off] = '\0';
+	return 0;
+
+}
+
 inodeops_t procinodeops = {
 	.open = procfs_open,
 	.close = procfs_close,
@@ -146,6 +173,7 @@ inodeops_t procinodeops = {
 	.rmdir = procfs_rmdir,
 	.link = procfs_link,
 	.unlink = procfs_unlink,
+	.readdir = procfs_readdir,
 };
 
 
@@ -153,8 +181,6 @@ fsops_t procfsops = {
 	.init = procfs_init,
 	.lookup = procfs_lookup,
 };
-
-
 
 
 filesystem_t *create_procfs() {

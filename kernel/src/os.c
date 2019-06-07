@@ -1,6 +1,10 @@
 #include <common.h>
 #include <klib.h>
 #include <devices.h>
+
+extern shell_thread(int tty_id);
+
+
 void echo_task(void *name) {
 	device_t *tty = dev_lookup(name);
 	while(1) {
@@ -80,9 +84,11 @@ static void os_init() {
 	kmt->init();
 	dev->init();
 	vfs->init();
-vfs->mount("/mnt",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+	vfs->mount("/",create_blkfs("ramdisk0",dev_lookup("ramdisk0")));
+	vfs->mount("/mnt",create_blkfs("ramdisk1"),dev_lookup("ramdisk1"));
 
 		//kmt->create(&tmptask, "test", test, NULL);
+	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread, 1)
 
 	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");

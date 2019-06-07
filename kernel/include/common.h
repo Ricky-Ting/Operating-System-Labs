@@ -102,6 +102,7 @@ struct inodeops{
 	int (*rmdir)(const char *name, filesystem_t *fs);
 	int (*link)(const char *name, inode_t *inode, filesystem_t *fs);
 	int (*unlink)(const char *name, filesystem_t *fs);
+	int (*readdir)(const char *path, void *buf, filesystem_t *fs);
 };
 
 
@@ -110,6 +111,7 @@ struct inode{
 	int id; 			//在磁盘上的inode编号
 	//void *ptr;
 	
+	int f_or_d;
 	int devfs_cnt;
 	int proc_cnt;
 	task_t *task;	
@@ -124,6 +126,10 @@ struct file{
 };
 
 filesystem_t *create_blkfs(const char *fsname, device_t *dev);
+
+
+#define ISFILE 1
+#define ISDIRE 0
 
 /*END: FOR vfs*/
 

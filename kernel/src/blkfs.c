@@ -128,6 +128,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 		if(!(current_inode->has_inode_t)) {
 			ret = pmm->alloc(sizeof(inode_t));
 			ret->id = current_dire->inode_id;
+			ret->f_or_d = current_dire->f_or_d;
 			ret->fs = fs;
 			ret->refcnt = 0;
 			ret->ops = fs->iops;
@@ -660,6 +661,31 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 	return 0;
 }
 
+int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
+	int off = 0;
+	char tmpbuf[200];
+	blkinode tmp1; blkdire tmp2;
+	blkinode *current_inode = &tmp1;
+	blkdire *current_dire = &tmp2;
+
+	inode_t *node = fs->ops->lookup(fs,path,0);
+	if(node == NULL)
+		return -1;
+	assert(node->f_or_d == ISDIRE);
+
+	fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE * (node->id), current_inode, INODE_SIZE);
+	for(int i=2; i<(current_inode->filesize/32); i++) {
+		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE * (current_inode->block_id[0])+ i*32, current_dire, sizeof(blkdire_t));
+		sprintf(tmpbuf, "%s\n", current_dire->filename);
+		memcpy(buf+off, tmpbuf, sizeof(tmpbuf));
+		off += sizeof(tmpbuf);
+	}
+	buf[off] = '\0';
+	return 0;
+}
+
+
+
 
 inodeops_t blkinodeops = {
 	.open = blkfs_inode_open,
@@ -671,6 +697,7 @@ inodeops_t blkinodeops = {
 	.rmdir = blkfs_inode_rmdir,
 	.link = blkfs_inode_link,
 	.unlink = blkfs_inode_unlink,
+	.readdir = blkfs_readdir,
 };
 
 fsops_t blkfsops = {
