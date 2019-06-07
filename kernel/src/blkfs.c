@@ -91,7 +91,7 @@ void blkfs_init(struct filesystem *fs, const char *name, device_t *dev) {
 inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 
 	if(strcmp(path,"/")==0)
-		return &(fs->root_inode);
+		return (fs->root_inode);
 
 
 	inode_t *ret = NULL;
