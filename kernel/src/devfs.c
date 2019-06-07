@@ -145,7 +145,7 @@ int devfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 
 	char tmpbuf[20];
 	for(int i=0; i< NUM_OF_DEVS;i++) {
-		sprintf(tmpbuf, "%s\n",devfs_name[i]);
+		sprintf(tmpbuf, "%s\n",dev_name[i]);
 		strcat(buf,tmpbuf);
 	}
 	//buf+off = '\0';
