@@ -158,7 +158,7 @@ int procfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 		memcpy(buf+off, tmpbuf, strlen(tmpbuf));
 		off+=strlen(tmpbuf);
 	}	
-	buf[off] = '\0';
+	buf+off = '\0';
 	return 0;
 
 }
