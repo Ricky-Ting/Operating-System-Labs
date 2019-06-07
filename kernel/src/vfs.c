@@ -69,7 +69,7 @@ int vfs_access(const char *path, int mode) {
 	printf("In access buf is %s\n",buf);
 	inode_t * p = fs->ops->lookup(fs, buf, 0);
 	if(p!=NULL) {
-		assert((p->f_or_d == ISFILE || p->f_or_d == ISDIRE));
+		//assert((p->f_or_d == ISFILE || p->f_or_d == ISDIRE));
 		return p->f_or_d;
 	}
 	else
