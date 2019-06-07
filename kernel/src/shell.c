@@ -1,5 +1,5 @@
 #include <common.h>
-#include <klibs.h>
+#include <klib.h>
 
 void shell_thread() {
 	int tty_id = 1;
