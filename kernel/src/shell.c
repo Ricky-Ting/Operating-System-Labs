@@ -14,6 +14,7 @@ void shell_thread() {
 	char line[2048];
 
 	while(1) {
+		printf("Here\n");
 		sprintf(prompt, "%s>", pwd);
 		vfs->write(stdout, prompt, strlen(prompt) );	
 		int nread = vfs->read(stdin, line, sizeof(line));
