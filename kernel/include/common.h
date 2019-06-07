@@ -126,6 +126,8 @@ struct file{
 };
 
 filesystem_t *create_blkfs(const char *fsname, device_t *dev);
+filesystem_t *create_devfs();
+filesystem_t *create_procfs();
 
 
 #define ISFILE 1
