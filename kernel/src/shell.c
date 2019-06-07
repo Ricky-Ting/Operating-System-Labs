@@ -64,8 +64,16 @@ void shell_thread() {
 			int ret = vfs->open(line,0);
 			if(ret<0) {
 				printf("touch %s failed\n",line);
-			} else {
-				
+			} else{
+
+			} 
+		} else if(line[0] == 'm' && line[1] == 'k' && line[2] == 'd' && line[3] == 'i' && line[4] == 'r'){
+			int len = strlen(line);
+			memmove(line, line+6, len-6);
+			line[len-6] = '\0';
+			int ret = vfs->mkdir(line);
+			if(ret<0) {
+				printf("mkdir %s failed\n",line);
 			}
 
 
