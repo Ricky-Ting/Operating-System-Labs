@@ -46,8 +46,10 @@ void shell_thread() {
 				printf("rm Error\n");
 
 		} else if(line[0] =='l' && line[1] == 'n') {
+				printf("More\n");
 		
 		} else if(line[0] == 'u') {
+				printf("Mor\n");
 
 		}
 
