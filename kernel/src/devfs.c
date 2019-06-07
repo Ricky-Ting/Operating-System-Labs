@@ -143,15 +143,12 @@ int devfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 	if(strcmp(path,"ls")!=0)
 		return -1;
 
-	int off  = 0;
 	char tmpbuf[20];
 	for(int i=0; i< NUM_OF_DEVS;i++) {
 		sprintf(tmpbuf, "%s\n",devfs_name[i]);
-		memcpy(buf+off,tmpbuf,strlen(tmpbuf));
-		off += strlen(tmpbuf);
+		strcat(buf,tmpbuf);
 	}
 	//buf+off = '\0';
-	memcpy(buf+off,'\0',1);
 	return 0;
 
 }

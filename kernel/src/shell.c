@@ -14,7 +14,6 @@ void shell_thread() {
 	char line[2048];
 	char output[2048];
 	while(1) {
-		printf("Here\n");
 		sprintf(prompt, "%s>", pwd);
 		vfs->write(stdout, prompt, strlen(prompt) );	
 		int nread = vfs->read(stdin, line, sizeof(line));
@@ -35,6 +34,7 @@ void shell_thread() {
 			int len = strlen(line);
 			memmove(line, line+3, len-3);
 			line[len-3] = '\0';
+			printf("In shell cd %s\n",line);
 			int ret = vfs->access(line,0);
 			if(ret != ISDIRE) {
 				printf("cd Error\n");

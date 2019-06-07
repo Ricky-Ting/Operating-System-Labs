@@ -151,15 +151,12 @@ int procfs_unlink(const char *name, filesystem_t *fs) {
 int procfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 	if(strcmp(path,"/")!=0)
 		return -1;
-	int off = 0;
 	char tmpbuf[20];
 	for(int i=0;i<pid_counter;i++) {
 		sprintf(tmpbuf,"%d\n",i);
-		memcpy(buf+off, tmpbuf, strlen(tmpbuf));
-		off+=strlen(tmpbuf);
+		strcat(buf,tmpbuf);
 	}	
 	//buf+off = '\0';
-	memcpy(buf+off,'\0',1);
 	return 0;
 
 }
