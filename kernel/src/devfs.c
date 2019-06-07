@@ -34,6 +34,7 @@ void devfs_init(filesystem_t *fs, const char *name, device_t *dev){
 		devfs_inodes[i].inode.f_or_d = ISFILE;
 		devfs_inodes[i].inode.ops = fs->iops;	
 		devfs_inodes[i].dev = dev_lookup(devfs_name[i]);
+		assert(devfs_inodes[i].dev!=NULL);
 	}
 
 	root.inode.refcnt = 0;
