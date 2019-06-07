@@ -84,7 +84,7 @@ struct filesystem{
 	device_t *dev;
 	inodeops_t *iops;
 	spinlock_t fs_lock;
-	struct inode root_inode;
+	inode_t root_inodej;
 };
 
 struct fsops{
