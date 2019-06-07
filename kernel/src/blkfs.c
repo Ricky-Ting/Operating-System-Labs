@@ -681,6 +681,7 @@ int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 		off += sizeof(tmpbuf);
 	}
 	//buf+off = '\0';
+	assert(off!=0);
 	memcpy(buf+off,'\0',1);
 	return 0;
 }
