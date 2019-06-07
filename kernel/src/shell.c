@@ -98,7 +98,7 @@ void shell_thread() {
 					break;
 				}	
 				vfs->write(stdout, readbuf, nread);
-			}while( nread==128)
+			}while( nread==128);
 
 
 		}
