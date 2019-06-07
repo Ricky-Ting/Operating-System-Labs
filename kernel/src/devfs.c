@@ -87,6 +87,7 @@ ssize_t devfs_read(file_t *file, char *buf, size_t size) {
 
 ssize_t devfs_write(file_t *file, const char *buf, size_t size) {
 	device_t *dev = devfs_inodes[file->inode->devfs_cnt].dev;
+	printf("In devfs_write, dev name is %s\n",dev->name);
 	int ret = dev->ops->write(dev, file->offset, buf, size);
 	file->offset += ret;
 	return ret;		
