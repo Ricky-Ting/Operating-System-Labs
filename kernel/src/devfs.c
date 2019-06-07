@@ -140,7 +140,7 @@ int devfs_unlink(const char *name, filesystem_t *fs) {
 }
 
 int devfs_readdir(const char *path, void *buf, filesystem_t *fs) {
-	if(strcmp(path,"ls")!=0)
+	if(strcmp(path,"/")!=0)
 		return -1;
 
 	char tmpbuf[20];
