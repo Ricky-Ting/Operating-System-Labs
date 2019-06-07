@@ -20,6 +20,7 @@ struct task {
 	const char *name;
 	_Context *context;
 	int bind_cpu;
+	int pid;
 	int status; /* 0: ready  1: running 2: sleep*/
 	uint8_t fence1[32];
 	void * stack;
@@ -110,7 +111,8 @@ struct inode{
 	//void *ptr;
 	
 	int devfs_cnt;
-	
+	int proc_cnt;
+	task_t *task;	
 	filesystem_t *fs;
 	inodeops_t *ops;
 };

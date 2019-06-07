@@ -21,6 +21,7 @@ task_t* task_tail[MAXCPU];
 spinlock_t create_lock;
 spinlock_t task_lk[MAXCPU];
 int next_cpu = 0;
+int pid_counter = 0;`
 void kmt_init() {
 	memset(int_stack, 0, sizeof(int_stack));
 	for(int i=0; i<MAXCPU; i++) {
@@ -114,6 +115,7 @@ int kmt_create(task_t *task, const char *name, void (*entry)(void *arg), void * 
 	kmt_spin_lock(&create_lock);
 	printf("In lock\n");
 	task->bind_cpu = next_cpu % _ncpu();	
+	task->pid = pid_counter++;
 	//kmt_spin_lock(&task_lk[task->bind_cpu]);
 	next_cpu = (next_cpu + 1) % _ncpu();
 	printf("CPU: %d\n", _ncpu());

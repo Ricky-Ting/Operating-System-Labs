@@ -46,10 +46,7 @@ inode_t *devfs_lookup(struct filesystem *fs, const char *path, int flags) {
 		}
 	} 
 	return NULL;
-
 }
-
-
 
 
 int devfs_open(const char *name, file_t *file, int flags, filesystem_t *fs) {
