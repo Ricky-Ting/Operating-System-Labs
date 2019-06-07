@@ -359,8 +359,10 @@ int vfs_readdir(const char *path, void *buf) {
 	if(strcmp(path,"/")==0) {
 		mnt_t* current_mnt = myvfs->mnthead;
 		while(current_mnt!=NULL) {
+				
 			sprintf(tmp2buf,"%s\n" ,current_mnt->path);
-			strcat(buf,tmp2buf);
+			if(strcmp(current_mnt->path,"/")!=0)
+				strcat(buf,tmp2buf);
 			current_mnt = current_mnt->next;
 		}
 		
