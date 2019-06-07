@@ -21,7 +21,7 @@ task_t* task_tail[MAXCPU];
 spinlock_t create_lock;
 spinlock_t task_lk[MAXCPU];
 int next_cpu = 0;
-int pid_counter = 0;`
+int pid_counter = 0;
 void kmt_init() {
 	memset(int_stack, 0, sizeof(int_stack));
 	for(int i=0; i<MAXCPU; i++) {
