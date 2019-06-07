@@ -114,6 +114,7 @@ inode_t *blkfs_lookup(struct filesystem *fs, const char *path, int flags) {
 				fs->dev->ops->read(fs->dev, INODE_OFF + INODE_SIZE*current_inode_id, current_inode, INODE_SIZE);
 				current_block_id = current_inode->block_id[0];
 				found = 1;
+				printf("In blkfs_lookup, found %s\n",path);
 				break;
 			}
 		}
