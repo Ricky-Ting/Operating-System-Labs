@@ -662,7 +662,6 @@ int blkfs_inode_unlink(const char *name, filesystem_t *fs){
 }
 
 int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
-	int off = 0;
 	char tmpbuf[200];
 	blkinode_t tmp1; blkdire_t tmp2;
 	blkinode_t *current_inode = &tmp1;
@@ -677,15 +676,11 @@ int blkfs_readdir(const char *path, void *buf, filesystem_t *fs) {
 	for(int i=2; i<(current_inode->filesize/32); i++) {
 		fs->dev->ops->read(fs->dev, BLOCK_OFF + BLOCK_SIZE * (current_inode->block_id[0])+ i*32, current_dire, sizeof(blkdire_t));
 		sprintf(tmpbuf, "%s\n", current_dire->filename);
-		memcpy(buf+off, tmpbuf, sizeof(tmpbuf));
-		off += sizeof(tmpbuf);
+		//memcpy(buf+off, tmpbuf, sizeof(tmpbuf));
+		strcat(buf,tmpbuf);
 	}
 	//buf+off = '\0';
 	//assert(off!=0);
-	if(off == 0) {
-		//memcpy(buf,"\n\0",2);
-	}
-	sprintf(buf,"\n");
 	printf("In blkfs_readdir, %sh\n",buf);
 	return 0;
 }
