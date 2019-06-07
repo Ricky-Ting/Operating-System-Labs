@@ -88,7 +88,6 @@ static void os_init() {
 	vfs->mount("/mnt",create_blkfs("ramdisk1",dev_lookup("ramdisk1")));
 
 		//kmt->create(&tmptask, "test", test, NULL);
-	int one = 1;
 	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread , NULL);
 
 	kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
