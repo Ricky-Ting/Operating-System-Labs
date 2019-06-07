@@ -13,7 +13,6 @@ void shell_thread() {
 
 	char line[2048];
 	char output[2048];
-
 	while(1) {
 		printf("Here\n");
 		sprintf(prompt, "%s>", pwd);
@@ -22,11 +21,14 @@ void shell_thread() {
 		line[nread - 1] = '\0';
 		
 		if(strcmp(line,"ls")==0) {
+			output[0] = '\0';
 			printf("In sheell, buf is %s\n",output);
 			int ret = vfs->readdir(pwd,output);
 			if(ret<0)
 				printf("ls Error\n");
 			else {
+				int tmplen = strlen(output);
+				output[tmplen] = '\n'; output[tmplen +1 ] = '\0'; 
 				vfs->write(stdout, output, strlen(output));
 			}
 		} else if(line[0] == 'c' && line[1] == 'd') {
