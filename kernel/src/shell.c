@@ -1,8 +1,8 @@
 #include <common.h>
 #include <klib.h>
 
-void shell_thread() {
-	int tty_id = 1;
+void shell_thread(int tty_id) {
+	
 	char buf[128];
 
 	char pwd[1024], prompt[1024];
