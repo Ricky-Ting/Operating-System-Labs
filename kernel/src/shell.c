@@ -14,7 +14,7 @@ void shell_thread(void *tty_id) {
 	char line[2048];
 	char output[2048];
 	while(1) {
-		sprintf(prompt, "%s>", pwd);
+		sprintf(prompt, "tty%d:%s>", tty_id,pwd);
 		vfs->write(stdout, prompt, strlen(prompt) );	
 		int nread = vfs->read(stdin, line, sizeof(line));
 		line[nread - 1] = '\0';
