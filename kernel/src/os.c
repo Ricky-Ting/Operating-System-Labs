@@ -91,6 +91,9 @@ static void os_init() {
 
 		//kmt->create(&tmptask, "test", test, NULL);
 	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread , (void *)1);
+	kmt->create(pmm->alloc(sizeof(task_t)), "shell_tty1", shell_thread , (void *)2);
+
+
 
 	//kmt->create(pmm->alloc(sizeof(task_t)), "test", test, NULL);
 	//kmt->create(pmm->alloc(sizeof(task_t)), "print1", echo_task, "tty1");
