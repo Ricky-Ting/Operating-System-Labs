@@ -59,8 +59,6 @@ void shell_thread(void *tty_id) {
 			int ret = vfs->link(oldpath, newpath);
 			if(ret<0)
 				printf("link %s %s failed\n", oldpath, newpath);
-		} else if(line[0] == 'u') {
-				printf("Mor\n");
 
 		} else if(line[0] == 't' && line[1] == 'o' && line[2] == 'u' && line[3] == 'c' && line[4] == 'h') {
 			int len = strlen(line);
