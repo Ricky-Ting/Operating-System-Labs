@@ -1,7 +1,7 @@
 #include <common.h>
 #include <klib.h>
 
-void shell_thread(int tty_id) {
+void shell_thread(void *tty_id) {
 	
 	char buf[128];
 

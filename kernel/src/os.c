@@ -2,7 +2,7 @@
 #include <klib.h>
 #include <devices.h>
 
-extern void shell_thread(int tty_id);
+extern void shell_thread(void *tty_id);
 
 
 void echo_task(void *name) {
