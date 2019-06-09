@@ -1,0 +1,19 @@
+#include "kvdb.h"
+
+int main() {
+	kvdb_t db;
+	
+	kvdb_open(&db, "a.db");
+	kvdb_put(&db,"Me","you");
+	kvdb_put(&db,"hello","world");
+	char *s = kvdb_get(&db,"hello");
+	printf("%s\n",s);
+	kvdb_put(&db,"hello","circle");
+	char *h = kvdb_get(&db,"hello");
+	printf("%s\n",h);
+	
+
+	recover(&db);
+	kvdb_close(&db);
+	
+}
